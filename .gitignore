@@ -8,3 +8,8 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+/nbproject/private/
+.idea
+.vscode
+.metals
+nbproject
