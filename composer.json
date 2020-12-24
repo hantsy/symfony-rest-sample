@@ -13,7 +13,7 @@
         "doctrine/annotations": "^1.11",
         "doctrine/dbal": "2.12.1",
         "doctrine/doctrine-bundle": "2.3.x-dev",
-        "doctrine/doctrine-migrations-bundle": "3.0.1",
+        "doctrine/doctrine-migrations-bundle": "3.0.2",
         "doctrine/orm": "2.8.0",
         "sensio/framework-extra-bundle": "^5.6",
         "symfony/asset": "5.2.*",
