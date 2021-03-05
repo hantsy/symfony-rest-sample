@@ -2803,16 +2803,16 @@
         },
         {
             "name": "symfony/expression-language",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/expression-language.git",
-                "reference": "7bf30a4e29887110f8bd1882ccc82ee63c8a5133"
+                "reference": "3fc560e62bc5121751b792b11505db03a12cf83c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/expression-language/zipball/7bf30a4e29887110f8bd1882ccc82ee63c8a5133",
-                "reference": "7bf30a4e29887110f8bd1882ccc82ee63c8a5133",
+                "url": "https://api.github.com/repos/symfony/expression-language/zipball/3fc560e62bc5121751b792b11505db03a12cf83c",
+                "reference": "3fc560e62bc5121751b792b11505db03a12cf83c",
                 "shasum": ""
             },
             "require": {
@@ -2860,7 +2860,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T10:15:41+00:00"
+            "time": "2021-02-12T10:38:38+00:00"
         },
         {
             "name": "symfony/filesystem",
