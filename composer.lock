@@ -1850,7 +1850,7 @@
         },
         {
             "name": "symfony/asset",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/asset.git",
