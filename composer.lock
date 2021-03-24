@@ -2007,12 +2007,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache-contracts.git",
-                "reference": "648977af9989c325eec96ba2671a20d5ff58fbea"
+                "reference": "c0446463729b89dd4fa62e9aeecc80287323615d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/648977af9989c325eec96ba2671a20d5ff58fbea",
-                "reference": "648977af9989c325eec96ba2671a20d5ff58fbea",
+                "url": "https://api.github.com/repos/symfony/cache-contracts/zipball/c0446463729b89dd4fa62e9aeecc80287323615d",
+                "reference": "c0446463729b89dd4fa62e9aeecc80287323615d",
                 "shasum": ""
             },
             "require": {
@@ -2075,7 +2075,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-02-25T16:38:04+00:00"
+            "time": "2021-03-23T23:28:01+00:00"
         },
         {
             "name": "symfony/config",
@@ -4839,16 +4839,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.30.1",
+            "version": "v1.30.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "4021ece4955286e0816a34b3d545bf1a917afb0f"
+                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/4021ece4955286e0816a34b3d545bf1a917afb0f",
-                "reference": "4021ece4955286e0816a34b3d545bf1a917afb0f",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
+                "reference": "a395a85aa4ded6c1fa3da118d60329b64b6c2acd",
                 "shasum": ""
             },
             "require": {
@@ -4919,7 +4919,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-03-22T17:49:17+00:00"
+            "time": "2021-03-23T13:53:38+00:00"
         }
     ],
     "aliases": [],
