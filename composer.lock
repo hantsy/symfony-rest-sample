@@ -1146,22 +1146,22 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "2.9.1",
+            "version": "2.9.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "f3e55fae9fdbdbc23897006bdbf016c20e11f6e9"
+                "reference": "75b4b88c5b7cebc24ed7251a20c2a5aa027300e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/f3e55fae9fdbdbc23897006bdbf016c20e11f6e9",
-                "reference": "f3e55fae9fdbdbc23897006bdbf016c20e11f6e9",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/75b4b88c5b7cebc24ed7251a20c2a5aa027300e1",
+                "reference": "75b4b88c5b7cebc24ed7251a20c2a5aa027300e1",
                 "shasum": ""
             },
             "require": {
                 "composer/package-versions-deprecated": "^1.8",
                 "doctrine/annotations": "^1.13",
-                "doctrine/cache": "^1.11|^2.0",
+                "doctrine/cache": "^1.11.3|^2.0.3",
                 "doctrine/collections": "^1.5",
                 "doctrine/common": "^3.0.3",
                 "doctrine/dbal": "^2.13.0",
@@ -1230,7 +1230,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2021-05-24T15:54:12+00:00"
+            "time": "2021-05-31T09:53:14+00:00"
         },
         {
             "name": "doctrine/persistence",
