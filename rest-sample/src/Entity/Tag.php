@@ -24,7 +24,7 @@ class Tag
     private ?string $name;
 
     #[ManyToMany(targetEntity: Post::class, inversedBy: "tags")]
-    private ArrayCollection $posts;
+    private Collection $posts;
 
     #[Pure] public function __construct()
     {

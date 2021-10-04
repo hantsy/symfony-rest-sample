@@ -40,7 +40,7 @@ class Post
     #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts")]
     private Collection $tags;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->createdAt = new DateTime();
         $this->comments = new ArrayCollection();
@@ -130,7 +130,7 @@ class Post
     /**
      * @return DateTime
      */
-    public function getPublishedAt(): DateTime
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
@@ -172,14 +172,7 @@ class Post
         return $this;
     }
 
-    public function setComments(Collection $comments): self
-    {
-        $this->comments = $comments;
-        return $this;
-    }
-
-
-    public function getComments(): ArrayCollection
+    public function getComments(): Collection
     {
         return $this->comments;
     }
@@ -202,6 +195,16 @@ class Post
         }
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return "Post: [ id =" . $this->getId()
+            . ", title=" . $this->getTitle()
+            . ", content=" . $this->getContent()
+            . ", createdAt=" . $this->getCreatedAt()->getTimestamp()
+            . ", publishedAt=" . $this->getPublishedAt()?->getTimestamp()
+            . "]";
     }
 
 }
