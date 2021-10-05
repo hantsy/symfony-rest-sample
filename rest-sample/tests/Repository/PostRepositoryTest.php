@@ -2,17 +2,15 @@
 
 namespace App\Tests\Repository;
 
-use App\Controller\Dto\CreatePostDto;
 use App\Entity\PostFactory;
 use App\Repository\PostRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PostRepositoryTest extends KernelTestCase
 {
 
-    private EntityManager $entityManager;
+    private EntityManagerInterface $entityManager;
 
     private PostRepository $postRepository;
 
@@ -27,6 +25,13 @@ class PostRepositoryTest extends KernelTestCase
         $this->postRepository = $this->getContainer()
             ->get(PostRepository::class);
     }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->entityManager->close();
+    }
+
 
     public function testCreatePost(): void
     {
