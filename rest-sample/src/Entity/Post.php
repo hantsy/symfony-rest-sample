@@ -47,18 +47,6 @@ class Post
         $this->tags = new ArrayCollection();
     }
 
-    //#[ArrayShape(['id' => "null|string", 'title' => "string", 'content' => "string", 'createdAt' => "\DateTime|null", 'publishedAt' => "\DateTime|null"])]
-    public function asArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content,
-            'createdAt' => $this->createdAt,
-            'publishedAt' => $this->publishedAt
-        ];
-    }
-
     /**
      * @return string
      */
