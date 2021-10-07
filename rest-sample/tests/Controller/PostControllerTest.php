@@ -2,7 +2,7 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\Dto\CreatePostDto;
+use App\Controller\Dto\CommentWithPostSummaryDto;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class PostControllerTest extends WebTestCase
@@ -24,7 +24,7 @@ class PostControllerTest extends WebTestCase
     public function testCreatePost(): void
     {
         $client = static::createClient();
-        $data = CreatePostDto::of("test title", "test content");
+        $data = CommentWithPostSummaryDto::of("test title", "test content");
         $crawler = $client->request(
             'POST',
             '/posts',

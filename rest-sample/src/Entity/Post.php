@@ -13,6 +13,8 @@ use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Validator\Constraints\Cascade;
+use Symfony\Component\Validator\Mapping\CascadingStrategy;
 
 #[Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -34,10 +36,10 @@ class Post
     #[Column(type: "datetime", nullable: true)]
     private DateTime|null $publishedAt = null;
 
-    #[OneToMany(mappedBy: "post", targetEntity: Comment::class)]
+    #[OneToMany(mappedBy: "post", targetEntity: Comment::class, fetch: 'LAZY', orphanRemoval: true)]
     private Collection $comments;
 
-    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts")]
+    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts", cascade: ['persist','merge'], fetch: 'EAGER')]
     private Collection $tags;
 
     public function __construct()

@@ -17,7 +17,7 @@ class Comment
     #[GeneratedValue(strategy: "UUID")]
     #[Column(type: "string", unique: true)]
     //    #[GeneratedValue(strategy: "CUSTOM")]
-    //    #[CustomIdGenerator(class:UuidGenerator::class)]
+        //    #[CustomIdGenerator(class:UuidGenerator::class)]
     private ?string $id = null;
 
     #[Column(type: "string", length: 255)]
@@ -32,6 +32,13 @@ class Comment
 
     public function __construct()
     {
+    }
+
+    public static function of(string $content): Comment
+    {
+        $comment = new Comment();
+        $comment->setContent($content);
+        return $comment;
     }
 
     public function getId(): ?string

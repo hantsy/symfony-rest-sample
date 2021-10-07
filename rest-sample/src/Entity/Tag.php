@@ -26,9 +26,16 @@ class Tag
     #[ManyToMany(targetEntity: Post::class, inversedBy: "tags")]
     private Collection $posts;
 
-    #[Pure] public function __construct()
+    public function __construct()
     {
         $this->posts = new ArrayCollection();
+    }
+
+    public static function of(string $name): Tag
+    {
+        $tag = new Tag();
+        $tag->setName($name);
+        return $tag;
     }
 
     public function getId(): ?string

@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\CreatePostDto;
+use App\Controller\Dto\CommentWithPostSummaryDto;
+use App\Entity\Comment;
 use App\Entity\PostFactory;
+use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,7 +16,9 @@ use Symfony\Component\Serializer\SerializerInterface;
 #[Route(path: "/posts", name: "posts_")]
 class PostController extends AbstractController
 {
-    public function __construct(private PostRepository $posts, private SerializerInterface $serializer)
+    public function __construct(private PostRepository      $posts,
+                                private CommentRepository   $comments,
+                                private SerializerInterface $serializer)
     {
     }
 
@@ -39,7 +43,7 @@ class PostController extends AbstractController
     #[Route(path: "", name: "create", methods: ["POST"])]
     public function create(Request $request): Response
     {
-        $data = $this->serializer->deserialize($request->getContent(), CreatePostDto::class, 'json');
+        $data = $this->serializer->deserialize($request->getContent(), CommentWithPostSummaryDto::class, 'json');
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
         $this->posts->getEntityManager()->persist($entity);
 
@@ -57,4 +61,32 @@ class PostController extends AbstractController
 
         return $this->json([], 202);
     }
+
+    // comments sub resources.
+    #[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
+    function getComments(string $id): Response
+    {
+        $data = $this->posts->findOneBy(["id" => $id]);
+        if ($data) {
+            return $this->json($data->getComments());
+        } else {
+            return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
+        }
+    }
+
+    #[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
+    function addComment(string $id, Request $request): Response
+    {
+        $data = $this->posts->findOneBy(["id" => $id]);
+        if ($data) {
+            $dto = $this->serializer->deserialize($request->getContent(), CommentWithPostSummaryDto::class, 'json');
+            $entity = Comment::of($dto->getContent());
+            $this->comments->getEntityManager()->persist($entity->setPost($data));
+            //$data->addComment(Comment::of($dto->getContent()));
+            return $this->json([], 201, ["Location" => "/comments/" . $entity->getId()]);
+        } else {
+            return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
+        }
+    }
+
 }
