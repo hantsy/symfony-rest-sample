@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Controller\Dto\CommentWithPostSummaryDto;
+use App\Controller\Dto\CreatePostDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
 use App\Repository\CommentRepository;
@@ -43,7 +44,7 @@ class PostController extends AbstractController
     #[Route(path: "", name: "create", methods: ["POST"])]
     public function create(Request $request): Response
     {
-        $data = $this->serializer->deserialize($request->getContent(), CommentWithPostSummaryDto::class, 'json');
+        $data = $this->serializer->deserialize($request->getContent(), CreatePostDto::class, 'json');
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
         $this->posts->getEntityManager()->persist($entity);
 
