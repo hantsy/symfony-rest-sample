@@ -51,5 +51,6 @@ jobs:
         docker-compose up -d postgres
         sleep 10
         docker ps -a
-        php bin/console doctrine:migrations:migrate -q --all-or-nothing
+        php bin/console doctrine:schema:create
+        php bin/console doctrine:fixtures:load
         composer run-script test
