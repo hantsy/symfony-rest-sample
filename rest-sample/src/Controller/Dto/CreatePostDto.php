@@ -7,9 +7,9 @@ class CreatePostDto
     private string $title;
     private string $content;
 
-    static function of(string $title, string $content): CommentWithPostSummaryDto
+    static function of(string $title, string $content): CreatePostDto
     {
-        $dto = new CommentWithPostSummaryDto();
+        $dto = new CreatePostDto();
         $dto->setTitle($title)->setContent($content);
         return $dto;
     }
