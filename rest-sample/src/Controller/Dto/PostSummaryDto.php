@@ -26,7 +26,7 @@ class PostSummaryDto
      * @param string $id
      * @return PostSummaryDto
      */
-    public function setId(string $id): PostSummaryDto
+    public function setId(string $id): self
     {
         $this->id = $id;
         return $this;
