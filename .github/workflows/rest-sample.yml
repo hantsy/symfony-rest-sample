@@ -30,7 +30,7 @@ jobs:
         php-version: 8.0
         coverage: none
         tools: composer:v2
-        extensions: mbstring, xml, ctype, iconv, intl, pdo_pg, pgsql, dom, filter, gd, json, mbstring, pdo
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql, pgsql, dom, filter, gd, json, mbstring, pdo
       env:
         update: true
     - name: Check PHP Version
