@@ -13,7 +13,8 @@ on:
       - synchronize
       - reopened
 
-
+# see: https://www.strangebuzz.com/en/blog/setting-a-ci-cd-workflow-for-a-symfony-project-thanks-to-the-github-actions
+# and https://antonshell.me/en/post/github-actions-symfony
 jobs:
   build:
 
