@@ -13,7 +13,8 @@ on:
       - synchronize
       - reopened
 
-
+# see: https://www.strangebuzz.com/en/blog/setting-a-ci-cd-workflow-for-a-symfony-project-thanks-to-the-github-actions
+# and https://antonshell.me/en/post/github-actions-symfony
 jobs:
   build:
 
@@ -21,6 +22,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
+    # https://github.com/shivammathur/setup-php (community)
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.0
+        coverage: none
+        tools: composer:v2
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_pg, pgsql, dom, filter, gd, json, mbstring, pdo
+      env:
+        update: true
+    - name: Check PHP Version
+      run: php -v
 
     - name: Validate composer.json and composer.lock
       run: |
@@ -41,7 +55,17 @@ jobs:
       run: | 
         cd rest-sample
         composer install --prefer-dist --no-progress --no-suggest
-
+    # —— Symfony ——————————————————————————————————————————————————————————
+    - name: Check Symfony requirements
+      run: |
+        cd rest-sample
+        vendor/bin/requirements-checker
+        bin/console -V
+    # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
+    #- name: PHP-CS-Fixer
+    #  uses: docker://oskarstark/php-cs-fixer-ga
+    #  with:
+    #    args: --config=.php_cs.dist --diff --dry-run
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
 
