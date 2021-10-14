@@ -57,10 +57,11 @@ jobs:
         composer install --prefer-dist --no-progress --no-suggest
     # —— Symfony ——————————————————————————————————————————————————————————
     - name: Check Symfony requirements
-      run: |
-        cd rest-sample
-        vendor/bin/requirements-checker
-        bin/console -V
+      run: |      
+        wget https://get.symfony.com/cli/installer -O - | bash
+        symfony check:requirements
+        cd rest-sample    
+        php bin/console -V
     # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
     #- name: PHP-CS-Fixer
     #  uses: docker://oskarstark/php-cs-fixer-ga
