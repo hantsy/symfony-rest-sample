@@ -59,6 +59,7 @@ jobs:
     - name: Check Symfony requirements
       run: |      
         wget https://get.symfony.com/cli/installer -O - | bash
+        export PATH="$HOME/.symfony/bin:$PATH"
         symfony check:requirements
         cd rest-sample    
         php bin/console -V
