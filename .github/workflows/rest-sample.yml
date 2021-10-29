@@ -30,7 +30,7 @@ jobs:
         php-version: 8.0
         coverage: none
         tools: composer:v2
-        extensions: mbstring, xml, ctype, iconv, intl, pdo_pg, pgsql, dom, filter, gd, json, mbstring, pdo
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql, pgsql, dom, filter, gd, json, mbstring, pdo
       env:
         update: true
     - name: Check PHP Version
@@ -57,10 +57,12 @@ jobs:
         composer install --prefer-dist --no-progress --no-suggest
     # —— Symfony ——————————————————————————————————————————————————————————
     - name: Check Symfony requirements
-      run: |
-        cd rest-sample
-        vendor/bin/requirements-checker
-        bin/console -V
+      run: |      
+        wget https://get.symfony.com/cli/installer -O - | bash
+        export PATH="$HOME/.symfony/bin:$PATH"
+        symfony check:requirements
+        cd rest-sample    
+        php bin/console -V
     # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
     #- name: PHP-CS-Fixer
     #  uses: docker://oskarstark/php-cs-fixer-ga
@@ -75,6 +77,6 @@ jobs:
         docker-compose up -d postgres
         sleep 10
         docker ps -a
-        php bin/console doctrine:schema:create
-        php bin/console doctrine:fixtures:load
+        php ./bin/console doctrine:schema:create -q
+        php ./bin/console doctrine:fixtures:load --purge-with-truncate
         composer run-script test

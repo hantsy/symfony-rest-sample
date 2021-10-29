@@ -3,16 +3,14 @@ version: "3.5" # specify docker-compose version, v3.5 is compatible with docker 
 
 # Define the services/containers to be run
 services:
-  postgres:
-    image: postgres
-    ports:
-      - "5432:5432"
-    restart: always
+
+  database:
+    image: postgres:${POSTGRES_VERSION:-13}-alpine
     environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: blogdb
-      POSTGRES_USER: user
+      POSTGRES_DB: ${POSTGRES_DB:-blogdb}
+      # You should definitely change the password in production
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: ${POSTGRES_USER:-user}
     volumes:
-      - ./data/postgresql:/var/lib/postgresql
+      - ./data/blogdb:/var/lib/postgresql/data:rw
       - ./pg-initdb.d:/docker-entrypoint-initdb.d
-        
