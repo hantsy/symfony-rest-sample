@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -23,8 +24,8 @@ class Comment
     #[Column(type: "string", length: 255)]
     private string $content;
 
-    #[Column(name: "created_at", type: "datetime")]
-    private \DateTime|null $createdAt;
+    #[Column(name: "created_at", type: "datetime", nullable: true)]
+    private DateTime|null $createdAt = null;
 
     #[ManyToOne(targetEntity: "Post", inversedBy: "comments")]
     #[JoinColumn(name: "post_id", referencedColumnName: "id")]
@@ -32,6 +33,7 @@ class Comment
 
     public function __construct()
     {
+        $this->createdAt = new DateTime();
     }
 
     public static function of(string $content): Comment
@@ -57,12 +59,12 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;

@@ -12,9 +12,6 @@ use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
-use JetBrains\PhpStorm\Pure;
-use Symfony\Component\Validator\Constraints\Cascade;
-use Symfony\Component\Validator\Mapping\CascadingStrategy;
 
 #[Entity(repositoryClass: PostRepository::class)]
 class Post
@@ -30,16 +27,16 @@ class Post
     #[Column(type: "string", length: 255)]
     private string $content;
 
-    #[Column(type: "datetime", nullable: true)]
+    #[Column(name: "created_at", type: "datetime", nullable: true)]
     private DateTime|null $createdAt = null;
 
-    #[Column(type: "datetime", nullable: true)]
+    #[Column(name: "published_at", type: "datetime", nullable: true)]
     private DateTime|null $publishedAt = null;
 
-    #[OneToMany(mappedBy: "post", targetEntity: Comment::class, fetch: 'LAZY', orphanRemoval: true)]
+    #[OneToMany(mappedBy: "post", targetEntity: Comment::class, cascade: ['persist', 'merge', "remove"], fetch: 'LAZY', orphanRemoval: true)]
     private Collection $comments;
 
-    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts", cascade: ['persist','merge'], fetch: 'EAGER')]
+    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts", cascade: ['persist', 'merge'], fetch: 'EAGER')]
     private Collection $tags;
 
     public function __construct()
@@ -172,7 +169,7 @@ class Post
     {
         if (!$this->comments->contains($comment)) {
             $this->comments[] = $comment;
-            $comment->setPost(null);
+            $comment->setPost($this);
         }
 
         return $this;

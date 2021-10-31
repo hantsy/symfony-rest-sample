@@ -19,6 +19,7 @@ class RequestBodyParamConverter implements ParamConverterInterface
 
     /**
      * @inheritDoc
+     * @throws ReflectionException
      */
     public function apply(Request $request, ParamConverter $configuration)
     {
@@ -40,7 +41,7 @@ class RequestBodyParamConverter implements ParamConverterInterface
      * @inheritDoc
      * @throws ReflectionException
      */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         $className = $configuration->getClass();
         $reflector = new ReflectionClass($className);

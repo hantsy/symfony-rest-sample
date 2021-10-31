@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\CommentWithPostSummaryDto;
+use App\Controller\Dto\CreateCommentDto;
 use App\Controller\Dto\CreatePostDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
@@ -80,7 +80,7 @@ class PostController extends AbstractController
     {
         $data = $this->posts->findOneBy(["id" => $id]);
         if ($data) {
-            $dto = $this->serializer->deserialize($request->getContent(), CommentWithPostSummaryDto::class, 'json');
+            $dto = $this->serializer->deserialize($request->getContent(), CreateCommentDto::class, 'json');
             $entity = Comment::of($dto->getContent());
             $this->comments->getEntityManager()->persist($entity->setPost($data));
             //$data->addComment(Comment::of($dto->getContent()));

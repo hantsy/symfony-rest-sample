@@ -6,6 +6,8 @@ services:
 
   database:
     image: postgres:${POSTGRES_VERSION:-13}-alpine
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-blogdb}
       # You should definitely change the password in production
