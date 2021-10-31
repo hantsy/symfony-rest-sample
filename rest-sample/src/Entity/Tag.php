@@ -6,24 +6,32 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: TagRepository::class)]
 class Tag
 {
     #[Id]
-    #[GeneratedValue(strategy: "UUID")]
-    #[Column(type: "string")]
-    private ?string $id;
+    //#[GeneratedValue(strategy: "UUID")
+    //#[Column(type: "string", unique: true)]
+    #[Column(type: "uuid", unique: true)]
+    #[GeneratedValue(strategy: "CUSTOM")]
+    #[CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[Column(type: "string", length: 255)]
     private ?string $name;
 
     #[ManyToMany(targetEntity: Post::class, inversedBy: "tags")]
+    #[Ignore]
     private Collection $posts;
 
     public function __construct()
@@ -38,7 +46,7 @@ class Tag
         return $tag;
     }
 
-    public function getId(): ?string
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

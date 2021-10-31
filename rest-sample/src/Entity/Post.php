@@ -7,19 +7,25 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\ORM\Mapping\OneToMany;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: PostRepository::class)]
 class Post
 {
     #[Id]
-    #[GeneratedValue(strategy: "UUID")]
-    #[Column(type: "string", unique: true)]
-    private ?string $id = null;
+    //#[GeneratedValue(strategy: "UUID")
+    //#[Column(type: "string", unique: true)]
+    #[Column(type: "uuid", unique: true)]
+    #[GeneratedValue(strategy: "CUSTOM")]
+    #[CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[Column(type: "string", length: 255)]
     private string $title;
@@ -47,17 +53,17 @@ class Post
     }
 
     /**
-     * @return string
+     * @return Uuid|null
      */
-    public function getId(): string
+    public function getId(): ?Uuid
     {
         return $this->id;
     }
 
     /**
-     * @param string $id
+     * @param Uuid $id
      */
-    public function setId(string $id): self
+    public function setId(Uuid $id): self
     {
         $this->id = $id;
         return $this;
@@ -115,7 +121,7 @@ class Post
     }
 
     /**
-     * @return DateTime
+     * @return DateTime|null
      */
     public function getPublishedAt(): ?DateTime
     {
@@ -133,7 +139,7 @@ class Post
 
 
     /**
-     * @return Collection|Tag[]
+     * @return Collection
      */
     public function getTags(): Collection
     {

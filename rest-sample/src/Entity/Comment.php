@@ -4,22 +4,27 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use DateTime;
+
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToOne;
+use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
+use Symfony\Component\Serializer\Annotation\Ignore;
+use Symfony\Component\Uid\Uuid;
 
 #[Entity(repositoryClass: CommentRepository::class)]
 class Comment
 {
     #[Id]
-    #[GeneratedValue(strategy: "UUID")]
-    #[Column(type: "string", unique: true)]
-    //    #[GeneratedValue(strategy: "CUSTOM")]
-        //    #[CustomIdGenerator(class:UuidGenerator::class)]
-    private ?string $id = null;
+    //#[GeneratedValue(strategy: "UUID")]
+    #[Column(type: "uuid", unique: true)]
+    #[GeneratedValue(strategy: "CUSTOM")]
+    #[CustomIdGenerator(class: UuidGenerator::class)]
+    private ?Uuid $id = null;
 
     #[Column(type: "string", length: 255)]
     private string $content;
@@ -29,6 +34,7 @@ class Comment
 
     #[ManyToOne(targetEntity: "Post", inversedBy: "comments")]
     #[JoinColumn(name: "post_id", referencedColumnName: "id")]
+    #[Ignore]
     private Post $post;
 
     public function __construct()
@@ -43,7 +49,7 @@ class Comment
         return $comment;
     }
 
-    public function getId(): ?string
+    public function getId(): ?Uuid
     {
         return $this->id;
     }

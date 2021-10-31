@@ -397,6 +397,9 @@
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
     },
+    "symfony/polyfill-uuid": {
+        "version": "v1.23.0"
+    },
     "symfony/property-access": {
         "version": "v5.3.8"
     },
@@ -436,6 +439,9 @@
     },
     "symfony/translation-contracts": {
         "version": "v2.4.0"
+    },
+    "symfony/uid": {
+        "version": "v5.3.10"
     },
     "symfony/validator": {
         "version": "4.3",
