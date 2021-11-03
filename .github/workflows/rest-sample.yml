@@ -77,6 +77,6 @@ jobs:
         docker-compose up -d postgres
         sleep 10
         docker ps -a
-        php ./bin/console doctrine:schema:create -q
-        php ./bin/console doctrine:fixtures:load --purge-with-truncate
+        php ./bin/console doctrine:schema:create -n
+        php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
         composer run-script test
