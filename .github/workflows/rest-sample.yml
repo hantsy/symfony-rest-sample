@@ -70,13 +70,14 @@ jobs:
     #    args: --config=.php_cs.dist --diff --dry-run
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    - name: Run test suite
+    - name: Setup Database
       run: |
-        cd rest-sample
         docker-compose up -d postgres
         sleep 10
         docker ps -a
+    - name: Run test suite
+      run: |
+        cd rest-sample
         php ./bin/console doctrine:schema:create -n
         php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
         composer run-script test
