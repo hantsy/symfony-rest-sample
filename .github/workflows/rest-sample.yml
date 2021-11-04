@@ -1,4 +1,4 @@
-name: PHP Composer
+name: rest-sample
 
 on:
   push:
