@@ -2,6 +2,8 @@
 
 namespace App\Request\ParamConverter;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use ReflectionClass;
 use ReflectionException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -11,31 +13,35 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 // see: https://symfony.com/bundles/SensioFrameworkExtraBundle/current/annotations/converters.html#creating-a-converter
-class RequestBodyParamConverter implements ParamConverterInterface
+class RequestBodyParamConverter implements ParamConverterInterface, LoggerAwareInterface
 {
-    public function __construct(private SerializerInterface $serializer,
-                                private ValidatorInterface  $validator)
+    public function __construct(private SerializerInterface $serializer)
     {
     }
 
+    private LoggerInterface $logger;
+
     /**
      * @inheritDoc
-     * @throws ReflectionException
      */
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
+        $param = $configuration->getName();
         $className = $configuration->getClass();
-        $reflector = new ReflectionClass($className);
-        $requestBody = $reflector->getAttributes(RequestBody::class)[0];
-        $format = $requestBody->getArguments()[0] ?? "json";
+        $format = $request->getRequestFormat();
+        $this->logger->debug("request format: {f}", ["f" => $format]);
+        if ($format) {
+            //read request body
+            $content = $request->getContent();
+            $bodyData = $this->serializer->deserialize($content, $className, $format);
+            $request->attributes->set($param, $bodyData);
+            return true;
+        }
 
-        //read request body
-        $body = $request->getContent();
-        $bodyObject = $this->serializer->deserialize($body, $className, $format);
-        $violationList = $this->validator->validate($bodyObject);
-
-        $request->attributes->set('_violations', $violationList);
-        $request->attributes->set($configuration->getName(), $bodyObject);
+        return false;
+        //
+//        $violationList = $this->validator->validate($bodyObject);
+//        $request->attributes->set('_violations', $violationList);
     }
 
     /**
@@ -47,12 +53,17 @@ class RequestBodyParamConverter implements ParamConverterInterface
         $className = $configuration->getClass();
         if ($className) {
             $reflector = new ReflectionClass($className);
-            $attrs = $reflector->getAttributes(RequestBody::class);
+            $attrs = $reflector->getAttributes(Body::class);
 
-            //check if it is annotated with `RequestBody`
+            //check if it is annotated with `Body`
             return sizeof($attrs) > 0;
         }
 
         return false;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
     }
 }

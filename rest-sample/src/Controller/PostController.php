@@ -8,7 +8,7 @@ use App\Entity\Comment;
 use App\Entity\PostFactory;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use App\Request\ParamConverter\RequestBody;
+use App\Request\ParamConverter\Body;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

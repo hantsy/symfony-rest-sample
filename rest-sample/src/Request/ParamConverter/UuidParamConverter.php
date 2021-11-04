@@ -18,7 +18,7 @@ class UuidParamConverter implements ParamConverterInterface
     /**
      * @inheritDoc
      */
-    public function apply(Request $request, ParamConverter $configuration)
+    public function apply(Request $request, ParamConverter $configuration): bool
     {
 
         $param = $configuration->getName();
@@ -44,7 +44,7 @@ class UuidParamConverter implements ParamConverterInterface
     /**
      * @inheritDoc
      */
-    public function supports(ParamConverter $configuration)
+    public function supports(ParamConverter $configuration): bool
     {
         $className = $configuration->getClass();
         $this->logger->info("converting to UUID :{c}", ["c" => $className]);
