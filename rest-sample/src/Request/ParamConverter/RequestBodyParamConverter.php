@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Request\ParamConverter\ParamConverterInte
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+
 // see: https://symfony.com/bundles/SensioFrameworkExtraBundle/current/annotations/converters.html#creating-a-converter
 class RequestBodyParamConverter implements ParamConverterInterface
 {
@@ -44,10 +45,14 @@ class RequestBodyParamConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration): bool
     {
         $className = $configuration->getClass();
-        $reflector = new ReflectionClass($className);
-        $attrs = $reflector->getAttributes(RequestBody::class);
+        if ($className) {
+            $reflector = new ReflectionClass($className);
+            $attrs = $reflector->getAttributes(RequestBody::class);
 
-        //check if it is annotated with `RequestBody`
-        return sizeof($attrs) > 0;
+            //check if it is annotated with `RequestBody`
+            return sizeof($attrs) > 0;
+        }
+
+        return false;
     }
 }

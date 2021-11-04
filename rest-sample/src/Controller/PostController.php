@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Uid\Uuid;
 
 #[Route(path: "/posts", name: "posts_")]
 class PostController extends AbstractController
@@ -32,7 +33,7 @@ class PostController extends AbstractController
     }
 
     #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
-    function getById(string $id): Response
+    function getById(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
         if ($data) {
@@ -53,7 +54,7 @@ class PostController extends AbstractController
     }
 
     #[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
-    public function deleteById(string $id): Response
+    public function deleteById(Uuid $id): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
         if (!$entity) {
@@ -66,7 +67,7 @@ class PostController extends AbstractController
 
     // comments sub resources.
     #[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
-    function getComments(string $id): Response
+    function getComments(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
         if ($data) {
@@ -77,7 +78,7 @@ class PostController extends AbstractController
     }
 
     #[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
-    function addComment(string $id, Request $request): Response
+    function addComment(Uuid $id, Request $request): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
         if ($data) {
