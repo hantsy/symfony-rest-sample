@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\ParamConverter;
+namespace App\ArgumentResolver;
 
 
 use Attribute;

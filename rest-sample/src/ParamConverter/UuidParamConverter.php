@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Request\ParamConverter;
+namespace App\ParamConverter;
 
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -14,21 +14,18 @@ class UuidParamConverter implements ParamConverterInterface
     {
     }
 
-
     /**
      * @inheritDoc
      */
     public function apply(Request $request, ParamConverter $configuration): bool
     {
-
+        $this->logger->info("applying  UuidParamConverter...");
         $param = $configuration->getName();
-
         if (!$request->attributes->has($param)) {
             return false;
         }
-
         $value = $request->attributes->get($param);
-        $this->logger->info("parameter value:" . $value);
+        $this->logger->info("The request attribute name:" . $param . ",  value:" . $value);
         if (!$value && $configuration->isOptional()) {
             $request->attributes->set($param, null);
 
@@ -37,7 +34,6 @@ class UuidParamConverter implements ParamConverterInterface
 
         $data = Uuid::fromString($value);
         $request->attributes->set($param, $data);
-
         return true;
     }
 
@@ -47,7 +43,6 @@ class UuidParamConverter implements ParamConverterInterface
     public function supports(ParamConverter $configuration): bool
     {
         $className = $configuration->getClass();
-        $this->logger->info("converting to UUID :{c}", ["c" => $className]);
         return $className && $className == Uuid::class;
     }
 }

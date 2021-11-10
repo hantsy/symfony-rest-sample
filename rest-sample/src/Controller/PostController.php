@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\CreateCommentDto;
-use App\Controller\Dto\CreatePostDto;
+use App\Dto\CreateCommentDto;
+use App\Dto\CreatePostDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use App\Request\ParamConverter\Body;
+use App\ArgumentResolver\QueryParam;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,10 +25,21 @@ class PostController extends AbstractController
     {
     }
 
+//    #[Route(path: "", name: "all", methods: ["GET"])]
+//    function all(): Response
+//    {
+//        $data = $this->posts->findAll();
+//        return $this->json($data);
+//    }
+
     #[Route(path: "", name: "all", methods: ["GET"])]
-    function all(): Response
+    // function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
+        // see: https://github.com/symfony/symfony/issues/43958
+    function all(#[QueryParam] string|null $keyword,
+                 #[QueryParam] int $offset = 0,
+                 #[QueryParam] int $limit = 20): Response
     {
-        $data = $this->posts->findAll();
+        $data = $this->posts->findByKeyword($keyword || '', $offset, $limit);
         return $this->json($data);
     }
 

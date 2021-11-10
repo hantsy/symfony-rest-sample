@@ -86,6 +86,7 @@
   "require-dev": {
     "dama/doctrine-test-bundle": "^6.6",
     "doctrine/doctrine-fixtures-bundle": "^3.4",
+    "phpunit/php-code-coverage": "^9.2",
     "phpunit/phpunit": "^9.5",
     "symfony/browser-kit": "5.3.*",
     "symfony/css-selector": "5.3.*",

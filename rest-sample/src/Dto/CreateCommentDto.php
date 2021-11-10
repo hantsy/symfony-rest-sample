@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Dto;
+namespace App\Dto;
 
 class CreateCommentDto
 {
