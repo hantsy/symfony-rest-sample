@@ -23,13 +23,14 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
-        $className = $argument->getType();
-        $format = $request->getRequestFormat();
-        $this->logger->debug("request format:" . $format);
+        $type = $argument->getType();
+        $this->logger->debug("The argument type:'" . $type . "'");
+        $format = $request->getRequestFormat() ?? 'json';
+        $this->logger->debug("The request format:'" . $format . "'");
 
         //read request body
         $content = $request->getContent();
-        $data = $this->serializer->deserialize($content, $className, $format);
+        $data = $this->serializer->deserialize($content, $type, $format);
         dump($data);
         yield $data;
     }

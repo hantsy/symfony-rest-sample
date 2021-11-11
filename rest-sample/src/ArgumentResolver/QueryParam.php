@@ -9,13 +9,23 @@ use JetBrains\PhpStorm\Pure;
 #[Attribute(Attribute::TARGET_PARAMETER)]
 final class QueryParam
 {
-    private ?string $name = '';
-    private ?bool $required = false;
+    private null|string $name;
+    private bool $required;
 
     /**
-     * @return string
+     * @param string|null $name
+     * @param bool $required
      */
-    public function getName(): string
+    public function __construct(?string $name = null, bool $required = false)
+    {
+        $this->name = $name;
+        $this->required = $required;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -50,6 +60,6 @@ final class QueryParam
 
     #[Pure] public function __toString(): string
     {
-        return "QueryParam[name=".$this->getName().", required=".$this->isRequired().']';
+        return "QueryParam[name='" . $this->getName() . "', required='" . $this->isRequired() . "']";
     }
 }

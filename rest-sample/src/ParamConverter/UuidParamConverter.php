@@ -25,7 +25,7 @@ class UuidParamConverter implements ParamConverterInterface
             return false;
         }
         $value = $request->attributes->get($param);
-        $this->logger->info("The request attribute name:" . $param . ",  value:" . $value);
+        $this->logger->debug("The request attribute name:" . $param . ",  value:" . $value);
         if (!$value && $configuration->isOptional()) {
             $request->attributes->set($param, null);
 

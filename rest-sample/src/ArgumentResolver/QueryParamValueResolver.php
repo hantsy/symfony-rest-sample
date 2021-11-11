@@ -21,35 +21,43 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
-        $this->logger->debug("Applying QueryParamValueResolver...");
         $argumentName = $argument->getName();
-        $this->logger->debug("The method argument name: " . $argumentName);
+        $this->logger->info("Found [QueryParam] annotation/attribute on argument '" . $argumentName . "', applying [QueryParamValueResolver]");
+        $type = $argument->getType();
+        $nullable = $argument->isNullable();
+        $this->logger->debug("The method argument type: '" . $type . "' and nullable: '" . $nullable . "'");
 
         //read name property from QueryParam
-        $attrs = $argument->getAttributes(QueryParam::class);
-
+        $attr = $argument->getAttributes(QueryParam::class)[0];// `QueryParam` is not repeatable
+        $this->logger->debug("QueryParam:" . $attr);
         //if name property is not set in `QueryParam`, use the argument name instead.
-        $queryParamAttribute = $attrs[0];
-        //$this->logger->debug("QueryParam:" . $queryParamAttribute);
-        $name = $queryParamAttribute->getName();
-        $required = $queryParamAttribute->isRequired();
-        $this->logger->debug("QueryParam values: name= " . $name . ", required =" . $required);
-        $name = $name ?? $argumentName;
+        $name = $attr->getName() ?? $argumentName;
+        $required = $attr->isRequired() ?? false;
+        $this->logger->debug("Polished QueryParam values: name='" . $name . "', required='" . $required . "'");
 
         //fetch query name from request
         $value = $request->query->get($name);
-        $this->logger->debug("request query parameter value: " . $value);
+        $this->logger->debug("The request query parameter value: '" . $value . "'");
 
         //if default value is set and query param value is not set, use default value instead.
-        if (!$value && $required) {
-            if ($argument->hasDefaultValue()) {
-                $value = $argument->getDefaultValue();
-            } else {
-                throw new \InvalidArgumentException("Request query parameter `" . $name . "` is required, but not set.");
-            }
+        if (!$value && $argument->hasDefaultValue()) {
+            $value = $argument->getDefaultValue();
+            $this->logger->debug("After set default value: '" . $value . "'");
         }
-        $this->logger->debug("final resolved value: " . $value);
-        yield $value;
+
+        if ($required && !$value) {
+            throw new \InvalidArgumentException("Request query parameter '" . $name . "' is required, but not set.");
+        }
+
+        $this->logger->debug("final resolved value: '" . $value . "'");
+
+        yield match ($type) {
+            'int' => $value ? (int)$value : 0,
+            'float' => $value ? (float)$value : .0,
+            'bool' => (bool)$value,
+            'string' => $value ? (string)$value : ($nullable ? null : ''),
+            null => null
+        };
     }
 
     public function supports(Request $request, ArgumentMetadata $argument): bool

@@ -19,7 +19,7 @@ class Page
     }
 
 
-    public static function of(array $content, int $totalElements, int $offset = 0, int $limit = 20): Page
+    public static function of(Collection $content, int $totalElements, int $offset = 0, int $limit = 20): Page
     {
         $page = new Page();
         $page->setContent($content)
@@ -31,7 +31,7 @@ class Page
     }
 
     /**
-     * @param array $content
+     * @param Collection $content
      * @return Page
      */
     public function setContent(Collection $content): Page
@@ -72,7 +72,7 @@ class Page
 
 
     /**
-     * @return array
+     * @return Collection
      */
     public function getContent(): Collection
     {

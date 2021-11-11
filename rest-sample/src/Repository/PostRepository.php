@@ -6,6 +6,7 @@ use App\Dto\Page;
 use App\Dto\PostSummaryDto;
 use App\Entity\Post;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -27,16 +28,16 @@ class PostRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder("p")
             ->andWhere("p.title like :q or p.content like :q")
             ->setParameter('q', "%" . $q . "%")
-            ->orderBy('c.createdAt', 'DESC')
+            ->orderBy('p.createdAt', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery();
 
         $paginator = new Paginator($query, $fetchJoinCollection = false);
         $c = count($paginator);
-        $content = [];
+        $content = new ArrayCollection();
         foreach ($paginator as $post) {
-            $content[] = PostSummaryDto::of($post->getId(), $post->getTitle());
+            $content->add(PostSummaryDto::of($post->getId(), $post->getTitle()));
         }
         return Page::of ($content, $c, $offset, $limit);
     }
