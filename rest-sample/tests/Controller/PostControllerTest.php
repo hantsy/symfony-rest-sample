@@ -2,8 +2,8 @@
 
 namespace App\Tests\Controller;
 
-use App\Controller\Dto\CommentWithPostSummaryDto;
-use App\Controller\Dto\CreatePostDto;
+use App\Dto\CommentWithPostSummaryDto;
+use App\Dto\CreatePostDto;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Uid\Uuid;
 
