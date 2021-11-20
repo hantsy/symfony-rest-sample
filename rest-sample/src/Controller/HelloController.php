@@ -2,12 +2,10 @@
 
 namespace App\Controller;
 
-use App\Annotation\Options;
+use App\Annotation\Get;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 class HelloController extends AbstractController
 {
@@ -15,7 +13,7 @@ class HelloController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    #[Options('/hello', name: 'hello')]
+    #[Get('/hello', name: 'hello')]
     public function sayHello(Request $request): Response
     {
         $name = $request->get("name") ?? "Symfony";

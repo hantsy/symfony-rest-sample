@@ -50,7 +50,8 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
         }
 
         $this->logger->debug("final resolved value: '" . $value . "'");
-
+        
+        //must return  a `yield` clause
         yield match ($type) {
             'int' => $value ? (int)$value : 0,
             'float' => $value ? (float)$value : .0,

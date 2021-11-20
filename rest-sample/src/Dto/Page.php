@@ -5,6 +5,7 @@ namespace App\Dto;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JetBrains\PhpStorm\Pure;
 
 class Page
 {
@@ -13,7 +14,7 @@ class Page
     private int $offset;
     private int $limit;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->content = new ArrayCollection();
     }
