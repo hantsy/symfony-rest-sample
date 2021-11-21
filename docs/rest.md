@@ -9,8 +9,15 @@
   - [Building Data Models](#building-data-models)
     - [Adding Sample Data](#adding-sample-data)
     - [Testing Repository](#testing-repository)
-  - [Exposing RESTful APIs](#exposing-restful-apis)
+  - [Creating PostController:  Exposing your first Rest API](#creating-postcontroller--exposing-your-first-rest-api)
     - [Testing Controller](#testing-controller)
+    - [Preparing Data for Testing Purpose](#preparing-data-for-testing-purpose)
+    - [Paginating Result](#paginating-result)
+    - [Customzing ArgumentResolver](#customzing-argumentresolver)
+  - [Get Post by ID](#get-post-by-id)
+    - [Customizing ParamConverter](#customizing-paramconverter)
+  - [Creating a Post](#creating-a-post)
+    - [Converting Request Body](#converting-request-body)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
