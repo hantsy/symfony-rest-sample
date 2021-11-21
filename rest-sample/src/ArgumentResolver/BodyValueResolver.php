@@ -9,7 +9,6 @@ use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Serializer\SerializerInterface;
 
-// see: https://symfony.com/bundles/SensioFrameworkExtraBundle/current/annotations/converters.html#creating-a-converter
 class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
 {
     public function __construct(private SerializerInterface $serializer)
@@ -25,13 +24,13 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
     {
         $type = $argument->getType();
         $this->logger->debug("The argument type:'" . $type . "'");
-        $format = $request->getRequestFormat() ?? 'json';
+        $format = $request->getContentType() ?? 'json';
         $this->logger->debug("The request format:'" . $format . "'");
 
         //read request body
         $content = $request->getContent();
         $data = $this->serializer->deserialize($content, $type, $format);
-        dump($data);
+       // $this->logger->debug("deserialized data:{0}", [$data]);
         yield $data;
     }
 

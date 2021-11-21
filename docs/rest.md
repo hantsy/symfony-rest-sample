@@ -856,24 +856,26 @@ class Page
 
 ### Customzing ArgumentResolver
 
-In the `PostController` , create a new function to serve the route `/posts`, but it accepts query parameters like */posts?q=Symfony&offset=0&limit=10*, and make the parameters are optional.
+In the `PostController` , let's improve the the function which serves the route `/posts`, make it accept query parameters like */posts?q=Symfony&offset=0&limit=10*, and ensure the parameters are optional.
 
 ```php
     #[Route(path: "", name: "all", methods: ["GET"])]
     function all(Request $req): Response
     {
-        $keyword = $req->query->get('q');
-        $offset = $req->query->get('offset');
-        $limit = $req->query->get('limit');
+        $keyword = $req->query->get('q')??'';
+        $offset = $req->query->get('offset')??0;
+        $limit = $req->query->get('limit')??10;
         
-        $data = $this->posts->findByKeyword($keyword || '', $offset, $limit);
+        $data = $this->posts->findByKeyword($keyword, $offset, $limit);
         return $this->json($data);
     }
 ```
 
-It works but the query parameters can not be handled as the route path parameters.  We can create a custom `ArgumentResolver` to resolve the bound the arguments.
+It works but the query parameters handling looks a little ugly.  It is great if they can be handled as the route path parameters.  
 
-Create an attribute to identify a query parameter that need to be resolved by a `ArgumentResolver`.
+We can create a custom `ArgumentResolver` to resolve the bound query arguments.
+
+Firstly create an Annotation/Attribute class to identify a query parameter that need to be resolved by this `ArgumentResolver`.
 
 ```php
 #[Attribute(Attribute::TARGET_PARAMETER)]
@@ -968,7 +970,39 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
 
  At runtime, it calls the `supports` function to check it the current request satisfy the requirement, if it is ok, then invoke the `resovle` funtion.
 
-In the `supports` function, we check if the argument is annotated with a `QueryParam`, if it is existed, then resolved the argument from request query.
+In the `supports` function, we check if the argument is annotated with a `QueryParam`, if it is existed, then resolved the argument from request query string. 
+
+Now change the function that serves */posts* endpoint to the following.
+
+```php
+#[Route(path: "", name: "all", methods: ["GET"])]
+function all(#[QueryParam] $keyword,
+    #[QueryParam] int $offset = 0,
+    #[QueryParam] int $limit = 20): Response
+    {
+        $data = $this->posts->findByKeyword($keyword || '', $offset, $limit);
+        return $this->json($data);
+    }
+```
+
+Run the application and test the */posts* using `curl`.
+
+```bash
+# curl http://localhost:8000/posts
+{
+    "content":[
+    	{
+            "id":"1ec3e1e0-17b3-6ed2-a01c-edecc112b436",
+            "title":"Building Restful APIs with Symfony and PHP 8"
+        }
+    ],
+    "totalElements":1,
+    "offset":0,
+    "limit":20
+}
+```
+
+
 
 ##  Get Post by ID 
 
@@ -1059,6 +1093,139 @@ class UuidParamConverter implements ParamConverterInterface
 In the above codes, 
 
 * The `supports` function to check the execution environment if matching the requirements
+
 * The `apply` function to perform the conversion. if `supports` returns false, this conversion step will be skipped.
-* 
+
+  
+
+## Creating a Post
+
+Follow the REST convention, define the following rule to serve an endpoint to handle the request.
+
+* Request matches Http verbs/HTTP Method: `POST`
+* Request matches route endpoint: */posts*
+* Set request header  `Content-Type` value to *application/json*, and use request body to hold request data as JSON format
+* If successful, return a `CREATED`(201) Http Status code, and set the response header *Location* value to the URI of the new created post.
+
+```php
+#[Route(path: "", name: "create", methods: ["POST"])]
+public function create(Request $request): Response
+{
+    $data = $this->serializer->deserialize($request->getContent(), CreatePostDto::class, 'json');
+    $entity = PostFactory::create($data->getTitle(), $data->getContent());
+    $this->posts->getEntityManager()->persist($entity);
+
+    return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
+}
+```
+
+The `posts->getEntityManager()` overrides parent methods to get a `EntityManager` from parent class, you can also inject `ObjectManager` or `EntityManagerInterface` in the  `PostController` directly to do the persistence work. The Doctrine `Repository` is mainly designated to build query criteria and execute custom queries.
+
+Create a test function to verify in the `PostControllerTest` file.
+
+```php
+public function testCreatePost(): void
+{
+    $client = static::createClient();
+    $data = CreatePostDto::of("test title", "test content");
+    $crawler = $client->request(
+        'POST',
+        '/posts',
+        [],
+        [],
+        [],
+        $this->getContainer()->get('serializer')->serialize($data, 'json')
+    );
+
+    $this->assertResponseIsSuccessful();
+
+    $response = $client->getResponse();
+    $url = $response->headers->get('Location');
+    //dump($data);
+    $this->assertNotNull($url);
+    $this->assertStringStartsWith("/posts/", $url);
+}
+```
+
+### Converting Request Body 
+
+We can also use an Annotation/Attribute to erase the raw codes of handling `Request` object through introducing a custom  `ArgumentResolver`.
+
+Create a `Body` *Attribute*.
+
+```php
+#[Attribute(Attribute::TARGET_PARAMETER)]
+final class Body
+{
+}
+```
+
+Then create a `BodyValueResolver`.
+
+```php
+class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
+{
+    public function __construct(private SerializerInterface $serializer)
+    {
+    }
+
+    private LoggerInterface $logger;
+
+    /**
+     * @inheritDoc
+     */
+    public function resolve(Request $request, ArgumentMetadata $argument)
+    {
+        $type = $argument->getType();
+        $this->logger->debug("The argument type:'" . $type . "'");
+        $format = $request->getContentType() ?? 'json';
+        $this->logger->debug("The request format:'" . $format . "'");
+
+        //read request body
+        $content = $request->getContent();
+        $data = $this->serializer->deserialize($content, $type, $format);
+       // $this->logger->debug("deserialized data:{0}", [$data]);
+        yield $data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports(Request $request, ArgumentMetadata $argument): bool
+    {
+        $attrs = $argument->getAttributes(Body::class);
+        return count($attrs) > 0;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+```
+
+In the `supports` method, it simply detects if the method argument annotated with a `Body` attribute, then apply `resolve` method to deserialize the request body  content to a typed object.
+
+Run the application and test the endpoint through */posts*.
+
+```php
+curl -v http://localhost:8000/posts -H "Content-Type:application/json" -d "{\"title\":\"test title\",\"content\":\"test content\"}"
+> POST /posts HTTP/1.1
+> Host: localhost:8000
+> User-Agent: curl/7.55.1
+> Accept: */*
+> Content-Type:application/json
+> Content-Length: 47
+>
+< HTTP/1.1 201 Created
+< Cache-Control: no-cache, private
+< Content-Type: application/json
+< Date: Sun, 21 Nov 2021 08:42:49 GMT
+< Location: /posts/1ec4aa70-1b21-6bce-93f8-b39330fe328e
+< X-Powered-By: PHP/8.0.10
+< X-Robots-Tag: noindex
+< Content-Length: 2
+<
+[]
+```
 

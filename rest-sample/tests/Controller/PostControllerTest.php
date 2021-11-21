@@ -26,7 +26,7 @@ class PostControllerTest extends WebTestCase
     public function testGetANoneExistingPost(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/posts/'. Uuid::v4());
+        $crawler = $client->request('GET', '/posts/' . Uuid::v4());
 
         //
         $response = $client->getResponse();
@@ -44,7 +44,7 @@ class PostControllerTest extends WebTestCase
             '/posts',
             [],
             [],
-            [],
+            ["CONTENT_TYPE" => "application/json"],
             $this->getContainer()->get('serializer')->serialize($data, 'json')
         );
 
