@@ -1326,6 +1326,23 @@ function getById(Uuid $id): Response
 }
 ```
 
+Add a test to verify if the post is not found and get a 404 status code.
+
+```php
+public function testGetANoneExistingPost(): void
+{
+    $client = static::createClient();
+    $id = Uuid::v4();
+    $crawler = $client->request('GET', '/posts/' . $id);
+
+    //
+    $response = $client->getResponse();
+    $this->assertResponseStatusCodeSame(404);
+    $data = $response->getContent();
+    $this->assertStringContainsString("Post #" . $id . " was not found", $data);
+}
+```
+
 Run the application again, and try to access a single Post through a none existing id.
 
 ```bash
