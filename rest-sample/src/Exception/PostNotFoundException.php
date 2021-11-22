@@ -9,7 +9,7 @@ class PostNotFoundException extends \RuntimeException
 
     public function __construct(Uuid $uuid)
     {
-        parent::__construct("Post #" . $uuid . " was not found.");
+        parent::__construct("Post #" . $uuid . " was not found");
     }
 
 }

@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-use App\Dto\CommentWithPostSummaryDto;
 use App\Dto\CreatePostDto;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Uid\Uuid;
@@ -26,13 +25,14 @@ class PostControllerTest extends WebTestCase
     public function testGetANoneExistingPost(): void
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/posts/' . Uuid::v4());
+        $id = Uuid::v4();
+        $crawler = $client->request('GET', '/posts/' . $id);
 
         //
         $response = $client->getResponse();
         $this->assertResponseStatusCodeSame(404);
         $data = $response->getContent();
-        $this->assertStringContainsString("Post was not found by id", $data);
+        $this->assertStringContainsString("Post #" . $id . " was not found", $data);
     }
 
     public function testCreatePost(): void
@@ -44,7 +44,7 @@ class PostControllerTest extends WebTestCase
             '/posts',
             [],
             [],
-            ["CONTENT_TYPE" => "application/json"],
+            ["CONTENT_TYPE" => "application / json"],
             $this->getContainer()->get('serializer')->serialize($data, 'json')
         );
 
@@ -54,6 +54,6 @@ class PostControllerTest extends WebTestCase
         $url = $response->headers->get('Location');
         //dump($data);
         $this->assertNotNull($url);
-        $this->assertStringStartsWith("/posts/", $url);
+        $this->assertStringStartsWith(" / posts / ", $url);
     }
 }
