@@ -44,7 +44,7 @@ class PostControllerTest extends WebTestCase
             '/posts',
             [],
             [],
-            ["CONTENT_TYPE" => "application / json"],
+            ["CONTENT_TYPE" => "application/json"],
             $this->getContainer()->get('serializer')->serialize($data, 'json')
         );
 
@@ -54,6 +54,6 @@ class PostControllerTest extends WebTestCase
         $url = $response->headers->get('Location');
         //dump($data);
         $this->assertNotNull($url);
-        $this->assertStringStartsWith(" / posts / ", $url);
+        $this->assertStringStartsWith("/posts", $url);
     }
 }
