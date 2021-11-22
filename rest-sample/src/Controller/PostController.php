@@ -3,13 +3,14 @@
 namespace App\Controller;
 
 use App\ArgumentResolver\Body;
+use App\ArgumentResolver\QueryParam;
 use App\Dto\CreateCommentDto;
 use App\Dto\CreatePostDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
+use App\Exception\PostNotFoundException;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
-use App\ArgumentResolver\QueryParam;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,7 +52,8 @@ class PostController extends AbstractController
         if ($data) {
             return $this->json($data);
         } else {
-            return $this->json(["error" => "Post was not found by id:" . $id], 404);
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
     }
 
@@ -69,7 +71,8 @@ class PostController extends AbstractController
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
         if (!$entity) {
-            return $this->json(["error" => "Post was not found by id:" . $id], 404);
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
         $this->posts->getEntityManager()->remove($entity);
 
@@ -84,7 +87,8 @@ class PostController extends AbstractController
         if ($data) {
             return $this->json($data->getComments());
         } else {
-            return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
         }
     }
 
@@ -99,7 +103,8 @@ class PostController extends AbstractController
             //$data->addComment(Comment::of($dto->getContent()));
             return $this->json([], 201, ["Location" => "/comments/" . $entity->getId()]);
         } else {
-            return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
         }
     }
 
