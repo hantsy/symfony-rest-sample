@@ -32,7 +32,7 @@
     "symfony/monolog-bundle": "^3.7",
     "symfony/property-access": "5.4.*",
     "symfony/property-info": "5.3.*",
-    "symfony/proxy-manager-bridge": "5.3.*",
+    "symfony/proxy-manager-bridge": "5.4.*",
     "symfony/runtime": "5.3.*",
     "symfony/serializer": "5.3.*",
     "symfony/uid": "5.3.*",
