@@ -20,7 +20,7 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
     /**
      * @inheritDoc
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $type = $argument->getType();
         $this->logger->debug("The argument type:'" . $type . "'");
@@ -30,7 +30,7 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
         //read request body
         $content = $request->getContent();
         $data = $this->serializer->deserialize($content, $type, $format);
-       // $this->logger->debug("deserialized data:{0}", [$data]);
+        // $this->logger->debug("deserialized data:{0}", [$data]);
         yield $data;
     }
 
@@ -43,7 +43,7 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
         return count($attrs) > 0;
     }
 
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }

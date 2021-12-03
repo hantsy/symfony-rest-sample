@@ -19,7 +19,7 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
     /**
      * @inheritDoc
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         $argumentName = $argument->getName();
         $this->logger->info("Found [QueryParam] annotation/attribute on argument '" . $argumentName . "', applying [QueryParamValueResolver]");
@@ -50,7 +50,7 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
         }
 
         $this->logger->debug("final resolved value: '" . $value . "'");
-        
+
         //must return  a `yield` clause
         yield match ($type) {
             'int' => $value ? (int)$value : 0,
@@ -67,7 +67,7 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
         return count($attrs) > 0;
     }
 
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }
