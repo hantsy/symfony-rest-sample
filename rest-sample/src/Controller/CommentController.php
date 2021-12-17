@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Controller\Dto\CommentWithPostSummaryDto;
-use App\Controller\Dto\PostSummaryDto;
+
+use App\Dto\CommentWithPostSummaryDto;
+use App\Dto\PostSummaryDto;
 use App\Repository\CommentRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
