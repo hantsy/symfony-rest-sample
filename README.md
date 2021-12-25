@@ -1,5 +1,6 @@
-# symfony5-sample
-Sample codes demonstrating Symfony, Doctrine, PHPUnit, etc. 
+# Symfony Sample
+
+Sample codes demonstrates the latest Symfony, Doctrine, PHPUnit, etc. 
 
 ## Docs
 
