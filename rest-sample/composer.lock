@@ -5219,16 +5219,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "6ef7c361b84f8ae666843279d08b2b8ce8006033"
+                "reference": "6750d730b5d1c002b366ec40ac811317d142d1f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/6ef7c361b84f8ae666843279d08b2b8ce8006033",
-                "reference": "6ef7c361b84f8ae666843279d08b2b8ce8006033",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/6750d730b5d1c002b366ec40ac811317d142d1f3",
+                "reference": "6750d730b5d1c002b366ec40ac811317d142d1f3",
                 "shasum": ""
             },
             "require": {
@@ -5269,10 +5269,11 @@
             "homepage": "https://symfony.com",
             "keywords": [
                 "UID",
+                "ulid",
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v6.0.1"
+                "source": "https://github.com/symfony/uid/tree/v6.0.2"
             },
             "funding": [
                 {
@@ -5288,7 +5289,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2021-12-16T22:13:01+00:00"
         },
         {
             "name": "symfony/validator",
