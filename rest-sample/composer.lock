@@ -565,16 +565,16 @@
         },
         {
             "name": "doctrine/doctrine-bundle",
-            "version": "2.5.3",
+            "version": "2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/DoctrineBundle.git",
-                "reference": "f6cbf1816691bd2632407f6f34cf5db24fc2e411"
+                "reference": "f6191c50600bad1c0195638413f53aee6158b909"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/f6cbf1816691bd2632407f6f34cf5db24fc2e411",
-                "reference": "f6cbf1816691bd2632407f6f34cf5db24fc2e411",
+                "url": "https://api.github.com/repos/doctrine/DoctrineBundle/zipball/f6191c50600bad1c0195638413f53aee6158b909",
+                "reference": "f6191c50600bad1c0195638413f53aee6158b909",
                 "shasum": ""
             },
             "require": {
@@ -658,7 +658,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/DoctrineBundle/issues",
-                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.5.3"
+                "source": "https://github.com/doctrine/DoctrineBundle/tree/2.5.4"
             },
             "funding": [
                 {
@@ -674,7 +674,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-29T08:13:45+00:00"
+            "time": "2021-12-30T18:43:28+00:00"
         },
         {
             "name": "doctrine/doctrine-migrations-bundle",
@@ -2761,16 +2761,16 @@
         },
         {
             "name": "symfony/doctrine-bridge",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/doctrine-bridge.git",
-                "reference": "d5b0bef7fc93f60a5a5acafffea4f651ffa01ce5"
+                "reference": "edc5491594d2f69d5704118d255c6f597167813d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/d5b0bef7fc93f60a5a5acafffea4f651ffa01ce5",
-                "reference": "d5b0bef7fc93f60a5a5acafffea4f651ffa01ce5",
+                "url": "https://api.github.com/repos/symfony/doctrine-bridge/zipball/edc5491594d2f69d5704118d255c6f597167813d",
+                "reference": "edc5491594d2f69d5704118d255c6f597167813d",
                 "shasum": ""
             },
             "require": {
@@ -2785,7 +2785,7 @@
             "conflict": {
                 "doctrine/dbal": "<2.13.1",
                 "doctrine/lexer": "<1.1",
-                "doctrine/orm": "<2.7.3",
+                "doctrine/orm": "<2.7.4",
                 "phpunit/phpunit": "<5.4.3",
                 "symfony/cache": "<5.4",
                 "symfony/dependency-injection": "<5.4",
@@ -2798,12 +2798,11 @@
                 "symfony/validator": "<5.4"
             },
             "require-dev": {
-                "composer/package-versions-deprecated": "^1.8",
                 "doctrine/annotations": "^1.10.4",
                 "doctrine/collections": "~1.0",
                 "doctrine/data-fixtures": "^1.1",
                 "doctrine/dbal": "^2.13.1|^3.0",
-                "doctrine/orm": "^2.7.3",
+                "doctrine/orm": "^2.7.4",
                 "psr/log": "^1|^2|^3",
                 "symfony/cache": "^5.4|^6.0",
                 "symfony/config": "^5.4|^6.0",
@@ -2857,7 +2856,7 @@
             "description": "Provides integration for Doctrine with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/doctrine-bridge/tree/v6.0.1"
+                "source": "https://github.com/symfony/doctrine-bridge/tree/v6.0.2"
             },
             "funding": [
                 {
@@ -2873,7 +2872,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2021-12-25T20:10:03+00:00"
         },
         {
             "name": "symfony/dotenv",
