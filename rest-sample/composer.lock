@@ -2606,16 +2606,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "401f794b342585772c1d22288cafbce597485093"
+                "reference": "a9346ef44ea8a7b60f1f1edc8d802ffb91baa6a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/401f794b342585772c1d22288cafbce597485093",
-                "reference": "401f794b342585772c1d22288cafbce597485093",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/a9346ef44ea8a7b60f1f1edc8d802ffb91baa6a8",
+                "reference": "a9346ef44ea8a7b60f1f1edc8d802ffb91baa6a8",
                 "shasum": ""
             },
             "require": {
@@ -2674,7 +2674,7 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v6.0.1"
+                "source": "https://github.com/symfony/dependency-injection/tree/v6.0.2"
             },
             "funding": [
                 {
@@ -2690,7 +2690,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2021-12-29T10:14:09+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -4581,20 +4581,19 @@
         },
         {
             "name": "symfony/proxy-manager-bridge",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/proxy-manager-bridge.git",
-                "reference": "6b2021ef8f9b09be9ca2a9a857676c2384fffea3"
+                "reference": "9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/proxy-manager-bridge/zipball/6b2021ef8f9b09be9ca2a9a857676c2384fffea3",
-                "reference": "6b2021ef8f9b09be9ca2a9a857676c2384fffea3",
+                "url": "https://api.github.com/repos/symfony/proxy-manager-bridge/zipball/9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb",
+                "reference": "9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb",
                 "shasum": ""
             },
             "require": {
-                "composer/package-versions-deprecated": "^1.8",
                 "friendsofphp/proxy-manager-lts": "^1.0.2",
                 "php": ">=8.0.2",
                 "symfony/dependency-injection": "^5.4|^6.0"
@@ -4628,7 +4627,7 @@
             "description": "Provides integration for ProxyManager with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/proxy-manager-bridge/tree/v6.0.1"
+                "source": "https://github.com/symfony/proxy-manager-bridge/tree/v6.0.2"
             },
             "funding": [
                 {
@@ -4644,7 +4643,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2021-12-25T20:10:03+00:00"
         },
         {
             "name": "symfony/routing",
@@ -5219,16 +5218,16 @@
         },
         {
             "name": "symfony/uid",
-            "version": "v6.0.1",
+            "version": "v6.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/uid.git",
-                "reference": "6ef7c361b84f8ae666843279d08b2b8ce8006033"
+                "reference": "6750d730b5d1c002b366ec40ac811317d142d1f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/uid/zipball/6ef7c361b84f8ae666843279d08b2b8ce8006033",
-                "reference": "6ef7c361b84f8ae666843279d08b2b8ce8006033",
+                "url": "https://api.github.com/repos/symfony/uid/zipball/6750d730b5d1c002b366ec40ac811317d142d1f3",
+                "reference": "6750d730b5d1c002b366ec40ac811317d142d1f3",
                 "shasum": ""
             },
             "require": {
@@ -5269,10 +5268,11 @@
             "homepage": "https://symfony.com",
             "keywords": [
                 "UID",
+                "ulid",
                 "uuid"
             ],
             "support": {
-                "source": "https://github.com/symfony/uid/tree/v6.0.1"
+                "source": "https://github.com/symfony/uid/tree/v6.0.2"
             },
             "funding": [
                 {
@@ -5288,7 +5288,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2021-12-16T22:13:01+00:00"
         },
         {
             "name": "symfony/validator",
