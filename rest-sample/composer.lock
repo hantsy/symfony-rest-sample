@@ -5693,16 +5693,16 @@
     "packages-dev": [
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v6.7.3",
+            "version": "v6.7.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "1f964d416cf89698064dd0d69b5fe3170d05558d"
+                "reference": "b1626f0e63a75a335aac49f6932d33018a6c5e2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/1f964d416cf89698064dd0d69b5fe3170d05558d",
-                "reference": "1f964d416cf89698064dd0d69b5fe3170d05558d",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/b1626f0e63a75a335aac49f6932d33018a6c5e2a",
+                "reference": "b1626f0e63a75a335aac49f6932d33018a6c5e2a",
                 "shasum": ""
             },
             "require": {
@@ -5753,9 +5753,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v6.7.3"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v6.7.4"
             },
-            "time": "2022-01-18T15:55:40+00:00"
+            "time": "2022-01-26T19:40:56+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
