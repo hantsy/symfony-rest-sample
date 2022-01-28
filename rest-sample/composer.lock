@@ -4580,16 +4580,16 @@
         },
         {
             "name": "symfony/proxy-manager-bridge",
-            "version": "v6.0.2",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/proxy-manager-bridge.git",
-                "reference": "9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb"
+                "reference": "51ba60d4340fd91dd42c9caad76a414a521fbee4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/proxy-manager-bridge/zipball/9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb",
-                "reference": "9a310804dbf73d5a115412f0f0f8eb14ff3d8cfb",
+                "url": "https://api.github.com/repos/symfony/proxy-manager-bridge/zipball/51ba60d4340fd91dd42c9caad76a414a521fbee4",
+                "reference": "51ba60d4340fd91dd42c9caad76a414a521fbee4",
                 "shasum": ""
             },
             "require": {
@@ -4626,7 +4626,7 @@
             "description": "Provides integration for ProxyManager with various Symfony components",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/proxy-manager-bridge/tree/v6.0.2"
+                "source": "https://github.com/symfony/proxy-manager-bridge/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -4642,7 +4642,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-25T20:10:03+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/routing",
@@ -4734,16 +4734,16 @@
         },
         {
             "name": "symfony/runtime",
-            "version": "v6.0.0",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/runtime.git",
-                "reference": "7ae279ba1eae28ac3f5d7098bd94f2ead498e458"
+                "reference": "3b1ee78e883101439eb6c033feb43a5eea7fe190"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/runtime/zipball/7ae279ba1eae28ac3f5d7098bd94f2ead498e458",
-                "reference": "7ae279ba1eae28ac3f5d7098bd94f2ead498e458",
+                "url": "https://api.github.com/repos/symfony/runtime/zipball/3b1ee78e883101439eb6c033feb43a5eea7fe190",
+                "reference": "3b1ee78e883101439eb6c033feb43a5eea7fe190",
                 "shasum": ""
             },
             "require": {
@@ -4790,7 +4790,7 @@
             "description": "Enables decoupling PHP applications from global state",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/runtime/tree/v6.0.0"
+                "source": "https://github.com/symfony/runtime/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -4806,7 +4806,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-07T13:29:17+00:00"
+            "time": "2022-01-26T17:34:56+00:00"
         },
         {
             "name": "symfony/serializer",
@@ -5292,22 +5292,23 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v6.0.2",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "550557c0074d9abf70133c9df20f479e55961553"
+                "reference": "35f3614f605227ad16e03cab9fb9815ba05f5878"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/550557c0074d9abf70133c9df20f479e55961553",
-                "reference": "550557c0074d9abf70133c9df20f479e55961553",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/35f3614f605227ad16e03cab9fb9815ba05f5878",
+                "reference": "35f3614f605227ad16e03cab9fb9815ba05f5878",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0.2",
                 "symfony/polyfill-ctype": "~1.8",
                 "symfony/polyfill-mbstring": "~1.0",
+                "symfony/polyfill-php81": "^1.22",
                 "symfony/translation-contracts": "^1.1|^2|^3"
             },
             "conflict": {
@@ -5379,7 +5380,7 @@
             "description": "Provides tools to validate values",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/validator/tree/v6.0.2"
+                "source": "https://github.com/symfony/validator/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -5395,7 +5396,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-21T13:16:58+00:00"
+            "time": "2022-01-26T17:23:29+00:00"
         },
         {
             "name": "symfony/var-dumper",
@@ -7593,16 +7594,16 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208"
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/3e2f1610a25edc2afc2f5f37cc421049d6bef208",
-                "reference": "3e2f1610a25edc2afc2f5f37cc421049d6bef208",
+                "url": "https://api.github.com/repos/symfony/browser-kit/zipball/0ec66df981406fd2c9e41acbb526249bd18a0123",
+                "reference": "0ec66df981406fd2c9e41acbb526249bd18a0123",
                 "shasum": ""
             },
             "require": {
@@ -7644,7 +7645,7 @@
             "description": "Simulates the behavior of a web browser, allowing you to make requests, click on links and submit forms programmatically",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/browser-kit/tree/v6.0.1"
+                "source": "https://github.com/symfony/browser-kit/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -7660,7 +7661,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/css-selector",
@@ -7729,16 +7730,16 @@
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v6.0.1",
+            "version": "v6.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
-                "reference": "5f05ce4e33e729b4c8c7b7436b681cacdf500867"
+                "reference": "24d9de5965b8b043ea13ef234087543c9740641c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/5f05ce4e33e729b4c8c7b7436b681cacdf500867",
-                "reference": "5f05ce4e33e729b4c8c7b7436b681cacdf500867",
+                "url": "https://api.github.com/repos/symfony/dom-crawler/zipball/24d9de5965b8b043ea13ef234087543c9740641c",
+                "reference": "24d9de5965b8b043ea13ef234087543c9740641c",
                 "shasum": ""
             },
             "require": {
@@ -7782,7 +7783,7 @@
             "description": "Eases DOM navigation for HTML and XML documents",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dom-crawler/tree/v6.0.1"
+                "source": "https://github.com/symfony/dom-crawler/tree/v6.0.3"
             },
             "funding": [
                 {
@@ -7798,7 +7799,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-08T15:13:44+00:00"
+            "time": "2022-01-02T09:55:41+00:00"
         },
         {
             "name": "symfony/maker-bundle",
