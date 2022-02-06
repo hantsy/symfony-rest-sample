@@ -37,11 +37,11 @@ class PostController extends AbstractController
     // function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
     // see: https://github.com/symfony/symfony/issues/43958
     #[Route(path: "", name: "all", methods: ["GET"])]
-    function all(#[QueryParam] $keyword,
+    function all(#[QueryParam] string $keyword,
                  #[QueryParam] int $offset = 0,
                  #[QueryParam] int $limit = 20): Response
     {
-        $data = $this->posts->findByKeyword($keyword || '', $offset, $limit);
+        $data = $this->posts->findByKeyword($keyword ?: '', $offset, $limit);
         return $this->json($data);
     }
 
