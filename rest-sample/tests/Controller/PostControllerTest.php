@@ -66,10 +66,8 @@ class PostControllerTest extends WebTestCase
         );
 
         $getByIdResponse = $client->getResponse();
-        var_export($getByIdResponse->getContent());
+        echo("json response:::" . $getByIdResponse->getContent());
         $getData = $this->getContainer()->get('serializer')->deserialize($getByIdResponse->getContent(), Post::class, "json");
-        echo "get by data:::\n";
-        var_export($getData);
         $this->assertEquals("test title", $getData->getTitle());
         $this->assertEquals("test content", $getData->getContent());
         $this->assertEquals(Status::Draft, $getData->getStatus());

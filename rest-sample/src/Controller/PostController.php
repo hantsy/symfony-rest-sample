@@ -50,12 +50,7 @@ class PostController extends AbstractController
     #[Route(path: "/{id}", name: "get", methods: ["GET"])]
     function getById(Uuid $id): Response
     {
-
-        echo " get by id:::" . $id . "\n";
         $data = $this->posts->findOneBy(["id" => $id]);
-
-        echo "get result:::\n";
-        var_export($data);
         if ($data) {
             return $this->json($data);
         } else {
@@ -69,6 +64,7 @@ class PostController extends AbstractController
     {
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
         $this->posts->getEntityManager()->persist($entity);
+        $this->posts->getEntityManager()->flush();
 
         return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
     }
@@ -83,6 +79,7 @@ class PostController extends AbstractController
         }
         $entity->setTitle($data->getTitle())->setContent($data->getContent());
         $this->posts->getEntityManager()->persist($entity);
+        $this->posts->getEntityManager()->flush();
 
         return $this->json([], 204);
     }
@@ -97,6 +94,7 @@ class PostController extends AbstractController
         }
         $entity->setStatus($data->getStatus());
         $this->posts->getEntityManager()->persist($entity);
+        $this->posts->getEntityManager()->flush();
 
         return $this->json([], 204);
     }
@@ -110,6 +108,7 @@ class PostController extends AbstractController
             //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
         $this->posts->getEntityManager()->remove($entity);
+        $this->posts->getEntityManager()->flush();
 
         return $this->json([], 202);
     }
