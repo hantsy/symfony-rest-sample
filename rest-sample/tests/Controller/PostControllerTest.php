@@ -3,6 +3,8 @@
 namespace App\Tests\Controller;
 
 use App\Dto\CreatePostDto;
+use App\Entity\Post;
+use App\Entity\Status;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Uid\Uuid;
 
@@ -52,8 +54,25 @@ class PostControllerTest extends WebTestCase
 
         $response = $client->getResponse();
         $url = $response->headers->get('Location');
-        //dump($data);
+        //var_dump("url:::".$url);
         $this->assertNotNull($url);
         $this->assertStringStartsWith("/posts", $url);
+
+
+        // 2 get the newly created post.
+        $client->jsonRequest(
+            'GET',
+            $url,
+        );
+
+        $getByIdResponse = $client->getResponse();
+        var_export($getByIdResponse->getContent());
+        $getData = $this->getContainer()->get('serializer')->deserialize($getByIdResponse->getContent(), Post::class, "json");
+        echo "get by data:::\n";
+        var_export($getData);
+        $this->assertEquals("test title", $getData->getTitle());
+        $this->assertEquals("test content", $getData->getContent());
+        $this->assertEquals(Status::Draft, $getData->getStatus());
+        $this->assertNotNull($getData->getCreatedAt());
     }
 }

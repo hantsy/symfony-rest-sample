@@ -20,8 +20,8 @@ use Symfony\Component\Uid\Uuid;
 class Post
 {
     #[Id]
-    //#[GeneratedValue(strategy: "UUID")
-    //#[Column(type: "string", unique: true)]
+    // Since DBAL 3.0, this does not work.
+    //#[GeneratedValue(strategy: "UUID")//#[Column(type: "string", unique: true)]
     #[Column(type: "uuid", unique: true)]
     #[GeneratedValue(strategy: "CUSTOM")]
     #[CustomIdGenerator(class: UuidGenerator::class)]
@@ -32,6 +32,9 @@ class Post
 
     #[Column(type: "string", length: 255)]
     private string $content;
+
+    #[Column(type: "string", enumType: Status::class)]
+    private Status $status;
 
     #[Column(name: "created_at", type: "datetime", nullable: true)]
     private DateTime|null $createdAt = null;
@@ -47,6 +50,7 @@ class Post
 
     public function __construct()
     {
+        $this->status = Status::Draft;
         $this->createdAt = new DateTime();
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -102,6 +106,25 @@ class Post
         $this->content = $content;
         return $this;
     }
+
+    /**
+     * @return Status
+     */
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param Status $status
+     * @return Post
+     */
+    public function setStatus(Status $status): Post
+    {
+        $this->status = $status;
+        return $this;
+    }
+
 
     /**
      * @return DateTime

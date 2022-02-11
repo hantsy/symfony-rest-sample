@@ -6,6 +6,8 @@ use App\ArgumentResolver\Body;
 use App\ArgumentResolver\QueryParam;
 use App\Dto\CreateCommentDto;
 use App\Dto\CreatePostDto;
+use App\Dto\UpdatePostDto;
+use App\Dto\UpdatePostStatusDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
@@ -36,7 +38,7 @@ class PostController extends AbstractController
 
     // function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
     // see: https://github.com/symfony/symfony/issues/43958
-    #[Route(path: "", name: "all", methods: ["GET"])]
+    #[Route(path: "", name: "get_all", methods: ["GET"])]
     function all(#[QueryParam] string $keyword,
                  #[QueryParam] int $offset = 0,
                  #[QueryParam] int $limit = 20): Response
@@ -45,10 +47,15 @@ class PostController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
+    #[Route(path: "/{id}", name: "get", methods: ["GET"])]
     function getById(Uuid $id): Response
     {
+
+        echo " get by id:::" . $id . "\n";
         $data = $this->posts->findOneBy(["id" => $id]);
+
+        echo "get result:::\n";
+        var_export($data);
         if ($data) {
             return $this->json($data);
         } else {
@@ -64,6 +71,34 @@ class PostController extends AbstractController
         $this->posts->getEntityManager()->persist($entity);
 
         return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
+    }
+
+    #[Route(path: "/{id}", name: "update", methods: ["PUT"])]
+    public function update(Uuid $id, #[Body] UpdatePostDto $data): Response
+    {
+        $entity = $this->posts->findOneBy(["id" => $id]);
+        if (!$entity) {
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found by id:" . $id], 404);
+        }
+        $entity->setTitle($data->getTitle())->setContent($data->getContent());
+        $this->posts->getEntityManager()->persist($entity);
+
+        return $this->json([], 204);
+    }
+
+    #[Route(path: "/{id}", name: "updateStatus", methods: ["PUT"])]
+    public function updateStatus(Uuid $id, #[Body] UpdatePostStatusDto $data): Response
+    {
+        $entity = $this->posts->findOneBy(["id" => $id]);
+        if (!$entity) {
+            throw new PostNotFoundException($id);
+            //return $this->json(["error" => "Post was not found by id:" . $id], 404);
+        }
+        $entity->setStatus($data->getStatus());
+        $this->posts->getEntityManager()->persist($entity);
+
+        return $this->json([], 204);
     }
 
     #[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
