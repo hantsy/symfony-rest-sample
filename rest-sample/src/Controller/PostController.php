@@ -13,6 +13,8 @@ use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
 use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +25,16 @@ use Symfony\Component\Uid\Uuid;
 #[Route(path: "/posts", name: "posts_")]
 class PostController extends AbstractController
 {
-    public function __construct(private PostRepository      $posts,
-                                private CommentRepository   $comments,
-                                private SerializerInterface $serializer)
+    /**
+     * @param PostRepository $posts
+     * @param CommentRepository $comments
+     * @param EntityManagerInterface $objectManager
+     * @param SerializerInterface $serializer
+     */
+    public function __construct(private PostRepository         $posts,
+                                private CommentRepository      $comments,
+                                private EntityManagerInterface $objectManager,
+                                private SerializerInterface    $serializer)
     {
     }
 
@@ -63,8 +72,8 @@ class PostController extends AbstractController
     public function create(#[Body] CreatePostDto $data): Response
     {
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
-        $this->posts->getEntityManager()->persist($entity);
-        $this->posts->getEntityManager()->flush();
+        $this->objectManager->persist($entity);
+        $this->objectManager->flush();
 
         return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
     }
@@ -77,14 +86,15 @@ class PostController extends AbstractController
             throw new PostNotFoundException($id);
             //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
-        $entity->setTitle($data->getTitle())->setContent($data->getContent());
-        $this->posts->getEntityManager()->persist($entity);
-        $this->posts->getEntityManager()->flush();
+        $entity->setTitle($data->getTitle())
+            ->setContent($data->getContent());
+        $this->objectManager->merge($entity);
+        $this->objectManager->flush();
 
         return $this->json([], 204);
     }
 
-    #[Route(path: "/{id}", name: "updateStatus", methods: ["PUT"])]
+    #[Route(path: "/{id}/status", name: "update_status", methods: ["PUT"])]
     public function updateStatus(Uuid $id, #[Body] UpdatePostStatusDto $data): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
@@ -92,9 +102,11 @@ class PostController extends AbstractController
             throw new PostNotFoundException($id);
             //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
+        echo "update post status::::".PHP_EOL;
+        var_export($data);
         $entity->setStatus($data->getStatus());
-        $this->posts->getEntityManager()->persist($entity);
-        $this->posts->getEntityManager()->flush();
+        $this->objectManager->merge($entity);
+        $this->objectManager->flush();
 
         return $this->json([], 204);
     }
@@ -107,10 +119,10 @@ class PostController extends AbstractController
             throw new PostNotFoundException($id);
             //return $this->json(["error" => "Post was not found by id:" . $id], 404);
         }
-        $this->posts->getEntityManager()->remove($entity);
-        $this->posts->getEntityManager()->flush();
+        $this->objectManager->remove($entity);
+        $this->objectManager->flush();
 
-        return $this->json([], 202);
+        return $this->json([], 204);
     }
 
     // comments sub resources.
@@ -133,8 +145,9 @@ class PostController extends AbstractController
         if ($data) {
             $dto = $this->serializer->deserialize($request->getContent(), CreateCommentDto::class, 'json');
             $entity = Comment::of($dto->getContent());
-            $this->comments->getEntityManager()->persist($entity->setPost($data));
-            //$data->addComment(Comment::of($dto->getContent()));
+
+            $this->objectManager->persist($entity->setPost($data));
+            $this->objectManager->flush();
             return $this->json([], 201, ["Location" => "/comments/" . $entity->getId()]);
         } else {
             throw new PostNotFoundException($id);

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -37,10 +38,10 @@ class Post
     private Status $status;
 
     #[Column(name: "created_at", type: "datetime", nullable: true)]
-    private DateTime|null $createdAt = null;
+    private DateTimeInterface|null $createdAt = null;
 
     #[Column(name: "published_at", type: "datetime", nullable: true)]
-    private DateTime|null $publishedAt = null;
+    private DateTimeInterface|null $publishedAt = null;
 
     #[OneToMany(mappedBy: "post", targetEntity: Comment::class, cascade: ['persist', 'merge', "remove"], fetch: 'LAZY', orphanRemoval: true)]
     private Collection $comments;
@@ -119,7 +120,7 @@ class Post
      * @param Status $status
      * @return Post
      */
-    public function setStatus(Status $status): Post
+    public function setStatus(Status $status): self
     {
         $this->status = $status;
         return $this;
@@ -127,34 +128,36 @@ class Post
 
 
     /**
-     * @return DateTime
+     * @return DateTimeInterface
      */
-    public function getCreatedAt(): DateTime
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTimeInterface|null $createdAt
+     * @return Post
      */
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
-    public function getPublishedAt(): ?DateTime
+    public function getPublishedAt(): ?DateTimeInterface
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param DateTime $publishedAt
+     * @param DateTimeInterface|null $publishedAt
+     * @return Post
      */
-    public function setPublishedAt(DateTime $publishedAt): self
+    public function setPublishedAt(?DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
         return $this;
@@ -218,7 +221,7 @@ class Post
         return "Post: [ id =" . $this->getId()
             . ", title=" . $this->getTitle()
             . ", content=" . $this->getContent()
-            . ", createdAt=" . $this->getCreatedAt()->getTimestamp()
+            . ", createdAt=" . $this->getCreatedAt()?->getTimestamp()
             . ", publishedAt=" . $this->getPublishedAt()?->getTimestamp()
             . "]";
     }
