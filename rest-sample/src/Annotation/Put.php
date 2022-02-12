@@ -10,6 +10,6 @@ class Put extends Route
 {
     public function getMethods()
     {
-        return ['PUT'];
+        return [HttpMethod::PUT->name];
     }
 }

@@ -10,6 +10,6 @@ class Delete extends Route
 {
     public function getMethods()
     {
-        return ['DELETE'];
+        return [HttpMethod::DELETE->name];
     }
 }

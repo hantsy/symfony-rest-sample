@@ -10,6 +10,6 @@ class Patch extends Route
 {
     public function getMethods()
     {
-        return ['PATCH'];
+        return [HttpMethod::PATCH->name];
     }
 }

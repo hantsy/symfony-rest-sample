@@ -10,7 +10,7 @@ class Head extends Route
 {
     public function getMethods()
     {
-       return ['HEAD'];
+        return [HttpMethod::HEAD->name];
     }
 
 }

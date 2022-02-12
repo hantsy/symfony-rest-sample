@@ -10,7 +10,7 @@ class Options extends Route
 {
     public function getMethods()
     {
-       return ['OPTIONS'];
+        return [HttpMethod::OPTIONS->name];
     }
 
 }

@@ -10,6 +10,6 @@ class Post extends Route
 {
     public function getMethods()
     {
-        return ['POST'];
+        return [HttpMethod::POST->name];
     }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Annotation\Delete;
+use App\Annotation\Get;
+use App\Annotation\Post;
 use App\ArgumentResolver\Body;
 use App\ArgumentResolver\QueryParam;
 use App\Dto\CreateCommentDto;
@@ -36,7 +39,8 @@ class PostController extends AbstractController
 
     // function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
     // see: https://github.com/symfony/symfony/issues/43958
-    #[Route(path: "", name: "all", methods: ["GET"])]
+    // #[Route(path: "", name: "all", methods: ["GET"])]
+    #[Get(path: "", name: "all")]
     function all(#[QueryParam] string $keyword,
                  #[QueryParam] int $offset = 0,
                  #[QueryParam] int $limit = 20): Response
@@ -45,7 +49,8 @@ class PostController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
+    // #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
+    #[Get(path: "/{id}", name: "byId")]
     function getById(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
@@ -57,7 +62,8 @@ class PostController extends AbstractController
         }
     }
 
-    #[Route(path: "", name: "create", methods: ["POST"])]
+    //#[Route(path: "", name: "create", methods: ["POST"])]
+    #[Post(path: "", name: "create")]
     public function create(#[Body] CreatePostDto $data): Response
     {
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
@@ -66,7 +72,8 @@ class PostController extends AbstractController
         return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
     }
 
-    #[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
+    //#[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
+    #[Delete(path: "/{id}", name: "delete")]
     public function deleteById(Uuid $id): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
@@ -80,7 +87,8 @@ class PostController extends AbstractController
     }
 
     // comments sub resources.
-    #[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
+    //#[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
+    #[GET(path: "/{id}/comments", name: "commentByPostId")]
     function getComments(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
@@ -92,7 +100,8 @@ class PostController extends AbstractController
         }
     }
 
-    #[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
+    //#[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
+    #[Post(path: "/{id}/comments", name: "addComments")]
     function addComment(Uuid $id, Request $request): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);

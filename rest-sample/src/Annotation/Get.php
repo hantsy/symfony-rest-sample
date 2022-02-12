@@ -10,7 +10,7 @@ class Get extends Route
 {
     public function getMethods()
     {
-       return ['GET'];
+        return [HttpMethod::GET->name];
     }
 
 }
