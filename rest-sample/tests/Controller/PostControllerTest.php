@@ -13,7 +13,7 @@ use Symfony\Component\Uid\Uuid;
 
 class PostControllerTest extends WebTestCase
 {
-    public function testGetAllPosts(): void
+    public function testWhenGettingAllPosts_thenReturnOK(): void
     {
         $client = static::createClient();
         $crawler = $client->request('GET', '/posts');
@@ -23,15 +23,14 @@ class PostControllerTest extends WebTestCase
         //
         $response = $client->getResponse();
         $data = $response->getContent();
-        //dump($data);
         $this->assertStringContainsString("Symfony and PHP", $data);
     }
 
-    public function testGetANoneExistingPost(): void
+    public function testWhenGettingNonExistingPost_thenReturn404Status(): void
     {
         $client = static::createClient();
         $id = Uuid::v4();
-        $crawler = $client->request('GET', '/posts/' . $id);
+        $crawler = $client->jsonRequest('GET', '/posts/' . $id);
 
         //
         $response = $client->getResponse();
@@ -40,7 +39,43 @@ class PostControllerTest extends WebTestCase
         $this->assertStringContainsString("Post #" . $id . " was not found", $data);
     }
 
-    public function testCreatePost(): void
+    public function testWhenUpdatingNonExistingPost_thenReturn404Status(): void
+    {
+        $client = static::createClient();
+        $id = Uuid::v4();
+        $data = UpdatePostDto::of("update title", "update content");
+        $crawler = $client->request(
+            'PUT',
+            '/posts/' . $id,
+            [],
+            [],
+            ["CONTENT_TYPE" => "application/json"],
+            $this->getContainer()->get('serializer')->serialize($data, 'json')
+        );
+
+        //
+        $response = $client->getResponse();
+        $this->assertResponseStatusCodeSame(404);
+        $data = $response->getContent();
+        $this->assertStringContainsString("Post #" . $id . " was not found", $data);
+    }
+
+    public function testWhenDeletingNonExistingPost_thenReturn404Status(): void
+    {
+        $client = static::createClient();
+        $id = Uuid::v4();
+        $crawler = $client->request(
+            'DELETE',
+            '/posts/' . $id);
+
+        //
+        $response = $client->getResponse();
+        $this->assertResponseStatusCodeSame(404);
+        $data = $response->getContent();
+        $this->assertStringContainsString("Post #" . $id . " was not found", $data);
+    }
+
+    public function testPostCrudFlow(): void
     {
         $client = static::createClient();
 
@@ -149,6 +184,5 @@ class PostControllerTest extends WebTestCase
         // 9. verify the post is deleted.
         $client->jsonRequest('GET', $url,);
         $this->assertResponseStatusCodeSame(404);
-
     }
 }
