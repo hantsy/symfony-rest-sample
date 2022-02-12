@@ -29,4 +29,6 @@ symfony serve
 ## Resources
 
 * [Symfony Reference Document](https://symfony.com/doc/current/index.html)
+* [New in Symfony 5.4: PHP Enumerations Support](https://symfony.com/blog/new-in-symfony-5-4-php-enumerations-support)
+* [New Release: Doctrine ORM 2.11 with Enums, Virtual Columns, Read-Only Properties, Nested Attributes and more](https://www.doctrine-project.org/2022/01/11/orm-2.11.html)
 
