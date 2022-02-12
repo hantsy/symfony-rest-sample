@@ -58,9 +58,9 @@ jobs:
     # —— Symfony ——————————————————————————————————————————————————————————
     - name: Check Symfony requirements
       run: |      
-        echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' | tee /etc/apt/sources.list.d/symfony-cli.list
-        apt update
-        apt install symfony-cli 
+        echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' |sudo tee /etc/apt/sources.list.d/symfony-cli.list
+        sudo apt update
+        sudo apt install symfony-cli 
         symfony check:requirements
         cd rest-sample    
         php bin/console -V
