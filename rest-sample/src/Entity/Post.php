@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PostRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping\Column;
@@ -20,8 +21,8 @@ use Symfony\Component\Uid\Uuid;
 class Post
 {
     #[Id]
-    //#[GeneratedValue(strategy: "UUID")
-    //#[Column(type: "string", unique: true)]
+    // Since DBAL 3.0, this does not work.
+    //#[GeneratedValue(strategy: "UUID")//#[Column(type: "string", unique: true)]
     #[Column(type: "uuid", unique: true)]
     #[GeneratedValue(strategy: "CUSTOM")]
     #[CustomIdGenerator(class: UuidGenerator::class)]
@@ -33,11 +34,14 @@ class Post
     #[Column(type: "string", length: 255)]
     private string $content;
 
+    #[Column(type: "string", enumType: Status::class)]
+    private Status $status;
+
     #[Column(name: "created_at", type: "datetime", nullable: true)]
-    private DateTime|null $createdAt = null;
+    private DateTimeInterface|null $createdAt = null;
 
     #[Column(name: "published_at", type: "datetime", nullable: true)]
-    private DateTime|null $publishedAt = null;
+    private DateTimeInterface|null $publishedAt = null;
 
     #[OneToMany(mappedBy: "post", targetEntity: Comment::class, cascade: ['persist', 'merge', "remove"], fetch: 'LAZY', orphanRemoval: true)]
     private Collection $comments;
@@ -47,6 +51,7 @@ class Post
 
     public function __construct()
     {
+        $this->status = Status::Draft;
         $this->createdAt = new DateTime();
         $this->comments = new ArrayCollection();
         $this->tags = new ArrayCollection();
@@ -104,34 +109,55 @@ class Post
     }
 
     /**
-     * @return DateTime
+     * @return Status
      */
-    public function getCreatedAt(): DateTime
+    public function getStatus(): Status
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param Status $status
+     * @return Post
+     */
+    public function setStatus(Status $status): self
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+
+    /**
+     * @return DateTimeInterface
+     */
+    public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
     }
 
     /**
-     * @param DateTime $createdAt
+     * @param DateTimeInterface|null $createdAt
+     * @return Post
      */
-    public function setCreatedAt(DateTime $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;
     }
 
     /**
-     * @return DateTime|null
+     * @return DateTimeInterface|null
      */
-    public function getPublishedAt(): ?DateTime
+    public function getPublishedAt(): ?DateTimeInterface
     {
         return $this->publishedAt;
     }
 
     /**
-     * @param DateTime $publishedAt
+     * @param DateTimeInterface|null $publishedAt
+     * @return Post
      */
-    public function setPublishedAt(DateTime $publishedAt): self
+    public function setPublishedAt(?DateTimeInterface $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
         return $this;
@@ -195,7 +221,7 @@ class Post
         return "Post: [ id =" . $this->getId()
             . ", title=" . $this->getTitle()
             . ", content=" . $this->getContent()
-            . ", createdAt=" . $this->getCreatedAt()->getTimestamp()
+            . ", createdAt=" . $this->getCreatedAt()?->getTimestamp()
             . ", publishedAt=" . $this->getPublishedAt()?->getTimestamp()
             . "]";
     }
