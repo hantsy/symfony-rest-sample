@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use DateTime;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
 use Doctrine\ORM\Mapping\Entity;
@@ -30,7 +31,7 @@ class Comment
     private string $content;
 
     #[Column(name: "created_at", type: "datetime", nullable: true)]
-    private DateTime|null $createdAt = null;
+    private DateTimeInterface|null $createdAt = null;
 
     #[ManyToOne(targetEntity: "Post", inversedBy: "comments")]
     #[JoinColumn(name: "post_id", referencedColumnName: "id")]
@@ -65,12 +66,16 @@ class Comment
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTime
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(DateTime $createdAt): self
+    /**
+     * @param DateTimeInterface|null $createdAt
+     * @return $this
+     */
+    public function setCreatedAt(?DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
         return $this;

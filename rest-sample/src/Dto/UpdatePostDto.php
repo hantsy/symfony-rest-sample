@@ -7,9 +7,9 @@ class UpdatePostDto
     private string $title;
     private string $content;
 
-    static function of(string $title, string $content): UpdatePostStatusDto
+    static function of(string $title, string $content): UpdatePostDto
     {
-        $dto = new UpdatePostStatusDto();
+        $dto = new UpdatePostDto();
         $dto->setTitle($title)->setContent($content);
         return $dto;
     }
