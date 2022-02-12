@@ -1,6 +1,6 @@
 # Symfony Sample
 
-Sample codes demonstrates the latest Symfony, Doctrine, PHPUnit, etc. 
+Building Symfony RESTful APIs using the latest Symfony, Doctrine, PHPUnit, etc. 
 
 ## Docs
 
