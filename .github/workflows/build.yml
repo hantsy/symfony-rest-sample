@@ -1,13 +1,13 @@
-name: rest-sample
+name: Build
 
 on:
   push:
-    paths:
-      - "rest-sample/**"
+    paths-ignore:
+      - "docs/**"
     branches: [ master ]
   pull_request:
-    paths:
-      - "rest-sample/**"
+    paths-ignore:
+      - "docs/**"
     types:
       - opened
       - synchronize
@@ -17,7 +17,6 @@ on:
 # and https://antonshell.me/en/post/github-actions-symfony
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -37,9 +36,7 @@ jobs:
       run: php -v
 
     - name: Validate composer.json and composer.lock
-      run: |
-        cd rest-sample
-        composer validate
+      run: composer validate
 
     - name: Cache Composer packages
       id: composer-cache
@@ -51,24 +48,22 @@ jobs:
           ${{ runner.os }}-php-
 
     - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: | 
-        cd rest-sample
-        composer install --prefer-dist --no-progress --no-suggest
+      #if: steps.composer-cache.outputs.cache-hit != 'true'
+      run: composer install --prefer-dist --no-progress --no-suggest
     # —— Symfony ——————————————————————————————————————————————————————————
     - name: Check Symfony requirements
       run: |      
         echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' |sudo tee /etc/apt/sources.list.d/symfony-cli.list
         sudo apt update
         sudo apt install symfony-cli 
-        symfony check:requirements
-        cd rest-sample    
+        symfony check:requirements   
         php bin/console -V
     # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
     #- name: PHP-CS-Fixer
     #  uses: docker://oskarstark/php-cs-fixer-ga
     #  with:
     #    args: --config=.php_cs.dist --diff --dry-run
+    
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
     - name: Setup Database
@@ -78,7 +73,6 @@ jobs:
         docker ps -a
     - name: Run test suite
       run: |
-        cd rest-sample
         php ./bin/console doctrine:schema:create -n
         php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
         composer run-script test
