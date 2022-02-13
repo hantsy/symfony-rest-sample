@@ -53,5 +53,15 @@ nav:
     - gs/index.md
     - Prerequisites: gs/pre.md
     - "Hello Symfony!": gs/hello.md
-
+  - Data Accessing with Doctrine:
+    - data/index.md
+    - "Data Modeling": data/model.md
+    - "Data Operations": data/operations.md
+  - Producing RESTful API:
+    - api/index.md
+    - "Creating Controller": api/postctl.md
+  - Testing:
+    - test/index.md
+    - "Testing Repository": test/testdb.md
+    - "Testing Controller": test/testctl.md    
     
