@@ -6,6 +6,7 @@ Before creating a Symfony application, make sure you have installed the followin
 * PHP Composer
 * Symfony CLI
 * An text editor or IDE
+* Docker 
 
 ## Installing PHP and Composer
 
@@ -13,13 +14,13 @@ For most Linux users, PHP are available in the official repository, install it d
 
 For Windows users, to manage your softwares as Linux users, [install Chocolatey](https://chocolatey.org/) firstly.
 
-To install PHP 8 and PHP Composer, run the following command.
+To install PHP 8 and PHP Composer, open a terminal and run the following command.
 
 ```bash
 $ choco php composer
 ```
 
-To verify the installation, run the following command in your terminal.
+To verify the installation, run the following command.
 
 ```bash
 $  php -v
@@ -57,9 +58,9 @@ Symfony CLI version 5.3.3 (c) 2017-2022 Symfony SAS (2022-02-04T15:07:05Z - stab
 
 
 
-## Check System Requirements 
+## Checking System Requirements 
 
-Run the following 
+Run the following command to check if your PHP environment satisfices the requirements to run a Symfony application.  
 
 ```bash
 # symfony check:requirements
@@ -103,11 +104,11 @@ Note  The command console can use a different php.ini file
 
 Open the *php.ini* file, adjust the configuration according to the above *recommendations* info.  
 
-> If you are not familiar with PHP configuration, backup *php.ini* before modifying it.
+> If you are not familiar with PHP configuration, backup *php.ini* firstly before doing modification.
 
 And we will use Postgres as database in the sample application, make sure `pdo_pgsql` and `pgsql` modules are enabled.
 
-Finally, you can confirm the enabled modules by the following command.
+Finally,  to show all enabled PHP modules, run:
 
 ```bash
 $ php -m
@@ -149,6 +150,13 @@ zlib
 [Zend Modules]
 ```
 
-It lists all enabled PHP  modules.
+## PHP Editor or IDE
 
-Everything is OK now, in the next section, we will create a Symfony project.
+Install a text editor or IDE to code PHP,  there are some options:
+
+* VSCode + PHP extensions
+* NetBeans IDE includes excellent PHP support
+* IntelliJ IDEA Ultimate Edition or PHPStorm
+* Eclipse with PHP plugins installed
+
+Everything is ready now. In the next section, we will create a Symfony project.

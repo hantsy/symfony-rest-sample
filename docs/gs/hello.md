@@ -66,13 +66,13 @@ Run the following command to create a Symfony  project using `composer`.
 # composer create-project symfony/website-skeleton web-sample
 ```
 
-The later is similar to the `symfony new projectname --full` to generate a full-featured web project template.
+The later is similar to the `symfony new projectname --full` to generate a full-featured web project skeleton.
 
 
 
 ### Running Symfony Application
 
-Enter the project root folder, run the following command to start the application.
+Open your terminal, switch to the project root folder, and run the following command to start the application.
 
 ```bash
 # symfony server:start
@@ -94,111 +94,100 @@ Tailing Web Server log file (C:\Users\hantsy\.symfony\log\499d60b14521d4842ba7eb
 
 ```
 
-Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000) , it will show the default home page.
+Open a browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000) , it will show the default home page.
 
 
-## Creating Controller
+## Hello Symfony!
 
-Create a simple class to a resource entity in the HTTP response.
+Symfony follows the famous MVC pattern to handle request.  The controller  role is responsible for handling incoming request, updating models and  sending results to the HTTP response.
 
-```php
-class Post
-{
-    private ?string $id = null;
 
-    private string $title;
 
-    private string $content;
-    
-    //use IDE to generate getters and setters.
-}
-```
+### Creating Controller
 
-And use a factory to create a new Post instance.
-
-```php
-class PostFactory
-{
-    public static function create(string $title, string $content): Post
-    {
-        $post = new Post();
-        $post->setTitle($title);
-        $post->setContent($content);
-        return $post;
-    }
-}
-```
-
-Let's create a simple Controller class.  
+Here we will create a simple `Controller` to experience Symfony request handling.
 
 ```php 
-#[Route(path: "/posts", name: "posts_")]
-class PostController
+class HelloController
 {
-
-    #[Route(path: "", name: "all", methods: ["GET"])]
-    function all(): Response
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    #[Route('/hello', name: 'hello', methods:['GET'])]
+    public function sayHello(Request $request): Response
     {
-        $post1 = PostFactory::create("test title", "test content");
-        $post1->setId("1");
+        $name = $request->get("name") ?? "Symfony";
+        $data = ['message' => 'Hello ' . $name];
 
-        $post2 = PostFactory::create("test title", "test content");
-        $post2->setId("2");
-        $data = [$post1->asArray(), $post2->asArray()];
-        return new JsonResponse($data, 200, ["Content-Type" => "application/json"]);
+        return new JsonResponse($data, 200, [], true);
     }
-}    
+}  
 ```
 
-Atrribute is a new feature introduced in PHP 8.0. We use `Route` to define the routing rules for the `PostController`.
+Attribute is a new feature introduced in PHP 8.0, here we use `Route` attribute to define the routing rule for the `HelloController`.  
+
+
+
+### Configuring Routes
+
+According to the `Route` attribute defined in the `sayHello` method, if the incoming request path is matched with */hello* and the request method is `GET`,  it will be handled by `HelloController.sayHello` method. The `request` argument will be filled before invoking this method, it includes all request data in this request context. Every handling method return a `Reponse`, including the response status, view data, etc.
+
+> Symfony provides several approaches to configure the routes, such as YAML,  annotations, XML, JSON, etc.  But the PHP official `Attribute` will be the trend in future. We do not cover other methods in this tutorial. 
 
 To use the newest PHP 8 `Attribute` to configure the routing rules, apply the following changes in the project configuration.
 
 * Open *config/packages/doctrine.yaml*,  remove  `doctrine/orm/mapping/App/type` node in the configuration tree or change its value to `attribute`.
 * Open *composer.json*,  make sure  the PHP version set to `>=8.0.0`.
 
-To render the response body into a JSON string,  use a `JsonReponse` to wrap the response. 
+### Rendering JSON Response
 
-The first parameter of `JsonReponse` accepts an array as data, so add a function in the `Post` class to archive this purpose.
+To render the response body into a JSON string,  use a `JsonReponse` to wrap the response.  The first parameter of `JsonReponse` accepts an array as data. In PHP, it is a little tedious to convert an object to an array.
+
+Symfony provides a simple `AbstractController` which includes several functions to simplfy the response building and adopt the container and dependency injection management. 
+
+Change the above controller, make it to extend from `AbstractController`.  
 
 ```php
-class Post{
-    //...
-    public function asArray(): array
+class HelloController extends AbstractController
+{
+    /**
+     * @param Request $request
+     * @return Response
+     */
+    #[Get('/hello', name: 'hello')]
+    public function sayHello(Request $request): Response
     {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'content' => $this->content
-        ];
+        $name = $request->get("name") ?? "Symfony";
+        $data = Greeting::of('Hello ' . $name);
+        return $this->json($data);
     }
 }
 ```
+It simply invoke `$this->json` to accept an object and render the response in JSON format, no need to transform the data to an array before rendering response.
 
-Run the application, use `curl` to test the `/posts` endpoint.
-
-```bash
-$ curl http://localhost:8000/posts
-```
-
-Symfony provides a simple `AbstractController` which includes several functions to simplfy the response and adopt the container and dependency injection management. 
-
-Change the above controller, make it to extend from `AbstractController`.  Simply invoke `$this->json` to accept an object and render the response in JSON format, no need to transform the data to an array before rendering response.
+The `Greeting` is a plain PHP class.
 
 ```php
-class PostController extends AbstractController
+class Greeting
 {
-
-    function all(): Response
+    private string $message;
+    
+    static function of(string $message): Greeting
     {
-        //...
-        $data = [$post1, $post2];
-        return $this->json($data, 200, ["Content-Type" => "application/json"]);
+        $data = new Greeting();
+        return $data->setMessage($message);
     }
-}  
+    
+    // use IDE to generate setters and getters
+}    
 ```
-Run the application again, and  use  `curl` to test the `/posts` endpoint.
+
+Run the application, use `curl` to test the `/hello` endpoint.
 
 ```bash
-$ curl http://localhost:8000/posts
+$ curl http://localhost:8000/hello
+{"message":"Hello Symfony"}
+$ curl http://localhost:8000/hello?name=Hantsy
+{"message":"Hello Hantsy"}
 ```
