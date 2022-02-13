@@ -1,0 +1,204 @@
+# Hello Symfony!
+
+In this post, we will create a simply Somfony project and running the application.
+
+
+
+## Creating Symfony Project
+
+You can create a  new Symfony project using Symfony CLI or Composer command line tools.
+
+
+
+### Using Symfony CLI
+
+To create a new Symfony project, you can use `symfony new` command. 
+
+```bash
+$ symfony new rest-sample
+
+// install a webapp pack 
+$ symfony new web-sample --webapp
+```
+
+By default, it will create a simple Symfony skeleton project only with core kernel configuration, which is good to start a lightweight Restful API application.
+
+To get full options list of `symfony new` command, type the following command in your terminal.
+
+```bash
+$ symfony help new
+Description:
+  Create a new Symfony project
+
+Usage:
+  symfony.exe local:new [options] [--] [<directory>]
+
+Arguments:
+  directory  Directory of the project to create
+
+
+Options:
+  --dir=value      Project directory
+  --version=value  The version of the Symfony skeleton (a version or one of "lts", "stable", "next", or "previous")
+  --full           Use github.com/symfony/website-skeleton (deprecated, use --webapp instead)
+  --demo           Use github.com/symfony/demo
+  --webapp         Add the webapp pack to get a fully configured web project
+  --book           Clone the Symfony: The Fast Track book project
+  --docker         Enable Docker support
+  --no-git         Do not initialize Git
+  --cloud          Initialize Platform.sh
+  --debug          Display commands output
+  --php=value      PHP version to use
+```
+
+Alternatively, you can create it using Composer. 
+
+
+
+### Using Composer 
+
+Run the following command to create a Symfony  project using `composer`.
+
+```bash
+# composer create-project symfony/skeleton rest-sample
+
+//start a classic website application
+# composer create-project symfony/website-skeleton web-sample
+```
+
+The later is similar to the `symfony new projectname --full` to generate a full-featured web project template.
+
+
+
+### Running Symfony Application
+
+Enter the project root folder, run the following command to start the application.
+
+```bash
+# symfony server:start
+
+ [WARNING] run "symfony.exe server:ca:install" first if you want to run the web server with TLS support, or use "--no-  
+ tls" to avoid this warning                                                                                             
+                                                                                                                       
+Tailing PHP-CGI log file (C:\Users\hantsy\.symfony\log\499d60b14521d4842ba7ebfce0861130efe66158\79ca75f9e90b4126a5955a33ea6a41ec5e854698.log)
+Tailing Web Server log file (C:\Users\hantsy\.symfony\log\499d60b14521d4842ba7ebfce0861130efe66158.log)
+                                                                                                                        
+ [OK] Web server listening                                                                                              
+      The Web server is using PHP CGI 8.0.10                                                                            
+      http://127.0.0.1:8000                                                                                             
+                                                                                                                        
+
+[Web Server ] Oct  4 13:33:01 |DEBUG  | PHP    Reloading PHP versions
+[Web Server ] Oct  4 13:33:01 |DEBUG  | PHP    Using PHP version 8.0.10 (from default version in $PATH)
+[Web Server ] Oct  4 13:33:01 |INFO   | PHP    listening path="C:\\tools\\php80\\php-cgi.exe" php="8.0.10" port=61738
+
+```
+
+Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000) , it will show the default home page.
+
+
+## Creating Controller
+
+Create a simple class to a resource entity in the HTTP response.
+
+```php
+class Post
+{
+    private ?string $id = null;
+
+    private string $title;
+
+    private string $content;
+    
+    //use IDE to generate getters and setters.
+}
+```
+
+And use a factory to create a new Post instance.
+
+```php
+class PostFactory
+{
+    public static function create(string $title, string $content): Post
+    {
+        $post = new Post();
+        $post->setTitle($title);
+        $post->setContent($content);
+        return $post;
+    }
+}
+```
+
+Let's create a simple Controller class.  
+
+```php 
+#[Route(path: "/posts", name: "posts_")]
+class PostController
+{
+
+    #[Route(path: "", name: "all", methods: ["GET"])]
+    function all(): Response
+    {
+        $post1 = PostFactory::create("test title", "test content");
+        $post1->setId("1");
+
+        $post2 = PostFactory::create("test title", "test content");
+        $post2->setId("2");
+        $data = [$post1->asArray(), $post2->asArray()];
+        return new JsonResponse($data, 200, ["Content-Type" => "application/json"]);
+    }
+}    
+```
+
+Atrribute is a new feature introduced in PHP 8.0. We use `Route` to define the routing rules for the `PostController`.
+
+To use the newest PHP 8 `Attribute` to configure the routing rules, apply the following changes in the project configuration.
+
+* Open *config/packages/doctrine.yaml*,  remove  `doctrine/orm/mapping/App/type` node in the configuration tree or change its value to `attribute`.
+* Open *composer.json*,  make sure  the PHP version set to `>=8.0.0`.
+
+To render the response body into a JSON string,  use a `JsonReponse` to wrap the response. 
+
+The first parameter of `JsonReponse` accepts an array as data, so add a function in the `Post` class to archive this purpose.
+
+```php
+class Post{
+    //...
+    public function asArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'content' => $this->content
+        ];
+    }
+}
+```
+
+Run the application, use `curl` to test the `/posts` endpoint.
+
+```bash
+$ curl http://localhost:8000/posts
+```
+
+Symfony provides a simple `AbstractController` which includes several functions to simplfy the response and adopt the container and dependency injection management. 
+
+Change the above controller, make it to extend from `AbstractController`.  Simply invoke `$this->json` to accept an object and render the response in JSON format, no need to transform the data to an array before rendering response.
+
+```php
+class PostController extends AbstractController
+{
+
+    function all(): Response
+    {
+        //...
+        $data = [$post1, $post2];
+        return $this->json($data, 200, ["Content-Type" => "application/json"]);
+    }
+}  
+```
+Run the application again, and  use  `curl` to test the `/posts` endpoint.
+
+```bash
+$ curl http://localhost:8000/posts
+```

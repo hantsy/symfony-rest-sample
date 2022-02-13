@@ -51,6 +51,7 @@ nav:
     - index.md   
   - Getting Started:
     - gs/index.md
-    - Prerequisites: gs/prerequisites.md
+    - Prerequisites: gs/pre.md
+    - "Hello Symfony!": gs/hello.md
 
     

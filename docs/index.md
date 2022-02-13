@@ -4,19 +4,17 @@ In this tutorial, we will build a simple RESTful API application using Symfony a
 
 ## Audience
 
-I assume you have some basic knowledge of PHP language, esp. the OOP programming feature since PHP 5.2. 
+I assume you have some basic knowledge of PHP language, esp. the [OOP feature since PHP 5.2](https://www.php.net/manual/en/language.oop5.php). 
 
-If you know well about other OOP program languages, such as Java and C#, it is easy to migrate to the latest PHP progamming. 
-
-In fact, Zend Framework, Symfony and Doctrine are heavily inspired by Java frameworks, such as Spring and JPA/Hibernate.
+If you are experienced in other OOP program languages, such as Java and C#, it is not difficult to migrate to the latest PHP programming. In fact, a lot of PHP frameworks, such as Zend Framework(now Laminas), Symfony and Doctrine are heavily inspired by Java frameworks, such as Spring and JPA/Hibernate.
 
 In this tutorial, we will utilize the latest PHP 8 features to cook the sample application. 
 
 ## Sample Codes
 
-The sample codes of this tutorial are available on Github. Get a copy of the source codes, and explore them yourself.
+[The source codes of the sample application](https://github.com/hantsy/symfony-rest-sample)  are available on Github. Get a copy and explore them yourself.
 
-In short, you can clone the project from Github via GIT command line.
+In short, you can clone the project from Github via `git clone` command.
 
 ```bash 
 $ git clone https://github.com/hantsy/symfony-rest-sample
