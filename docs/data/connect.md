@@ -1,5 +1,4 @@
-## Connecting to Database 
-
+# Connecting to Database 
 
 Install Doctrine into the project.
 

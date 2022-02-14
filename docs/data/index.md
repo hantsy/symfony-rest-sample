@@ -1,5 +1,10 @@
 # Data Accessing with Doctrine
 
-Doctrine is a popular ORM framework, it is highly inspired by the existing Java ORM tooling, such as JPA spec and Hibernate framework. 
-There are two core components in Doctrine, `doctrine/dbal` and `doctrine/orm`, the former is a low level APIs for database operations, if you know Java development, consider it as the *Jdbc* layer. 
-The later is the advanced ORM framework, the public APIs are similar to JPA/Hibernate. 
+[Doctrine ORM](https://www.doctrine-project.org) is a popular ORM framework in PHP world, which is highly inspired by the existing Java ORM frameworks, esp. JPA specification and Hibernate.
+
+There are two core components in Doctrine project:
+
+* `doctrine/dbal` is a low-level abstraction layer for database operations, imagine it is the *Jdbc* role in Java world.
+* `doctrine/orm` is the advanced ORM framework which public APIs are similar to JPA/Hibernate. 
+
+Nowadays Doctrine includes a lot of PHP libraries.  In this tutorial we mainly use ORM components.
