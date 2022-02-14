@@ -55,6 +55,7 @@ nav:
     - "Hello Symfony!": gs/hello.md
   - Data Accessing with Doctrine:
     - data/index.md
+    - "Connecting to Database": data/connect.md
     - "Data Modeling": data/model.md
     - "Data Operations": data/operations.md
   - Producing RESTful API:
