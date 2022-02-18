@@ -15,7 +15,6 @@ use App\Dto\UpdatePostStatusDto;
 use App\Entity\Comment;
 use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
-use App\Repository\CommentRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,9 +32,9 @@ class PostController extends AbstractController
      * @param EntityManagerInterface $objectManager
      * @param SerializerInterface $serializer
      */
-    public function __construct(private PostRepository         $posts,
-                                private EntityManagerInterface $objectManager,
-                                private SerializerInterface    $serializer)
+    public function __construct(private readonly PostRepository $posts,
+                                private readonly EntityManagerInterface $objectManager,
+                                private readonly SerializerInterface $serializer)
     {
     }
 
@@ -51,8 +50,8 @@ class PostController extends AbstractController
     // #[Route(path: "", name: "all", methods: ["GET"])]
     #[Get(path: "", name: "all")]
     public function all(#[QueryParam] string $keyword,
-                 #[QueryParam] int $offset = 0,
-                 #[QueryParam] int $limit = 20): Response
+                        #[QueryParam] int $offset = 0,
+                        #[QueryParam] int $limit = 20): Response
     {
         $data = $this->posts->findByKeyword($keyword ?: '', $offset, $limit);
         return $this->json($data);

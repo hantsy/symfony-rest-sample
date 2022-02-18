@@ -50,7 +50,7 @@ Since Doctrine ORM 2.10.0 and Dbal 3.0,  the deprecated `UUID` strategy does not
 Install `symfony\uid` firstly.
 
 ```bash
-# composer require symfony/uid
+$ composer require symfony/uid
 ```
 Use the following instead of the legacy UUID strategy.
 
@@ -63,7 +63,7 @@ private ?Uuid $id = null;
 
 Next, let's create `Post`, `Comment` and `Tag` entities.
 
- ## Creating Entities
+## Creating Entities
 
 Run the following command, and follow the interactive steps to create `Post`, `Comment` and `Tag` one by one.
 
@@ -244,17 +244,17 @@ $ php bin/console doctrine:schema:drop
 $ php bin/console doctrine:schema:update
 $ php bin/console doctrine:schema:validate
 ```
+As you see, these commands are used to execute small tasks, esp,  performing some administration tasks. You can create your own command.
 
 
+## Creating AddPostCommand
 
-### Add Sample Data Using Command
+For example, you want to use custom command to load some sample data.
 
-In Symfony  application, a command is used to execute some tasks on the application directly, esp,  performing some administration tasks. 
-
-You can create a custom command to load some sample data.
+Run the following command.
 
 ```bash
-# php bin/console make:command add-post
+$ php bin/console make:command add-post
 ```
 
 It will generate a `AddPostCommand` under *src/Command* folder. 
@@ -314,9 +314,9 @@ class AddPostCommand extends Command
 }
 ```
 
-The Doctrine  `EntityManagerInterface` is managed by Symfony *Service Container*.
+The Doctrine  `EntityManagerInterface` is managed by Symfony *Service Container*. The `persist` method is used to persist entities, and `flush` to commit the transaction.
 
-Run the following command to execute the **add-pos** command, it will add a new `Post` into database.
+Run the following command to execute the `add-pos` command, it will add a new `Post` into database.
 
 ```bash
 # php bin/console app:add-post "test title" "test content"
