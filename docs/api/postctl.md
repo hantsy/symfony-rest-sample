@@ -1,5 +1,5 @@
-## Creating PostController:  Exposing your first Rest API
- Follow  the REST convention, we are planning to create the following APIs to a blog system.
+## Producing RESTful API
+ Follow  the REST convention, we are going to create the following APIs.
 
 * `GET  /posts`    Get all posts.
 * `GET /posts/{id}` Get a single post by ID, if not found, return status 404 
@@ -7,7 +7,13 @@
 * `DELETE /posts/{id}` Delete a single post by ID, return status 204. If the post was  not found, return status 404 instead.
 * ...
 
-Run the following command to create a Controller skeleton. Follow the interactive guide to create a controller named `PostController`.
+Similar to most of MVC patterns,  there is a `Controller`  for handling incoming requests.
+
+
+
+## Creating PostController
+
+To create a `Controller` skeleton, run the following command and follow the interactive guide to create a controller named `PostController`.
 
 ```bash
 # php bin/console make:constroller
@@ -15,7 +21,7 @@ Run the following command to create a Controller skeleton. Follow the interactiv
 
 Open *src/Controller/PostController.php* in IDE.
 
-Add `Route` attribute on class level and two functions: one for fetching all posts and another for getting single post by ID.
+Add a new function to retrieve all posts.  To bind the request path to the controller,  add a  `Route` attribute on class level and the `all` function. The former `Route` will apply to all functions in this controller.
 
 ```bash
 #[Route(path: "/posts", name: "posts_")]
@@ -35,7 +41,11 @@ class PostController extends AbstractController
 }
 ```
 
-Start up the application, and try to access the *http://localhost:8000/posts*, it will throw a circular dependencies exception when rendering the models in JSON view directly. There are some solutions to avoid this, the simplest is break the bi-direction relations before rendering the JSON view.  Add a `Ignore` attribute on `Comment.post` and `Tag.posts`.
+Start up the application, and try to access the *http://localhost:8000/posts*, it will throw a circular dependencies exception when rendering the models in JSON view directly. 
+
+There are some solutions to avoid this, the simplest is break the bi-direction relations before rendering the JSON view.  
+
+Add a `Ignore` attribute on `Comment.post` and `Tag.posts`.
 
 ```php
 //src/Entity/Comment.php
@@ -53,6 +63,7 @@ class Tag
 }
 ```
 
+> Alternatively,  the DTO pattern is a good option to transform the data to a plain object that only includes *essential* fields before rendering in the HTTP response.
 
 ### Paginating Result
 
@@ -262,7 +273,7 @@ Run the application and test the */posts* using `curl`.
 
 
 
-##  Get Post by ID 
+##  Retrieving Post
 
 Follow the design in the previous section, add another function to `PostController` to map route `/posts/{id}` . 
 
@@ -284,7 +295,7 @@ class PostController extends AbstractController
 }
 ```
 
-  Run the application, and try to access *http://localhost:8000/posts/{id}*, it will throw an exception like this.
+Run the application, and try to access *http://localhost:8000/posts/{id}*, it will throw an exception like this.
 
 ```bash
 App\Controller\PostController::getById(): Argument #1 ($id) must be of type Symfony\Component\Uid\Uuid, string given, cal
@@ -356,7 +367,7 @@ In the above codes,
 
   
 
-## Creating a Post
+## Creating Post
 
 Follow the REST convention, define the following rule to serve an endpoint to handle the request.
 
@@ -378,32 +389,6 @@ public function create(Request $request): Response
 ```
 
 The `posts->getEntityManager()` overrides parent methods to get a `EntityManager` from parent class, you can also inject `ObjectManager` or `EntityManagerInterface` in the  `PostController` directly to do the persistence work. The Doctrine `Repository` is mainly designated to build query criteria and execute custom queries.
-
-Create a test function to verify in the `PostControllerTest` file.
-
-```php
-public function testCreatePost(): void
-{
-    $client = static::createClient();
-    $data = CreatePostDto::of("test title", "test content");
-    $crawler = $client->request(
-        'POST',
-        '/posts',
-        [],
-        [],
-        [],
-        $this->getContainer()->get('serializer')->serialize($data, 'json')
-    );
-
-    $this->assertResponseIsSuccessful();
-
-    $response = $client->getResponse();
-    $url = $response->headers->get('Location');
-    //dump($data);
-    $this->assertNotNull($url);
-    $this->assertStringStartsWith("/posts/", $url);
-}
-```
 
 ### Converting Request Body 
 
@@ -574,23 +559,6 @@ function getById(Uuid $id): Response
     } else {
     	throw new PostNotFoundException($id);
     }
-}
-```
-
-Add a test to verify if the post is not found and get a 404 status code.
-
-```php
-public function testGetANoneExistingPost(): void
-{
-    $client = static::createClient();
-    $id = Uuid::v4();
-    $crawler = $client->request('GET', '/posts/' . $id);
-
-    //
-    $response = $client->getResponse();
-    $this->assertResponseStatusCodeSame(404);
-    $data = $response->getContent();
-    $this->assertStringContainsString("Post #" . $id . " was not found", $data);
 }
 ```
 

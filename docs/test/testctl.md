@@ -86,3 +86,46 @@ Run the following command to execute `PostControllerTest.php` .
 ```bash 
 # php .\vendor\bin\phpunit .\tests\Controller\PostControllerTest.php
 ```
+
+Create a test function to verify in the `PostControllerTest` file.
+
+```php
+public function testCreatePost(): void
+{
+    $client = static::createClient();
+    $data = CreatePostDto::of("test title", "test content");
+    $crawler = $client->request(
+        'POST',
+        '/posts',
+        [],
+        [],
+        [],
+        $this->getContainer()->get('serializer')->serialize($data, 'json')
+    );
+
+    $this->assertResponseIsSuccessful();
+
+    $response = $client->getResponse();
+    $url = $response->headers->get('Location');
+    //dump($data);
+    $this->assertNotNull($url);
+    $this->assertStringStartsWith("/posts/", $url);
+}
+```
+
+Add a test to verify if the post is not found and get a 404 status code.
+
+```php
+public function testGetANoneExistingPost(): void
+{
+    $client = static::createClient();
+    $id = Uuid::v4();
+    $crawler = $client->request('GET', '/posts/' . $id);
+
+    //
+    $response = $client->getResponse();
+    $this->assertResponseStatusCodeSame(404);
+    $data = $response->getContent();
+    $this->assertStringContainsString("Post #" . $id . " was not found", $data);
+}
+```
