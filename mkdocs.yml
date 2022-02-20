@@ -61,6 +61,7 @@ nav:
   - Producing RESTful API:
     - api/index.md
     - "Creating Controller": api/postctl.md
+    - "Handling Exceptions": api/ex.md
   - Testing:
     - test/index.md
     - "Testing Repository": test/testdb.md
