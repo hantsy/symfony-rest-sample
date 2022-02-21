@@ -12,8 +12,10 @@ A comment has to be added under a post, so I would like to design it like this.
 * Request matches route endpoint: */posts/{id}/comments*
 * If successful, return a `CREATED`(201) Http Status code, and set the response header *Location* value to the URI of the new created comments.
 
- ```php
- [Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
+Add a function to the existing `PostController`.
+
+```php
+#[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
  public function addComment(Uuid $id, Request $request): Response
  {
      $data = $this->posts->findOneBy(["id" => $id]);
@@ -29,9 +31,7 @@ A comment has to be added under a post, so I would like to design it like this.
          //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
      }
  }
- ```
-
-
+```
 
 ## Retrieving Comments
 
@@ -64,7 +64,6 @@ To retrieve a single comment in some cases, such as for updating purpose, we mov
 
 ```php
 //src/Controller/CommentController.php
-
 #[Route('comments', name: 'comments')]
 class CommentController extends AbstractController
 {
