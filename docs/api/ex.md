@@ -2,6 +2,8 @@
 
 Symfony kernel provides a event machoism to raise an `Exception` in `Controller` class and handle them  in your custom `EventListener` or `EventSubscriber` .
 
+## Creating PostNotFoundException
+
 For example, create a `PostNotFoundException`.
 
 ```php
@@ -15,7 +17,11 @@ class PostNotFoundException extends \RuntimeException
 
 }
 ```
-Create a EventListener to catch this exception, and handle the exception as expected.
+
+
+## Creating EventListener
+
+Create a `EventListener` to catch this exception, and handle the exception as expected.
 
 ```php
 class ExceptionListener implements LoggerAwareInterface
@@ -58,7 +64,7 @@ class ExceptionListener implements LoggerAwareInterface
 }
 ```
 
-Register this `ExceptionListener` in *config/service.yml* file.
+Next, register this `ExceptionListener` in *config/service.yml* file. Then it will be applied in the HTTP request lifecycle.
 
 ```yml
   App\EventListener\ExceptionListener:
@@ -66,14 +72,18 @@ Register this `ExceptionListener` in *config/service.yml* file.
       - { name: kernel.event_listener, event: kernel.exception, priority: 50 }
 ```
 
-It indicates it binds `event.exception`  event to `ExceptionListener`, and set `priority` to set the order at execution time.
+It binds the `event.exception`  event to this `ExceptionListener`, and set `priority` value to setup the execution order at runtime.
 
 Run the following command to show all registered `EventListener`/`EventSubscriber`s on event *kernel.exception*.
 
 ```base
 php bin/console debug:event-subscriber kernel.exception
 ```
-Change the  `getById` function to the following.
+
+
+## Throwing Exception in Controller
+
+Open the `PostController`, change the  `getById` function to the following.
 
 ```php
 #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
@@ -88,7 +98,7 @@ function getById(Uuid $id): Response
 }
 ```
 
-Run the application again, and try to access a single Post through a none existing id.
+Run the application again, and try to access a single Post through a non-existing id.
 
 ```bash
 curl http://localhost:8000/posts/1ec3e1e0-17b3-6ed2-a01c-edecc112b438 -H "Accept: application/json" -v
@@ -108,4 +118,3 @@ curl http://localhost:8000/posts/1ec3e1e0-17b3-6ed2-a01c-edecc112b438 -H "Accept
 {"error":"Post #1ec3e1e0-17b3-6ed2-a01c-edecc112b438 was not found."}
 ```
 
-Get the [complete source codes](https://github.com/hantsy/symfony5-sample/tree/master/rest-sample) from  my Github.

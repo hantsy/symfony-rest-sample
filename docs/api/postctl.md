@@ -7,8 +7,7 @@
 * `DELETE /posts/{id}` Delete a single post by ID, return status 204. If the post was  not found, return status 404 instead.
 * ...
 
-Similar to most of MVC patterns,  there is a `Controller`  for handling incoming requests.
-
+Next let's create a `Controller`  to handle the  incoming requests.
 
 
 ## Creating PostController
