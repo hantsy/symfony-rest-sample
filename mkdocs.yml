@@ -52,6 +52,7 @@ nav:
   - Getting Started:
     - gs/index.md
     - Prerequisites: gs/pre.md
+    - "Creating Symfony Project": gs/create.md
     - "Hello Symfony!": gs/hello.md
   - Data Accessing with Doctrine:
     - data/index.md
