@@ -11,15 +11,15 @@ Richardson Maturity Model defines a series of  **Levels** used to evaluate the q
 * Level 2 introduces a standard set of verbs so that we handle similar situations in the same way, removing unnecessary variation. For the same resource endpoint, such as */orders*, verb `POST` to place a new order, `GET` to retrieve all orders.
 * Level 3 introduces discoverability, providing a way of making a protocol more self-documenting. HATEOAS (Hypertext As The Engine Of Application State) is a popular protocol archives *self-documenting* purpose, for example, in a *collection* result, using links make it possible to navigate all subresources with extra documentation. 
 
-According to these clear rules, when exploring the existing popular APIs in the internet, you will find a lot of public APIs only archive Level 0 or Level 1, in fact they are not *REST* ready,  although the author names  it *REST API* in their documentation. 
+According to these clear rules, when exploring the existing popular APIs in the internet, you will find a lot of public APIs only archive Level 0 or Level 1, in fact they are not *REST* ready,  although the authors call them *REST APIs* in their documentation. 
 
-When building RESTful APIs, make sure the design solution archives RMM Level 2, else we may can not call it  *REST*.  If you can take RMM Level 3 into consideration, it is a great addition.
+When building RESTful APIs, make sure the design solution archives RMM Level 2, else we may not call it  *REST*.  If you can take RMM Level 3 into consideration, it is a great addition.
 
-## Design RESTful API
+## Designing RESTful API
 
 If you are new to REST, consider reading [Roy's article](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) firstly, and do not miss [Martin's explanation of RMM](https://martinfowler.com/articles/richardsonMaturityModel.html).  To learn these resource in a central place, I suggest the [REST API Tutorial ](https://restfulapi.net/) website which explains REST and RMM with detailed examples. 
 
-[Github API](https://docs.github.com/en/rest) is an excellent REST design example, you can consider Github API as the *Best Practice*,  when designing REST API, use it as a reference.
+[Github API](https://docs.github.com/en/rest) is an excellent example of REST API design. When designing your REST API,  consider to use it as a *Best Practice* reference .
 
 Follow the REST convention and the requirements of RMM Level 2, we summarize the RESTful APIs of a blog system into a table list. This list covers all APIs we have designed and implemented in the previous sections.
 
