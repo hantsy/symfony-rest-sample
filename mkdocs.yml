@@ -63,6 +63,7 @@ nav:
     - "Creating Controller": api/postctl.md
     - "Handling Exceptions": api/ex.md
     - "Handling Subresources": api/sub.md
+    - "API Design Consideration": api/design.md
   - Testing:
     - test/index.md
     - "Testing Repository": test/testdb.md

@@ -1,8 +1,8 @@
 # Handling Subresources
 
-In a real world blog application, a `Post` can be commented, it is a great path that the author and the readers communicate with each others.
+In a real world blog application, a `Post` can be commented, it is a great path that the author can interact with it readers.
 
-When designing the APIs such as  adding a comment, there are a lot of debates, for example, *POST /comments* and *POST /posts/{id}/comments* which one is more reasonable. Many architects/developers only remember to perform the CRUD operations via HTTP protocol, but do not think through the relations between entities. 
+When designing the APIs such as  adding a comment under a specific post, there are a lot of debates.  For example, *POST /comments* and *POST /posts/{id}/comments* which one is more reasonable. Many architects/developers only remember to perform the CRUD operations via HTTP protocol, but do not think through the relations between entities. 
 
 ## Adding Comment to Post
 
@@ -89,17 +89,4 @@ class CommentController extends AbstractController
     }
 }
 ```
-
-## API Design Consideration
-
-How about the *retrieving comments of a user*, we could have some different design considerations,  for example:
-
-* *GET /comments?user=hantsy*  Use a united endpoint for all cases,  and add a query parameter to filter the result 
-* and *GET /me/comments* Mounted under  the current user endpoint, filter creator by the current user.
-
-Which is better? I prefer the later. 
-
-Sometimes it is difficult to make a decision this one is good and the other are bad, but when designing RESTful APIs, beside adopting the HTTP methods,  URI path itself is meaningful, it could indicate the root/leaves，whole/parts or parent/children relations. 
-
-So in my mind, when considering the scenario *retrieving comments of a Post*,  *GET /posts/{id}/comments* is better than *GET /comments?post=id*.
 
