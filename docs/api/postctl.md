@@ -122,7 +122,7 @@ class Page
 }    
 ```
 
-### Customzing ArgumentResolver
+### Handling Query Parameters
 
 In the `PostController` , let's improve the the function which serves the route `/posts`, make it accept query parameters like */posts?q=Symfony&offset=0&limit=10*, and ensure the parameters are optional.
 
@@ -306,7 +306,7 @@ The `id` in the URI is a string,  can not be  used  as `Uuid`  directly.
 
 Symfony provides `ParamConverter` to convert the request attributes to the target type. We can create a custom `ParamConverter` to archive the purpose.
 
-### Customizing ParamConverter 
+### Converting Request Attributes 
 
 Create a  new class `UuidParamCovnerter` under *src/Request/* folder.
 
@@ -469,5 +469,126 @@ curl -v http://localhost:8000/posts -H "Content-Type:application/json" -d "{\"ti
 < Content-Length: 2
 <
 []
+```
+
+### Validating Request
+
+In the last section,  we convert the request body into an plain object. To validate the object, generally we can inject a `Validator` service. 
+
+```php
+__constructor(ValidatorInterface $validator, ...){}
+```
+
+Then invoke `validate` function to validate the target value, store the validation result into an  `errors` object,  you can process it later.
+
+```php
+$errors = $validator->validate($body);
+
+if (count($errors) > 0) {
+    //...
+}
+```
+
+Like the above section, you can create  a custom  `ArgumentValueResolver`  and a specific `Attribute` to handle the validation automatically. 
+
+But I hope the official *validation attributes* can be applied on the controller method arguments directly,  like the existing Bean Validation in a Spring Controller. For example, 
+
+```php
+#[Route(path: "", name: "all", methods: ["GET"])]
+function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
+{
+    //...
+}
+             
+#[Route(path: "", name: "all", methods: ["POST"])]
+function create(#[Body] #[Valid] data: CreatePostCommand): Response
+{
+    //...
+}             
+```
+
+Please vote [issue #43958](https://github.com/symfony/symfony/issues/43958) if you like include this feature.
+
+## Updating Post
+
+Follow the REST convention, define the following rule to serve an endpoint to handle the request.
+
+* Request matches Http verbs/HTTP Method: `PUT`
+* Request matches route endpoint: */posts/{id}*
+* If successful, return a `NO_CONTENT`(204) Http Status code and an empty response body.
+
+```php
+#[Route(path: "/{id}", name: "update", methods: ["PUT"])]
+public function update(Uuid $id, #[Body] UpdatePostDto $data): Response
+{
+    $entity = $this->posts->findOneBy(["id" => $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this->json(["error" => "Post was not found by id:" . $id], 404);
+    }
+    $entity->setTitle($data->getTitle())
+        ->setContent($data->getContent());
+    $this->objectManager->merge($entity);
+    $this->objectManager->flush();
+
+    return $this->json([], 204);
+}
+```
+
+Firstly we retrieve the existing post through the `id` path variable.   Update the existing  post with data from the request body, and save it back to the database.
+
+### Updating Post Status 
+
+In the above update operation, we do not update the status field. In a real world application, in some cases we could update a single field instead of the world entity. 
+
+The status field of a `Post` can be updated via a standalone endpoint.
+
+Follow the REST convention, define the following rule to serve an endpoint to handle the request.
+
+* Request matches Http verbs/HTTP Method: `PUT`
+* Request matches route endpoint: */posts/{id}/status*
+* If successful, return a `NO_CONTENT`(204) Http Status code and an empty response body.
+
+```php
+#[Route(path: "/{id}/status", name: "update_status", methods: ["PUT"])]
+public function updateStatus(Uuid $id, #[Body] UpdatePostStatusDto $data): Response
+{
+    $entity = $this->posts->findOneBy(["id" => $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this->json(["error" => "Post was not found by id:" . $id], 404);
+    }
+    echo "update post status::::" . PHP_EOL;
+    var_export($data);
+    $entity->setStatus($data->getStatus());
+    $this->objectManager->merge($entity);
+    $this->objectManager->flush();
+
+    return $this->json([], 204);
+}
+```
+
+## Deleting Post
+
+Follow the REST convention, define the following rule to serve an endpoint to handle the request.
+
+* Request matches Http verbs/HTTP Method: `DELETE`
+* Request matches route endpoint: */posts/{id}*
+* If successful, return a `NO_CONTENT`(204) Http Status code and an empty response body.
+
+```php
+#[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
+public function deleteById(Uuid $id): Response
+{
+    $entity = $this->posts->findOneBy(["id" => $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this->json(["error" => "Post was not found by id:" . $id], 404);
+    }
+    $this->objectManager->remove($entity);
+    $this->objectManager->flush();
+
+    return $this->json([], 204);
+}
 ```
 
