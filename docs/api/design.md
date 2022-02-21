@@ -1,7 +1,5 @@
 # API Design Consideration
 
-When we design RESTful API, besides following the HTTP protocol, and REST convention, most of time it is maybe heavily dependent on our past experience and practice.
-
 The term `REST` firstly occurred in the [CHAPTER 5: Representational State Transfer (REST)](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) of [Roy Fielding](https://twobithistory.org/2020/06/28/rest.html)'s dissertation: [Architectural Styles and the Design of Network-based Software](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm). This dissertation had been translated into several languages, including Chinese. But it does not include certain executable guidelines and considerations when designing RESTful APIs, till [Richardson Maturity Model](https://martinfowler.com/articles/richardsonMaturityModel.html) (RMM) was born. 
 
 ## Richardson Maturity Model
@@ -15,15 +13,15 @@ Richardson Maturity Model defines a series of  **Levels** used to evaluate the q
 
 According to these clear rules, when exploring the existing popular APIs in the internet, you will find a lot of public APIs only archive Level 0 or Level 1, in fact they are not *REST* ready,  although the author names  it *REST API* in their documentation. 
 
-[Github API](https://docs.github.com/en/rest) is an excellent REST design example.
+When building RESTful APIs, make sure the design solution archives RMM Level 2, else we may can not call it  *REST*.  If you can take RMM Level 3 into consideration, it is a great addition.
 
-When building RESTful APIs, make sure the design solution archives RMM Level 2, else we may can not call it  *REST*.  If you can take RMM Level 3 into consideration, it is a great addition
+## Design RESTful API
 
-If you are new to REST, consider reading Roy's article firstly, and do not miss Martin's explanation of RMM.  To learn these resource in a central place, I suggest the [REST API Tutorial ](https://restfulapi.net/) website which explains REST and RMM with detailed examples. 
+If you are new to REST, consider reading [Roy's article](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm) firstly, and do not miss [Martin's explanation of RMM](https://martinfowler.com/articles/richardsonMaturityModel.html).  To learn these resource in a central place, I suggest the [REST API Tutorial ](https://restfulapi.net/) website which explains REST and RMM with detailed examples. 
 
-## RESTful API Summary
+[Github API](https://docs.github.com/en/rest) is an excellent REST design example, you can consider Github API as the *Best Practice*,  when designing REST API, use it as a reference.
 
-Follow the RMM rule, we summarize the RESTful APIs of a blog system into a table list. This list covers all APIs we have designed and implemented in the previous sections.
+Follow the REST convention and the requirements of RMM Level 2, we summarize the RESTful APIs of a blog system into a table list. This list covers all APIs we have designed and implemented in the previous sections.
 
 | URI      | Http Method | Request                                         | Response                    | Description       |
 | ----------- | ----------- | ----------------------------------------------- | --------------------------- | ----------------- |
@@ -37,6 +35,8 @@ Follow the RMM rule, we summarize the RESTful APIs of a blog system into a table
 
 ## Considering Entity Relations
 
+When we design RESTful API, besides following the HTTP protocol and REST convention, most of time it is maybe heavily dependent on our past experience and practice.
+
 How about the *retrieving comments of a user*, we could have some different design considerations,  for example:
 
 * *GET /comments?user=hantsy*  Use a united endpoint for all cases,  and add a query parameter to filter the result 
@@ -44,7 +44,7 @@ How about the *retrieving comments of a user*, we could have some different desi
 
 Which is better? I prefer the later. 
 
-Sometimes it is difficult to make a decision this one is good and the other are bad, but when designing RESTful APIs, beside adopting the HTTP methods,  URI path itself is meaningful, it could indicate the root/leaves，whole/parts or parent/children relations. 
+Sometimes it is difficult to make a decision this one is good and the other are bad.  Besides identifying the resources, URI path itself is meaningful, it could indicate the root/leaves, whole/parts or parent/children relations. 
 
 So in my mind, when considering the scenario *retrieving comments of a Post*,  *GET /posts/{id}/comments* is better than *GET /comments?post=id*.
 
