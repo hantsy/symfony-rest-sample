@@ -68,5 +68,8 @@ nav:
   - Testing:
     - test/index.md
     - "Testing Repository": test/testdb.md
-    - "Testing Controller": test/testctl.md    
+    - "Testing Controller": test/testctl.md   
+  - Tips and Tricks:
+    - tips/index.md
+    - "Using Enum": tips/enum.md   
     
