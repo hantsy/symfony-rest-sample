@@ -23,28 +23,26 @@ If you are new to REST, consider reading [Roy's article](https://www.ics.uci.edu
 
 Follow the REST convention and the requirements of RMM Level 2, we summarize the RESTful APIs of a blog system into a table list. This list covers all APIs we have designed and implemented in the previous sections.
 
-| URI      | Http Method | Request                                         | Response                    | Description       |
-| ----------- | ----------- | ----------------------------------------------- | --------------------------- | ----------------- |
-| /posts      | GET         |                                                 | 200, [{'id':1, 'title'},{}] | Get all posts     |
-| /posts      | POST        | {'title':'test title','content':'test content'} | 201                         | Create a new post |
-| /posts/{id} | GET         |                                                 | 200, {'id':1, 'title'}      | Get a post by id  |
-| /posts/{id} | PUT         | {'title':'test title','content':'test content'} | 204                         | Update a post     |
-| /posts/{id} | DELETE      |                                                 | 204                         | Delete a post     |
-| /posts/{id}/comments | GET  |                                                 | 200, [{'content':''},{}] | Get comments of a post|
-| /posts/{id}/comments | POST  | {'content':'test content'} | 201                   | Add comment to a post    |
+| URI                  | Http Method | Request                                         | Response                   | Description            |
+| -------------------- | ----------- | ----------------------------------------------- | -------------------------- | ---------------------- |
+| /posts               | GET         |                                                 | 200 [{'id':1, 'title'},{}] | Get all posts          |
+| /posts               | POST        | {'title':'test title','content':'test content'} | 201                        | Create a new post      |
+| /posts/{id}          | GET         |                                                 | 200, {'id':1, 'title'}     | Get a post by id       |
+| /posts/{id}          | PUT         | {'title':'test title','content':'test content'} | 204                        | Update a post          |
+| /posts/{id}          | DELETE      |                                                 | 204                        | Delete a post          |
+| /posts/{id}/comments | GET         |                                                 | 200, [{'content':''},{}]   | Get comments of a post |
+| /posts/{id}/comments | POST        | {'content':'test content'}                      | 201                        | Add comment to a post  |
 
 ## Considering Entity Relations
 
 When we design RESTful API, besides following the HTTP protocol and REST convention, most of time it is maybe heavily dependent on our past experience and practice.
 
-How about the *retrieving comments of a user*, we could have some different design considerations,  for example:
+For example,  there is  a scenario: *retrieving comments created by the current authenticated user*, we could have some different design considerations:
 
-* *GET /comments?user=hantsy*  Use a united endpoint for all cases,  and add a query parameter to filter the result 
-* and *GET /me/comments* Mounted under  the current user endpoint(*/me*), filter comments by the current user.
+* *GET /comments?user=hantsy*  Use a united endpoint for all cases,  and *explicitly* add an  query parameter to filter the comments
+* *GET /me/comments* The endpoint is mounted under *the authenticated user endpoint*(*/me*), and *implicitly* filter comments by the user
 
 Which is better? I prefer the later. 
 
-Sometimes it is difficult to make a decision this one is good and the other are bad.  Besides identifying the resources, URI path itself is meaningful, it could indicate the root/leaves, whole/parts or parent/children relations. 
-
-So in my mind, when considering the scenario *retrieving comments of a Post*,  *GET /posts/{id}/comments* is better than *GET /comments?post=id*.
+Sometimes it is difficult to make a decision this one is good and the other are bad.  Besides identifying the resources, URI path itself is meaningful, it could indicate the root/leaves, whole/parts or parent/children relations. So in my mind, when considering the scenario *retrieving comments of a Post*,  *GET /posts/{id}/comments* is better than *GET /comments?post=id*.
 

@@ -1,6 +1,8 @@
 # Testing Controller
 
-As described in the previous sections,  to test Controller/API, create a test class to extend `WebTestCase`, which provides a plenty of  facilities to handle request and assert response.
+As described in the previous sections,  to test Controller/API, create a test class to extend `WebTestCase`, which provides a plenty of facilities to handle request and assert response.
+
+## Creating PostControllerTest
 
 Run the following command to create a test skeleton.
 
@@ -32,7 +34,7 @@ class PostControllerTest extends WebTestCase
 
 If you try to run the test, it will fail. At the moment, there is no any data for testing.
 
-### Preparing Data for Testing Purpose
+## Preparing Data for Testing Purpose
 
 The `doctrine/doctrine-fixtures-bundle` is use for populate sample data for testing purpose, and `dama/doctrine-test-bundle` ensures the data is restored before evey test is running.
 
@@ -113,6 +115,12 @@ public function testCreatePost(): void
 }
 ```
 
+
+
+## Testing Exception
+
+We have created a `PostNotFoundException`  which is thrown when a *Post* is not found in the  `PostController`.
+
 Add a test to verify if the post is not found and get a 404 status code.
 
 ```php
@@ -129,3 +137,5 @@ public function testGetANoneExistingPost(): void
     $this->assertStringContainsString("Post #" . $id . " was not found", $data);
 }
 ```
+
+Here we use `Uuid:v4` to generate a random UUID, of course it should not exist in the backend database. When get a non-existing post, it should return 404 status code and write error message into the response.

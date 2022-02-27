@@ -58,7 +58,7 @@ Run the following command to create a Symfony  project using `composer`.
 
 The later is similar to the `symfony new projectname --full` to generate a full-featured web project skeleton.
 
-## Running Symfony Application
+## Running Application
 
 Open your terminal, switch to the project root folder, and run the following command to start the application.
 

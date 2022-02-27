@@ -1,14 +1,13 @@
 # Testing Repository
 
+Symfony provides a *test-pack* to simplify the configuration for running tests. 
 
+## Installing Testing Tools
 
-Run the following command to install PHPUnit and Symfony **test-pack**.  The **test-pack** will install all essential packages for testing Symfony components and  add PHPUnit configuration, such as *phpunit.xml.dist*.
+Run the following command to install PHPUnit and Symfony **test-pack**.  
+The **test-pack** will install all essential packages for testing Symfony components and add PHPUnit configuration, such as *phpunit.xml.dist*.
 
-```bash
-# composer require --dev phpunit/phpunit symfony/test-pack
-```
-
-An simple test example written in pure PHPUnit.
+An simple test example written in PHPUnit.
 
 ```bash
 class PostTest extends TestCase
@@ -27,7 +26,9 @@ class PostTest extends TestCase
 
 Symfony provides some specific base classes(`KernelTestCase`, `WebTestCase`, etc.) to simplfy the testing work in a Symfony project.
 
-The following is an example of  testing  a `Repository` - `PostRepository`. The  `KernelTestCase` contains facilities to bootstrap application kernel and provides service container.
+## Testing  PostRepository
+
+Create a  test class  `PostRepositoryTest`, make it extends from `KernelTestCase`. 
 
 ```php
 class PostRepositoryTest extends KernelTestCase
@@ -74,8 +75,14 @@ class PostRepositoryTest extends KernelTestCase
 }
 ```
 
-In the above codes, in the `setUp` function, boot up the application kernel, after it is booted, a test scoped *Service Container* is available.    Then get `EntityManagerInterface` and `PostRepository` from service container.
+The `KernelTestCase` contains all facilities to bootstrap the application kernel and provides service container in tests.
 
-In the  `testCreatePost`  function, persists a `Post` entity, and find this post by id and verify the *title* and *content* fields.
+In the above codes, there is a `setUp` function which is used to prepare the testing environment before running the tests.
 
-> Currently, PHPUnit does not include PHP 8 Attribute support, the testing codes are similar to the legacy JUnit 4 code style.
+In this function, it boots up the application kernel. After it is booted, a test scoped *Service Container* is available, you can fetch the managed service in the container.
+
+Here we retrieve `EntityManagerInterface` and `PostRepository` from service container.
+
+In the `testCreatePost` function, it persists a `Post` entity firstly, then find this post by id and verify the *title* and *content* fields.
+
+> Currently, PHPUnit does not include PHP 8 Attribute support, the testing codes looks like the legacy JUnit 4 code style.
