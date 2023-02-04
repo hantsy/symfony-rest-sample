@@ -44,6 +44,7 @@
     "preferred-install": {
       "*": "dist"
     },
+    "allow-plugins": true,
     "sort-packages": true
   },
   "autoload": {
