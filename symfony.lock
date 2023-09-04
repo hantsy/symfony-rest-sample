@@ -144,7 +144,7 @@
         "version": "1.14.0"
     },
     "phpunit/phpunit": {
-        "version": "10.3",
+        "version": "9.6",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
