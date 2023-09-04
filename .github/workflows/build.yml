@@ -4,7 +4,7 @@ on:
   push:
     paths-ignore:
       - "docs/**"
-    branches: [ master ]
+    branches: [master]
   pull_request:
     paths-ignore:
       - "docs/**"
@@ -35,67 +35,68 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-versions: [ '8.1', '8.2']
+        php-versions: ["8.1", "8.2"]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    
-    # https://github.com/shivammathur/setup-php (community)
-    - name: Setup PHP
-      id: setup-php
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version:  ${{ matrix.php-versions }}
-        coverage: xdebug
-        tools: composer:v2
-        extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql, pgsql, dom, filter, gd, json, mbstring, pdo
-      env:
-        update: true
-    - name: Print PHP version
-      run: echo ${{ steps.setup-php.outputs.php-version }}
+      - name: Checkout
+        uses: actions/checkout@v3
 
-    - name: Get composer cache directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      # https://github.com/shivammathur/setup-php (community)
+      - name: Setup PHP
+        id: setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          coverage: xdebug
+          tools: composer:v2
+          extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql, pgsql, dom, filter, gd, json, mbstring, pdo
+        env:
+          update: true
 
-    - name: Cache composer dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        # Use composer.json for key, if composer.lock is not committed.
-        # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: ${{ runner.os }}-composer-
+      - name: Print PHP version
+        run: echo ${{ steps.setup-php.outputs.php-version }}
 
-    - name: Install Composer dependencies
-      run: composer install --no-progress --prefer-dist --optimize-autoloader
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-    # —— Symfony ——————————————————————————————————————————————————————————
-    - name: Check Symfony requirements
-      run: |      
-        echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' |sudo tee /etc/apt/sources.list.d/symfony-cli.list
-        sudo apt update
-        sudo apt install symfony-cli 
-        symfony check:requirements   
-        php bin/console -V
-    # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
-    #- name: PHP-CS-Fixer
-    #  uses: docker://oskarstark/php-cs-fixer-ga
-    #  with:
-    #    args: --config=.php_cs.dist --diff --dry-run
-    
-    - name: Setup Database
-      run: |
-        docker-compose up -d postgres
-        sleep 10
-        docker ps -a
-    - name: Run Migrations
-      run: |
-        php ./bin/console doctrine:schema:create -n
-        php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
+      - name: Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          # Use composer.json for key, if composer.lock is not committed.
+          # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md    
-    - name: Run Tests
-      run: |
-        composer run-script test
+      - name: Install Composer dependencies
+        run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+      # —— Symfony ——————————————————————————————————————————————————————————
+      - name: Check Symfony requirements
+        run: |
+          echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' |sudo tee /etc/apt/sources.list.d/symfony-cli.list
+          sudo apt update
+          sudo apt install symfony-cli 
+          symfony check:requirements   
+          php bin/console -V
+      # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
+      #- name: PHP-CS-Fixer
+      #  uses: docker://oskarstark/php-cs-fixer-ga
+      #  with:
+      #    args: --config=.php_cs.dist --diff --dry-run
+
+      - name: Setup Database
+        run: |
+          docker-compose up -d postgres
+          sleep 10
+          docker ps -a
+      - name: Run Migrations
+        run: |
+          php ./bin/console doctrine:schema:create -n
+          php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
+
+      # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+      # Docs: https://getcomposer.org/doc/articles/scripts.md
+      - name: Run Tests
+        run: |
+          composer run-script test
