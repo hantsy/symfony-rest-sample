@@ -40,11 +40,13 @@ jobs:
       id: composer-cache
       run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-    - name: Cache dependencies
+    - name: Cache composer dependencies
       uses: actions/cache@v3
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+        # Use composer.json for key, if composer.lock is not committed.
+        # key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install Composer dependencies
