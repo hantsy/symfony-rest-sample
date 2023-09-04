@@ -66,15 +66,18 @@ jobs:
     #  with:
     #    args: --config=.php_cs.dist --diff --dry-run
     
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
     - name: Setup Database
       run: |
         docker-compose up -d postgres
         sleep 10
         docker ps -a
-    - name: Run test suite
+    - name: Run Migrations
       run: |
         php ./bin/console doctrine:schema:create -n
         php ./bin/console doctrine:fixtures:load --purge-with-truncate -n
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md    
+    - name: Run Tests
+      run: |
         composer run-script test
