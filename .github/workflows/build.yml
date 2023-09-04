@@ -15,20 +15,38 @@ on:
 
 # see: https://www.strangebuzz.com/en/blog/setting-a-ci-cd-workflow-for-a-symfony-project-thanks-to-the-github-actions
 # and https://antonshell.me/en/post/github-actions-symfony
+# and https://github.com/shivammathur/setup-php/blob/master/examples/symfony-postgres.yml
 jobs:
   build:
+    name: Symfony (PHP ${{ matrix.php-versions }})
     runs-on: ubuntu-latest
 
+    # Docs: https://docs.github.com/en/actions/using-containerized-services
+    # services:
+    #   postgres:
+    #     image: postgres:latest
+    #     env:
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: postgres
+    #       POSTGRES_DB: postgres
+    #     ports:
+    #       - 5432/tcp
+    #     options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 3
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: [ '8.1', '8.2']
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
     
     # https://github.com/shivammathur/setup-php (community)
     - name: Setup PHP
       id: setup-php
       uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.1'
-        coverage: xdebug2
+        php-version:  ${{ matrix.php-versions }}
+        coverage: xdebug
         tools: composer:v2
         extensions: mbstring, xml, ctype, iconv, intl, pdo_pgsql, pgsql, dom, filter, gd, json, mbstring, pdo
       env:
