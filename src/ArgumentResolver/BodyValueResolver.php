@@ -5,13 +5,13 @@ namespace App\ArgumentResolver;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Serializer\SerializerInterface;
 
-class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
+class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
 {
-    public function __construct(private SerializerInterface $serializer)
+    public function __construct(private readonly SerializerInterface $serializer)
     {
     }
 
@@ -24,7 +24,7 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
     {
         $type = $argument->getType();
         $this->logger->debug("The argument type:'" . $type . "'");
-        $format = $request->getContentType() ?? 'json';
+        $format = $request->getContentTypeFormat() ?? 'json';
         $this->logger->debug("The request format:'" . $format . "'");
 
         //read request body
@@ -34,9 +34,6 @@ class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareIn
         yield $data;
     }
 
-    /**
-     * @inheritDoc
-     */
     public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         $attrs = $argument->getAttributes(Body::class);

@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CommentController extends AbstractController
 {
 
-    public function __construct(private CommentRepository $commentRepository)
+    public function __construct(private readonly CommentRepository $commentRepository)
     {
     }
 

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Attribute]
 class Options extends Route
 {
-    public function getMethods()
+    public function getMethods(): array
     {
         return [HttpMethod::OPTIONS->name];
     }
