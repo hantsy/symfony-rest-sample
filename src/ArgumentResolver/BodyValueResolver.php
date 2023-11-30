@@ -22,7 +22,7 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (!$this->supports($request, $argument)) return null;
+        if (!$this->supports($request, $argument)) return [];
         $type = $argument->getType();
         $this->logger->debug("The argument type:'" . $type . "'");
         $format = $request->getContentTypeFormat() ?? 'json';

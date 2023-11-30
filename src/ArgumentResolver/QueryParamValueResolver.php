@@ -21,7 +21,7 @@ class QueryParamValueResolver implements ValueResolverInterface, LoggerAwareInte
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (!$this->supports($request, $argument)) return null;
+        if (!$this->supports($request, $argument)) return [];
         $argumentName = $argument->getName();
         $this->logger->info("Found [QueryParam] annotation/attribute on argument '" . $argumentName . "', applying [QueryParamValueResolver]");
         $type = $argument->getType();
