@@ -26,7 +26,7 @@ class PostSummaryDto
      * @param string $id
      * @return PostSummaryDto
      */
-    public function setId(string $id): self
+    public function setId(string $id): PostSummaryDto
     {
         $this->id = $id;
         return $this;
@@ -44,10 +44,13 @@ class PostSummaryDto
     /**
      * @return string
      */
-    public
-    function getTitle(): string
+    public function getTitle(): string
     {
         return $this->title;
+    }
+    
+    public function __toString():string {
+        return "PostSummaryDto[title=.".$this->title.", id.".$this->id."]";
     }
 
 }

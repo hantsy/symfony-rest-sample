@@ -72,4 +72,5 @@ nav:
   - Tips and Tricks:
     - tips/index.md
     - "Using Enum": tips/enum.md   
+    - "Upgrade to V7": tips/v7.md
     

@@ -6,7 +6,7 @@ class CreateCommentDto
 {
     private string $content;
 
-    static function of( string $content): CommentWithPostSummaryDto
+    static function of(string $content): CommentWithPostSummaryDto
     {
         $dto = new CommentWithPostSummaryDto();
         $dto->setContent($content);
@@ -16,8 +16,7 @@ class CreateCommentDto
     /**
      * @param string $content
      */
-    public
-    function setContent(string $content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
         return $this;
@@ -26,11 +25,8 @@ class CreateCommentDto
     /**
      * @return string
      */
-    public
-    function getContent(): string
+    public function getContent(): string
     {
         return $this->content;
     }
-
-
 }

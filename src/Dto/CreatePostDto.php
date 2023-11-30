@@ -26,8 +26,7 @@ class CreatePostDto
     /**
      * @param string $content
      */
-    public
-    function setContent(string $content): self
+    public function setContent(string $content): self
     {
         $this->content = $content;
         return $this;
@@ -36,8 +35,7 @@ class CreatePostDto
     /**
      * @return string
      */
-    public
-    function getTitle(): string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -45,11 +43,9 @@ class CreatePostDto
     /**
      * @return string
      */
-    public
-    function getContent(): string
+    public function getContent(): string
     {
         return $this->content;
     }
-
 
 }

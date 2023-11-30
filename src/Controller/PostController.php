@@ -2,10 +2,6 @@
 
 namespace App\Controller;
 
-use App\Annotation\Delete;
-use App\Annotation\Get;
-use App\Annotation\Post;
-use App\Annotation\Put;
 use App\ArgumentResolver\Body;
 use App\ArgumentResolver\QueryParam;
 use App\Dto\CreateCommentDto;
@@ -17,24 +13,29 @@ use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[Route(path: "/posts", name: "posts_")]
-class PostController extends AbstractController
+class PostController extends AbstractController implements LoggerAwareInterface
 {
+
+    private LoggerInterface $logger;
+
     /**
      * @param PostRepository $posts
      * @param EntityManagerInterface $objectManager
      * @param SerializerInterface $serializer
      */
-    public function __construct(private readonly PostRepository $posts,
+    public function __construct(private readonly PostRepository         $posts,
                                 private readonly EntityManagerInterface $objectManager,
-                                private readonly SerializerInterface $serializer)
+                                private readonly SerializerInterface    $serializer)
     {
     }
 
@@ -47,18 +48,20 @@ class PostController extends AbstractController
 
     // function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
     // see: https://github.com/symfony/symfony/issues/43958
-    // #[Route(path: "", name: "all", methods: ["GET"])]
-    #[Get(path: "", name: "all")]
+    #[Route(path: "", name: "all", methods: ["GET"])]
+    //  #[Get(path: "", name: "all")]
     public function all(#[QueryParam] string $keyword,
-                        #[QueryParam] int $offset = 0,
-                        #[QueryParam] int $limit = 20): Response
+                        #[QueryParam] int    $offset = 0,
+                        #[QueryParam] int    $limit = 20): Response
     {
+        $this->logger->debug("request param: keyword=[" . $keyword . "], offset=[" . $offset . "], limit=[" . $limit . "]");
         $data = $this->posts->findByKeyword($keyword ?: '', $offset, $limit);
+        $this->logger->debug("find all result:[" . $data . "]");
         return $this->json($data);
     }
 
-    // #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
-    #[Get(path: "/{id}", name: "byId")]
+    #[Route(path: "/{id}", name: "byId", methods: ["GET"])]
+    //#[Get(path: "/{id}", name: "byId")]
     public function getById(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
@@ -70,8 +73,8 @@ class PostController extends AbstractController
         }
     }
 
-    //#[Route(path: "", name: "create", methods: ["POST"])]
-    #[Post(path: "", name: "create")]
+    #[Route(path: "", name: "create", methods: ["POST"])]
+    //#[Post(path: "", name: "create")]
     public function create(#[Body] CreatePostDto $data): Response
     {
         $entity = PostFactory::create($data->getTitle(), $data->getContent());
@@ -81,8 +84,8 @@ class PostController extends AbstractController
         return $this->json([], 201, ["Location" => "/posts/" . $entity->getId()]);
     }
 
-    //#[Route(path: "/{id}", name: "update", methods: ["PUT"])]
-    #[Put(path: "/{id}", name: "update")]
+    #[Route(path: "/{id}", name: "update", methods: ["PUT"])]
+    //#[Put(path: "/{id}", name: "update")]
     public function update(Uuid $id, #[Body] UpdatePostDto $data): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
@@ -98,8 +101,8 @@ class PostController extends AbstractController
         return $this->json([], 204);
     }
 
-    // #[Route(path: "/{id}/status", name: "update_status", methods: ["PUT"])]
-    #[Put(path: "/{id}/status", name: "update_status")]
+    #[Route(path: "/{id}/status", name: "update_status", methods: ["PUT"])]
+    //#[Put(path: "/{id}/status", name: "update_status")]
     public function updateStatus(Uuid $id, #[Body] UpdatePostStatusDto $data): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
@@ -116,8 +119,8 @@ class PostController extends AbstractController
         return $this->json([], 204);
     }
 
-    //#[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
-    #[Delete(path: "/{id}", name: "delete")]
+    #[Route(path: "/{id}", name: "delete", methods: ["DELETE"])]
+    //#[Delete(path: "/{id}", name: "delete")]
     public function deleteById(Uuid $id): Response
     {
         $entity = $this->posts->findOneBy(["id" => $id]);
@@ -132,8 +135,8 @@ class PostController extends AbstractController
     }
 
     // comments sub resources.
-    //#[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
-    #[GET(path: "/{id}/comments", name: "commentByPostId")]
+    #[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
+    //#[GET(path: "/{id}/comments", name: "commentByPostId")]
     public function getComments(Uuid $id): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
@@ -145,8 +148,8 @@ class PostController extends AbstractController
         }
     }
 
-    //#[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
-    #[Post(path: "/{id}/comments", name: "addComments")]
+    #[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
+    //#[Post(path: "/{id}/comments", name: "addComments")]
     public function addComment(Uuid $id, Request $request): Response
     {
         $data = $this->posts->findOneBy(["id" => $id]);
@@ -163,4 +166,8 @@ class PostController extends AbstractController
         }
     }
 
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
 }

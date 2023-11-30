@@ -28,7 +28,7 @@ class Greeting
      * @param string $message
      * @return Greeting
      */
-    public function setMessage(string $message): self
+    public function setMessage(string $message): Greeting
     {
         $this->message = $message;
         return $this;
