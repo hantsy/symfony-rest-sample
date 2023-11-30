@@ -19,3 +19,6 @@ NUL
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+.idea/
+.vscode/
