@@ -3,7 +3,8 @@
 namespace App\Annotation;
 
 use Attribute;
-use Symfony\Component\Routing\Annotation\Route;
+use JetBrains\PhpStorm\Deprecated;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Attribute]
 class Patch extends Route

@@ -3,7 +3,7 @@
 namespace App\Annotation;
 
 use Attribute;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Attribute]
 class Put extends Route
