@@ -28,7 +28,7 @@ class UpdatePostStatusDto
      * @param Status $status
      * @return UpdatePostStatusDto
      */
-    public function setStatus(Status $status): self
+    public function setStatus(Status $status): UpdatePostStatusDto
     {
         $this->status = $status;
         return $this;

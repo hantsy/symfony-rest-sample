@@ -29,7 +29,7 @@ class CommentWithPostSummaryDto
      * @param string $id
      * @return CommentWithPostSummaryDto
      */
-    public function setId(string $id): self
+    public function setId(string $id): CommentWithPostSummaryDto
     {
         $this->id = $id;
         return $this;
@@ -67,7 +67,7 @@ class CommentWithPostSummaryDto
      * @param PostSummaryDto $post
      * @return CommentWithPostSummaryDto
      */
-    public function setPost(PostSummaryDto $post): self
+    public function setPost(PostSummaryDto $post): CommentWithPostSummaryDto
     {
         $this->post = $post;
         return $this;

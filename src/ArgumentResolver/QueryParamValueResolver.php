@@ -5,10 +5,10 @@ namespace App\ArgumentResolver;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
+class QueryParamValueResolver implements ValueResolverInterface, LoggerAwareInterface
 {
     public function __construct()
     {
@@ -21,6 +21,7 @@ class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerA
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
+        if (!$this->supports($request, $argument)) yield null;
         $argumentName = $argument->getName();
         $this->logger->info("Found [QueryParam] annotation/attribute on argument '" . $argumentName . "', applying [QueryParamValueResolver]");
         $type = $argument->getType();

@@ -75,7 +75,7 @@ class Comment
      * @param DateTimeInterface|null $createdAt
      * @return $this
      */
-    public function setCreatedAt(?DateTimeInterface $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): static
     {
         $this->createdAt = $createdAt;
         return $this;

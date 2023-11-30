@@ -107,26 +107,8 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
-    "friendsofphp/proxy-manager-lts": {
-        "version": "v1.0.5"
-    },
-    "laminas/laminas-code": {
-        "version": "4.4.3"
-    },
     "monolog/monolog": {
         "version": "2.3.5"
-    },
-    "nelmio/cors-bundle": {
-        "version": "1.5",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.5",
-            "ref": "6bea22e6c564fba3a1391615cada1437d0bde39c"
-        },
-        "files": [
-            "./config/packages/nelmio_cors.yaml"
-        ]
     },
     "nikic/php-parser": {
         "version": "v4.13.0"
@@ -168,18 +150,6 @@
     },
     "psr/log": {
         "version": "2.0.0"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        },
-        "files": [
-            "./config/packages/sensio_framework_extra.yaml"
-        ]
     },
     "symfony/asset": {
         "version": "v5.3.4"
@@ -349,9 +319,6 @@
     },
     "symfony/property-info": {
         "version": "v5.3.8"
-    },
-    "symfony/proxy-manager-bridge": {
-        "version": "v5.3.4"
     },
     "symfony/routing": {
         "version": "6.0",

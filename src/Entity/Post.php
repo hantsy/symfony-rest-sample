@@ -120,7 +120,7 @@ class Post
      * @param Status $status
      * @return Post
      */
-    public function setStatus(Status $status): self
+    public function setStatus(Status $status): Post
     {
         $this->status = $status;
         return $this;
@@ -139,7 +139,7 @@ class Post
      * @param DateTimeInterface|null $createdAt
      * @return Post
      */
-    public function setCreatedAt(?DateTimeInterface $createdAt): self
+    public function setCreatedAt(?DateTimeInterface $createdAt): Post
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -157,7 +157,7 @@ class Post
      * @param DateTimeInterface|null $publishedAt
      * @return Post
      */
-    public function setPublishedAt(?DateTimeInterface $publishedAt): self
+    public function setPublishedAt(?DateTimeInterface $publishedAt): Post
     {
         $this->publishedAt = $publishedAt;
         return $this;
