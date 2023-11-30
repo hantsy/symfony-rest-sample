@@ -22,7 +22,7 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
      */
     public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
-        if (!$this->supports($request, $argument)) yield null;
+        if (!$this->supports($request, $argument)) return null;
         $type = $argument->getType();
         $this->logger->debug("The argument type:'" . $type . "'");
         $format = $request->getContentTypeFormat() ?? 'json';
@@ -33,7 +33,6 @@ class BodyValueResolver implements ValueResolverInterface, LoggerAwareInterface
         $data = $this->serializer->deserialize($content, $type, $format);
         // $this->logger->debug("deserialized data:{0}", [$data]);
         yield $data;
-
     }
 
     /**

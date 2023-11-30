@@ -17,6 +17,8 @@ use App\Entity\PostFactory;
 use App\Exception\PostNotFoundException;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,16 +27,19 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 
 #[Route(path: "/posts", name: "posts_")]
-class PostController extends AbstractController
+class PostController extends AbstractController implements LoggerAwareInterface
 {
+
+    private LoggerInterface $logger;
+
     /**
      * @param PostRepository $posts
      * @param EntityManagerInterface $objectManager
      * @param SerializerInterface $serializer
      */
-    public function __construct(private readonly PostRepository $posts,
+    public function __construct(private readonly PostRepository         $posts,
                                 private readonly EntityManagerInterface $objectManager,
-                                private readonly SerializerInterface $serializer)
+                                private readonly SerializerInterface    $serializer)
     {
     }
 
@@ -50,10 +55,12 @@ class PostController extends AbstractController
     // #[Route(path: "", name: "all", methods: ["GET"])]
     #[Get(path: "", name: "all")]
     public function all(#[QueryParam] string $keyword,
-                        #[QueryParam] int $offset = 0,
-                        #[QueryParam] int $limit = 20): Response
+                        #[QueryParam] int    $offset = 0,
+                        #[QueryParam] int    $limit = 20): Response
     {
+        $this->logger->debug("request param: keyword=[" . $keyword . "], offset=[" . $offset . "], limit=[" . $limit . "]");
         $data = $this->posts->findByKeyword($keyword ?: '', $offset, $limit);
+        $this->logger -> debug("find all result:[".$data."]");
         return $this->json($data);
     }
 
@@ -163,4 +170,8 @@ class PostController extends AbstractController
         }
     }
 
+    public function setLogger(LoggerInterface $logger): void
+    {
+        $this->logger = $logger;
+    }
 }

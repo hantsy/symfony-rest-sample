@@ -104,5 +104,14 @@ class Page
         return $this->limit;
     }
 
+    public function __toString(): string
+    {
+        return "Page[totalElements=" . $this->totalElements
+            . ",offset=" . $this->offset
+            . ",limit=" . $this->offset
+            . ",content=" . $this->content
+            . "]";
+    }
+
 
 }
