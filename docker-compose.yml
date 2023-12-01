@@ -5,7 +5,7 @@ version: "3.5" # specify docker-compose version, v3.5 is compatible with docker 
 services:
 
   postgres:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    image: postgres:${POSTGRES_VERSION:-15}-alpine
     ports:
       - "5432:5432"
     environment:
