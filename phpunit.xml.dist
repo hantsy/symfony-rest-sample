@@ -22,13 +22,16 @@
         </testsuite>
     </testsuites>
 
-    <coverage>
-        <directory suffix=".php">src</directory>
+    <coverage includeUncoveredFiles="true">
+        <report>
+            <html outputDirectory="html-coverage" lowUpperBound="50" highLowerBound="90"/>
+            <xml outputDirectory="xml-coverage"/>
+        </report>
     </coverage>
 
-    <listeners>
+    <!-- <listeners>
         <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
-    </listeners>
+    </listeners> -->
 
     <extensions>
     </extensions>
