@@ -48,9 +48,10 @@ class PostSummaryDto
     {
         return $this->title;
     }
-    
-    public function __toString():string {
-        return "PostSummaryDto[title=.".$this->title.", id.".$this->id."]";
+
+    public function __toString(): string
+    {
+        return "PostSummaryDto[title=." . $this->title . ", id." . $this->id . "]";
     }
 
 }
