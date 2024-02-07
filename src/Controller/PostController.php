@@ -95,7 +95,6 @@ class PostController extends AbstractController implements LoggerAwareInterface
         }
         $entity->setTitle($data->getTitle())
             ->setContent($data->getContent());
-        $this->objectManager->merge($entity);
         $this->objectManager->flush();
 
         return $this->json([], 204);
@@ -113,7 +112,6 @@ class PostController extends AbstractController implements LoggerAwareInterface
         echo "update post status::::" . PHP_EOL;
         var_export($data);
         $entity->setStatus($data->getStatus());
-        $this->objectManager->merge($entity);
         $this->objectManager->flush();
 
         return $this->json([], 204);

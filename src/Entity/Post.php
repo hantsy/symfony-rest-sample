@@ -43,10 +43,10 @@ class Post
     #[Column(name: "published_at", type: "datetime", nullable: true)]
     private DateTimeInterface|null $publishedAt = null;
 
-    #[OneToMany(mappedBy: "post", targetEntity: Comment::class, cascade: ['persist', 'merge', "remove"], fetch: 'LAZY', orphanRemoval: true)]
+    #[OneToMany(mappedBy: "post", targetEntity: Comment::class, cascade: ['persist', "remove"], fetch: 'LAZY', orphanRemoval: true)]
     private Collection $comments;
 
-    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts", cascade: ['persist', 'merge'], fetch: 'EAGER')]
+    #[ManyToMany(targetEntity: Tag::class, mappedBy: "posts", cascade: ['persist'], fetch: 'EAGER')]
     private Collection $tags;
 
     public function __construct()
