@@ -1,0 +1,450 @@
+repo_name: hantsy/symfony-rest-sample
+report_id: f7f86322d32614d0ca5effac3ae28660
+version: 0.1
+repo_type: Public
+timestamp: '2024-01-31T08:15:19+00:00'
+requested_by: renovate[bot]
+provider: github
+branch: master
+detected_tools_count: 34
+tools:
+- name: PHP
+  description: A popular general-purpose scripting language that is especially suited
+    to web development
+  website_url: http://www.php.net/
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/991/hwUcGZ41_400x400.jpg
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample
+  detection_source: Repo Metadata
+- name: SQL
+  description: It is a domain-specific language used in programming
+  website_url: https://en.wikipedia.org/wiki/SQL
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Languages
+  image_url: https://img.stackshare.io/service/2271/default_068d33483bba6b81ee13fbd4dc7aab9780896a54.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/pg-initdb.d/ini.sql
+  detection_source: pg-initdb.d/ini.sql
+  last_updated_by: hantsy
+  last_updated_on: 2021-10-03 09:12:51.000000000 Z
+- name: Symfony
+  description: A PHP full-stack web framework
+  website_url: http://symfony.com/
+  version: 7.0.2
+  license: MIT
+  open_source: true
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Frameworks (Full Stack)
+  image_url: https://img.stackshare.io/service/1197/logosf_positif_03_icon.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: PostgreSQL
+  description: A powerful, open source object-relational database system
+  website_url: http://www.postgresql.org/
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Databases
+  image_url: https://img.stackshare.io/service/1028/ASOhU5xJ.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2023-12-01 10:09:37.000000000 Z
+- name: migra
+  description: A schema diff tool for PostgreSQL
+  website_url: https://migra.djrobstep.com/
+  license: Unlicense
+  open_source: true
+  hosted_saas: false
+  category: Data Stores
+  sub_category: Database Tools
+  image_url: https://img.stackshare.io/no-img-open-source.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.json
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2021-10-06 03:31:35.000000000 Z
+- name: Docker Compose
+  description: Define and run multi-container applications with Docker
+  website_url: https://github.com/docker/compose
+  license: Apache-2.0
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Container Tools
+  image_url: https://img.stackshare.io/service/3136/docker-compose.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2021-10-03 09:12:51.000000000 Z
+- name: Git
+  description: Fast, scalable, distributed revision control system
+  website_url: http://git-scm.com/
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Version Control System
+  image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample
+  detection_source: Repo Metadata
+- name: GitHub Actions
+  description: Automate your workflow from idea to production
+  website_url: https://github.com/features/actions
+  open_source: false
+  hosted_saas: true
+  category: Build, Test, Deploy
+  sub_category: Continuous Integration
+  image_url: https://img.stackshare.io/service/11563/actions.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/.github/workflows/build.yml
+  detection_source: ".github/workflows/build.yml"
+  last_updated_by: renovate[bot]
+  last_updated_on: 2024-01-18 05:39:12.000000000 Z
+- name: PHPUnit
+  description: Testing framework for PHP
+  website_url: https://phpunit.de/
+  version: 10.5.9
+  license: BSD-3-Clause
+  open_source: true
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Testing Frameworks
+  image_url: https://img.stackshare.io/service/1616/1_WsEnddd5Y4EgEHsT054kUQ.jpeg
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: hantsy
+  last_updated_on: 2020-12-09 05:55:45.000000000 Z
+- name: Alpine Linux
+  description: Security-oriented, lightweight Linux distribution based on musl libc
+    and busybox
+  website_url: https://www.alpinelinux.org/
+  open_source: false
+  hosted_saas: false
+  category: Languages & Frameworks
+  sub_category: Operating Systems
+  image_url: https://img.stackshare.io/service/6429/alpine_linux.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/docker-compose.yml
+  detection_source: docker-compose.yml
+  last_updated_by: hantsy
+  last_updated_on: 2023-12-01 10:09:37.000000000 Z
+- name: dama/doctrine-test-bundle
+  description: Symfony bundle to isolate doctrine database tests and improve test
+    performance
+  package_url: https://packagist.org/dama/doctrine-test-bundle
+  version: 8.0.1
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: doctrine/annotations
+  description: Docblock Annotations Parser
+  package_url: https://packagist.org/doctrine/annotations
+  version: 2.0.1
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: doctrine/doctrine-bundle
+  description: Symfony DoctrineBundle
+  package_url: https://packagist.org/doctrine/doctrine-bundle
+  version: 2.11.1
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: doctrine/doctrine-fixtures-bundle
+  description: Symfony DoctrineFixturesBundle
+  package_url: https://packagist.org/doctrine/doctrine-fixtures-bundle
+  version: 3.5.1
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: doctrine/doctrine-migrations-bundle
+  description: Symfony DoctrineMigrationsBundle
+  package_url: https://packagist.org/doctrine/doctrine-migrations-bundle
+  version: 3.3.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: doctrine/orm
+  description: Object-Relational-Mapper for PHP
+  package_url: https://packagist.org/doctrine/orm
+  version: 2.17.3
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: phpdocumentor/reflection-docblock
+  description: With this component
+  package_url: https://packagist.org/phpdocumentor/reflection-docblock
+  version: 5.3.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: phpunit/phpunit
+  description: The PHP Unit Testing framework
+  package_url: https://packagist.org/phpunit/phpunit
+  version: 10.5.9
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: renovate[bot]
+  last_updated_on: 2023-12-01 09:12:47.000000000 Z
+- name: symfony/asset
+  description: Manages URL generation and versioning of web assets such as CSS stylesheets
+  package_url: https://packagist.org/symfony/asset
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/browser-kit
+  description: Simulates the behavior of a web browser
+  package_url: https://packagist.org/symfony/browser-kit
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/console
+  description: Eases the creation of beautiful and testable command line interfaces
+  package_url: https://packagist.org/symfony/console
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/css-selector
+  description: Converts CSS selectors to XPath expressions
+  package_url: https://packagist.org/symfony/css-selector
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/dotenv
+  description: Registers environment variables from a .env file
+  package_url: https://packagist.org/symfony/dotenv
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/expression-language
+  description: Provides an engine that can compile and evaluate expressions
+  package_url: https://packagist.org/symfony/expression-language
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/flex
+  description: Composer plugin for Symfony
+  package_url: https://packagist.org/symfony/flex
+  version: 2.4.3
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/framework-bundle
+  description: Provides a tight integration between Symfony components and the Symfony
+    full-stack framework
+  package_url: https://packagist.org/symfony/framework-bundle
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/maker-bundle
+  description: Symfony Maker helps you create empty commands
+  package_url: https://packagist.org/symfony/maker-bundle
+  version: 1.52.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/monolog-bundle
+  description: Symfony MonologBundle
+  package_url: https://packagist.org/symfony/monolog-bundle
+  version: 3.10.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/phpunit-bridge
+  description: Provides utilities for PHPUnit
+  package_url: https://packagist.org/symfony/phpunit-bridge
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: renovate[bot]
+  last_updated_on: 2023-12-01 09:12:47.000000000 Z
+- name: symfony/property-access
+  description: Provides functions to read and write from/to an object or array using
+    a simple string notation
+  package_url: https://packagist.org/symfony/property-access
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/property-info
+  description: Extracts information about PHP class' properties using metadata of
+    popular sources
+  package_url: https://packagist.org/symfony/property-info
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/serializer
+  description: Handles serializing and deserializing data structures
+  package_url: https://packagist.org/symfony/serializer
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/validator
+  description: Provides tools to validate values
+  package_url: https://packagist.org/symfony/validator
+  version: 7.0.2
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
+- name: symfony/yaml
+  description: Loads and dumps YAML files
+  package_url: https://packagist.org/symfony/yaml
+  version: 7.0.0
+  open_source: false
+  hosted_saas: false
+  category: Build, Test, Deploy
+  sub_category: Package Managers
+  image_url: https://img.stackshare.io/package/packagist/image.png
+  detection_source_url: https://github.com/hantsy/symfony-rest-sample/blob/master/composer.lock
+  detection_source: composer.json
+  last_updated_by: Hantsy Bai
+  last_updated_on: 2023-11-30 14:44:13.000000000 Z
