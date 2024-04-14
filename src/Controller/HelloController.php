@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Annotation\Get;
 use App\Dto\Greeting;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,10 +10,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HelloController extends AbstractController
 {
-    /**
-     * @param Request $request
-     * @return Response
-     */
     #[Route('/hello', name: 'hello')]
     public function sayHello(Request $request): Response
     {

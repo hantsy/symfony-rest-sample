@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use DateTime;
-
 use DateTimeInterface;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\CustomIdGenerator;
