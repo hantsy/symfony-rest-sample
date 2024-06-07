@@ -44,7 +44,8 @@ class PostRepositoryTestWithTestcontainers extends KernelTestCase
         $application = new Application($kernel);
         $command = $application->find('doctrine:schema:create');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['n']);
+        $result = $commandTester->execute(['n']);
+        var_dump("schema:create result:".$result);
 
         // use static::getContainer() to access the service container
         $container = static::getContainer();
