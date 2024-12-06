@@ -12,29 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Testcontainers\Container\PostgresContainer;
 
-class PostRepositoryTestWithTestcontainers extends KernelTestCase
+class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
 {
 
     private EntityManagerInterface $entityManager;
 
     private PostRepository $postRepository;
 
-    private PostgresContainer $postgresContainer;
-
     protected function setUp(): void
     {
-        // starting Postgres Container
-        $this->postgresContainer = PostgresContainer::make('16', 'password');
-        $this->postgresContainer->withPostgresDatabase('blogdb');
-        $this->postgresContainer->withPostgresUser('user');
-        $this->postgresContainer->withPort("5432", "5432");
-
-        try {
-            $this->postgresContainer->run();
-        } catch (Exception $e) {
-            var_dump($e->getMessage());
-        }
-
         // boot the Symfony kernel
         $kernel = self::bootKernel();
         $this->assertSame('test', $kernel->getEnvironment());
@@ -61,9 +47,6 @@ class PostRepositoryTestWithTestcontainers extends KernelTestCase
     {
         parent::tearDown();
         $this->entityManager->close();
-
-        // stop postgres container
-        $this->postgresContainer->stop();
     }
 
     public function testCreatePost(): void

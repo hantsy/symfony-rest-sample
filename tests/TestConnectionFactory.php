@@ -17,10 +17,10 @@ class TestConnectionFactory extends ConnectionFactory
     {
         if (!$this::$testDsn) {
             $psql = PostgresContainer::make('16.0', 'password');
-            $psql->withPostgresDatabase('blogdb');
+            $psql->withPostgresDatabase('testdb');
             $psql->withPostgresUser('user');
             $psql->run();
-            $this::$testDsn = sprintf('postgresql://user:password@%s:5432/blogdb?serverVersion=14&charset=utf8', $psql->getAddress());
+            $this::$testDsn = sprintf('postgresql://user:password@%s:5432/testdb?serverVersion=16&charset=utf8', $psql->getAddress());
         }
         parent::__construct($typesConfig, $dsnParser);
     }
