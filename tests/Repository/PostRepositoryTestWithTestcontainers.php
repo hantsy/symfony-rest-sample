@@ -9,7 +9,7 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Testcontainer\Container\PostgresContainer;
+use Testcontainers\Container\PostgresContainer;
 
 class PostRepositoryTestWithTestcontainers extends KernelTestCase
 {
@@ -23,7 +23,7 @@ class PostRepositoryTestWithTestcontainers extends KernelTestCase
     protected function setUp(): void
     {
         // starting Postgres Container
-        $this->postgresContainer = PostgresContainer::make('14', 'password');
+        $this->postgresContainer = PostgresContainer::make('16', 'password');
         $this->postgresContainer->withPostgresDatabase('blogdb');
         $this->postgresContainer->withPostgresUser('user');
         $this->postgresContainer->withPort("5432", "5432");
