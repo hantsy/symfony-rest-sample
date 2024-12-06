@@ -25,3 +25,4 @@ NUL
 /nbproject/private/
 nbproject/
 .phpunit*
+/.phpunit.cache
