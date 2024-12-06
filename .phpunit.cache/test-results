@@ -1,0 +1,1 @@
+{"version":1,"defects":{"App\\Tests\\Repository\\PostRepositoryTest::testCreatePost":8,"App\\Tests\\Repository\\PostRepositoryTestWithTestConnectionFactory::testCreatePost":8},"times":{"App\\Tests\\Repository\\PostRepositoryTest::testCreatePost":0.028,"App\\Tests\\Repository\\PostRepositoryTestWithTestcontainers::testCreatePost":0.867}}

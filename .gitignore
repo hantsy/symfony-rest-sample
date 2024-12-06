@@ -24,3 +24,4 @@ NUL
 .vscode/
 /nbproject/private/
 nbproject/
+.phpunit*
