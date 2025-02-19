@@ -17,6 +17,7 @@ doctrine:
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
+        # see: https://symfony.com/blog/new-in-symfony-7-1-mapped-route-parameters
         #controller_resolver:
         #    auto_mapping: true
         mappings:
