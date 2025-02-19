@@ -1125,16 +1125,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "3.3.1",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/orm.git",
-                "reference": "b1f8253105aa5382c495e5f9f8ef34e297775428"
+                "reference": "c9557c588b3a70ed93caff069d0aa75737f25609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/orm/zipball/b1f8253105aa5382c495e5f9f8ef34e297775428",
-                "reference": "b1f8253105aa5382c495e5f9f8ef34e297775428",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/c9557c588b3a70ed93caff069d0aa75737f25609",
+                "reference": "c9557c588b3a70ed93caff069d0aa75737f25609",
                 "shasum": ""
             },
             "require": {
@@ -1209,9 +1209,9 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/orm/issues",
-                "source": "https://github.com/doctrine/orm/tree/3.3.1"
+                "source": "https://github.com/doctrine/orm/tree/3.3.2"
             },
-            "time": "2024-12-19T07:08:14+00:00"
+            "time": "2025-02-04T19:43:15+00:00"
         },
         {
             "name": "doctrine/persistence",
@@ -5370,16 +5370,16 @@
     "packages-dev": [
         {
             "name": "dama/doctrine-test-bundle",
-            "version": "v8.2.0",
+            "version": "v8.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dmaicher/doctrine-test-bundle.git",
-                "reference": "1f81a280ea63f049d24e9c8ce00e557b18e0ff2f"
+                "reference": "eefe54fdf00d910f808efea9cfce9cc261064a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/1f81a280ea63f049d24e9c8ce00e557b18e0ff2f",
-                "reference": "1f81a280ea63f049d24e9c8ce00e557b18e0ff2f",
+                "url": "https://api.github.com/repos/dmaicher/doctrine-test-bundle/zipball/eefe54fdf00d910f808efea9cfce9cc261064a0a",
+                "reference": "eefe54fdf00d910f808efea9cfce9cc261064a0a",
                 "shasum": ""
             },
             "require": {
@@ -5393,9 +5393,9 @@
             "require-dev": {
                 "behat/behat": "^3.0",
                 "friendsofphp/php-cs-fixer": "^3.27",
-                "phpstan/phpstan": "^1.2",
+                "phpstan/phpstan": "^2.0",
                 "phpunit/phpunit": "^8.0 || ^9.0 || ^10.0 || ^11.0",
-                "symfony/phpunit-bridge": "^6.3",
+                "symfony/phpunit-bridge": "^7.2",
                 "symfony/process": "^5.4 || ^6.3 || ^7.0",
                 "symfony/yaml": "^5.4 || ^6.3 || ^7.0"
             },
@@ -5431,9 +5431,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dmaicher/doctrine-test-bundle/issues",
-                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.2.0"
+                "source": "https://github.com/dmaicher/doctrine-test-bundle/tree/v8.2.2"
             },
-            "time": "2024-05-28T15:41:06+00:00"
+            "time": "2025-02-04T14:37:36+00:00"
         },
         {
             "name": "doctrine/data-fixtures",
@@ -5673,16 +5673,16 @@
         },
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -5721,7 +5721,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -5729,7 +5729,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -6232,16 +6232,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.6",
+            "version": "11.5.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "3c3ae14c90f244cdda95028c3e469028e8d1c02c"
+                "reference": "c9bd61aab12f0fc5e82ecfe621ff518a1d1f1049"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/3c3ae14c90f244cdda95028c3e469028e8d1c02c",
-                "reference": "3c3ae14c90f244cdda95028c3e469028e8d1c02c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/c9bd61aab12f0fc5e82ecfe621ff518a1d1f1049",
+                "reference": "c9bd61aab12f0fc5e82ecfe621ff518a1d1f1049",
                 "shasum": ""
             },
             "require": {
@@ -6313,7 +6313,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.6"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.8"
             },
             "funding": [
                 {
@@ -6329,7 +6329,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-01-31T07:03:30+00:00"
+            "time": "2025-02-18T06:26:59+00:00"
         },
         {
             "name": "sebastian/cli-parser",
