@@ -78,7 +78,7 @@
   "extra": {
     "symfony": {
       "allow-contrib": false,
-      "require": "7.1.*"
+      "require": "7.*"
     }
   },
   "require-dev": {
@@ -89,6 +89,6 @@
     "symfony/css-selector": "^7.1",
     "symfony/maker-bundle": "^1.34",
     "symfony/phpunit-bridge": "^7.1",
-    "testcontainers/testcontainers": "^0.2.0"
+    "testcontainers/testcontainers": "^1.0.0"
   }
 }
