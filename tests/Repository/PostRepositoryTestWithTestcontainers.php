@@ -10,7 +10,7 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Testcontainers\Container\PostgresContainer;
+use Testcontainers\Modules\PostgresContainer;
 
 class PostRepositoryTestWithTestcontainers extends KernelTestCase
 {
@@ -24,13 +24,14 @@ class PostRepositoryTestWithTestcontainers extends KernelTestCase
     protected function setUp(): void
     {
         // starting Postgres Container
-        $this->postgresContainer = PostgresContainer::make('16', 'password');
+        $this->postgresContainer = new PostgresContainer('16');
         $this->postgresContainer->withPostgresDatabase('blogdb');
         $this->postgresContainer->withPostgresUser('user');
-        $this->postgresContainer->withPort("5432", "5432");
+        $this->postgresContainer->withPostgresPassword('password');
+        $this->postgresContainer->withExposedPorts("5432");
 
         try {
-            $this->postgresContainer->run();
+            $this->postgresContainer->start();
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }
@@ -46,7 +47,7 @@ class PostRepositoryTestWithTestcontainers extends KernelTestCase
         $command = $application->find('doctrine:schema:create');
         $commandTester = new CommandTester($command);
         $result = $commandTester->execute(['n']);
-        var_dump("schema:create result:".$result);
+        var_dump("schema:create result:" . $result);
 
         // use static::getContainer() to access the service container
         // $container = static::getContainer();

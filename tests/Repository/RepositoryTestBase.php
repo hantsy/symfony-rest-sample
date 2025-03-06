@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 use Symfony\Component\DependencyInjection\Container;
-use Testcontainers\Container\PostgresContainer;
+use Testcontainers\Modules\PostgresContainer;
 
 class RepositoryTestBase extends KernelTestCase
 {
@@ -24,13 +24,14 @@ class RepositoryTestBase extends KernelTestCase
     public static function setUpBeforeClass(): void{
         parent::setUpBeforeClass();
         // starting Postgres Container
-        self::$postgresContainer = PostgresContainer::make('16', 'password');
+        self::$postgresContainer = new PostgresContainer('16');
         self::$postgresContainer->withPostgresDatabase('blogdb');
         self::$postgresContainer->withPostgresUser('user');
-        self::$postgresContainer->withPort("5432", "5432");
+        self::$postgresContainer->withPostgresPassword('password');
+        self::$postgresContainer->withExposedPorts("5432");
 
         try {
-            self::$postgresContainer->run();
+            self::$postgresContainer->start();
         } catch (Exception $e) {
             var_dump($e->getMessage());
         }

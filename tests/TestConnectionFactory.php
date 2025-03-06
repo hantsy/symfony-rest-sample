@@ -7,7 +7,7 @@ use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Configuration;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Tools\DsnParser;
-use Testcontainers\Container\PostgresContainer;
+use Testcontainers\Modules\PostgresContainer;
 
 class TestConnectionFactory extends ConnectionFactory
 {
@@ -16,11 +16,14 @@ class TestConnectionFactory extends ConnectionFactory
     public function __construct(array $typesConfig, ?DsnParser $dsnParser = null)
     {
         if (!$this::$testDsn) {
-            $psql = PostgresContainer::make('16.0', 'password');
+            $psql = new PostgresContainer('16');
             $psql->withPostgresDatabase('testdb');
             $psql->withPostgresUser('user');
-            $psql->run();
-            $this::$testDsn = sprintf('postgresql://user:password@%s:5432/testdb?serverVersion=16&charset=utf8', $psql->getAddress());
+            $psql->withPostgresPassword('password');
+            $psql->withExposedPorts('5432');
+            $psql->start();
+
+            $this::$testDsn = sprintf('postgresql://user:password@%s:'.$psql->getFirstMappedPort().'/testdb?serverVersion=16&charset=utf8', $psql->getHost());
         }
         parent::__construct($typesConfig, $dsnParser);
     }

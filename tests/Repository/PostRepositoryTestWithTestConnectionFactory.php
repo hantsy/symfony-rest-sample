@@ -6,11 +6,9 @@ use App\Entity\Post;
 use App\Entity\PostFactory;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
-use Testcontainers\Container\PostgresContainer;
 
 class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
 {
@@ -32,7 +30,7 @@ class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
         $command = $application->find('doctrine:schema:create');
         $commandTester = new CommandTester($command);
         $result = $commandTester->execute(['n']);
-        var_dump("schema:create result:".$result);
+        var_dump("schema:create result:" . $result);
 
         // use static::getContainer() to access the service container
         // $container = static::getContainer();
