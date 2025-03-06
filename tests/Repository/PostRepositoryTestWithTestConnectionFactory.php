@@ -9,12 +9,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use PHPUnit\Framework\Attributes\Test;
 
 class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
 {
-
     private EntityManagerInterface $entityManager;
-
     private PostRepository $postRepository;
 
     protected function setUp(): void
@@ -47,6 +46,7 @@ class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
         $this->entityManager->close();
     }
 
+    #[Test]
     public function testCreatePost(): void
     {
         // persist entities with EntityManager
@@ -60,5 +60,4 @@ class PostRepositoryTestWithTestConnectionFactory extends KernelTestCase
         $this->assertEquals("test post", $byId->getTitle());
         $this->assertEquals("test content", $byId->getContent());
     }
-
 }

@@ -1,4 +1,4 @@
 # config/packages/test/services.yaml
 
-  Doctrine\DBAL\Connection:
-    factory: App\Tests\TestConnectionFactory
+parameters:
+  doctrine.dbal.connection_factory.class: App\Tests\TestConnectionFactory
