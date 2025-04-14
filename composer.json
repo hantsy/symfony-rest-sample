@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "prefer-stable": true,
   "require": {
-    "php": ">=8.2",
+    "php": ">=8.3",
     "ext-ctype": "*",
     "ext-iconv": "*",
     "composer/package-versions-deprecated": "^1.11.99.4",
