@@ -22,7 +22,6 @@ class RepositoryTestBase extends KernelTestCase
     private static PostgresContainer $postgresContainer;
 
     public static function setUpBeforeClass(): void{
-        parent::setUpBeforeClass();
         // starting Postgres Container
         self::$postgresContainer = new PostgresContainer('16');
         self::$postgresContainer->withPostgresDatabase('blogdb');
