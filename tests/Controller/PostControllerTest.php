@@ -100,7 +100,7 @@ class PostControllerTest extends WebTestCase
 
 
         // 2. get the newly created post.
-        $client->jsonRequest('GET', $url,);
+        $client->jsonRequest('GET', $url);
 
         $getByIdResponse = $client->getResponse();
         echo("json response:::" . $getByIdResponse->getContent());
@@ -125,7 +125,7 @@ class PostControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(204);
 
         // 4. verify the updated post.
-        $client->jsonRequest('GET', $url,);
+        $client->jsonRequest('GET', $url);
 
         $updatedResponse = $client->getResponse();
         echo("json response of updated post:::" . $updatedResponse->getContent());
@@ -147,7 +147,7 @@ class PostControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(204);
 
         // 5. verify the updated post status.
-        $client->jsonRequest('GET', $url,);
+        $client->jsonRequest('GET', $url);
         $updatedStatusResponse = $client->getResponse();
         echo("json response of updated post status:::" . $updatedStatusResponse->getContent());
         $updatedStatusData = $this->getContainer()->get('serializer')->deserialize($updatedStatusResponse->getContent(), Post::class, "json");
@@ -182,7 +182,7 @@ class PostControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(204);
 
         // 9. verify the post is deleted.
-        $client->jsonRequest('GET', $url,);
+        $client->jsonRequest('GET', $url);
         $this->assertResponseStatusCodeSame(404);
     }
 }
