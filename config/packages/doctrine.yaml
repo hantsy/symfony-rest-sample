@@ -17,9 +17,6 @@ doctrine:
         identity_generation_preferences:
             Doctrine\DBAL\Platforms\PostgreSQLPlatform: identity
         auto_mapping: true
-        # see: https://symfony.com/blog/new-in-symfony-7-1-mapped-route-parameters
-        controller_resolver:
-           auto_mapping: false
         mappings:
             App:
                 type: attribute
@@ -27,11 +24,14 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+        controller_resolver:
+            auto_mapping: false
+
 when@test:
     doctrine:
         dbal:
             # "TEST_TOKEN" is typically set by ParaTest
-            # dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
 
 when@prod:
     doctrine:
