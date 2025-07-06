@@ -3,7 +3,7 @@
 
 # Define the services/containers to be run
 services:
-  postgres:
+  database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}

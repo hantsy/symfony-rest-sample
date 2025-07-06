@@ -76,8 +76,8 @@ jobs:
         run: |
           echo 'deb [trusted=yes] https://repo.symfony.com/apt/ /' |sudo tee /etc/apt/sources.list.d/symfony-cli.list
           sudo apt update
-          sudo apt install symfony-cli 
-          symfony check:requirements   
+          sudo apt install symfony-cli
+          symfony check:requirements
           php bin/console -V
       # —— Code style —— (Based on this package: https://github.com/OskarStark/php-cs-fixer-ga)
       #- name: PHP-CS-Fixer
@@ -87,7 +87,7 @@ jobs:
 
       - name: Setup Database
         run: |
-          docker compose up -d postgres
+          docker compose up -d database
           sleep 10
           docker ps -a
       - name: Run Migrations
