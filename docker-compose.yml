@@ -1,11 +1,9 @@
 # see https://docs.docker.com/compose/compose-file/compose-versioning/
-version: "3.5" # specify docker-compose version, v3.5 is compatible with docker 17.12.0+
+# version: "3.5" # specify docker-compose version, v3.5 is compatible with docker 17.12.0+
 
 # Define the services/containers to be run
 services:
-
-###> doctrine/doctrine-bundle ###
-  database:
+  postgres:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
@@ -22,9 +20,5 @@ services:
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
       - ./pg-initdb.d:/docker-entrypoint-initdb.d
-###< doctrine/doctrine-bundle ###
-
 volumes:
-###> doctrine/doctrine-bundle ###
   database_data:
-###< doctrine/doctrine-bundle ###
