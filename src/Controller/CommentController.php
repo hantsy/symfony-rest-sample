@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('comments', name: 'comments')]
+#[Route('comments', name: 'comments_')]
 class CommentController extends AbstractController
 {
 
@@ -18,7 +18,7 @@ class CommentController extends AbstractController
     {
     }
 
-    #[Route('{id}', name: "getById")]
+    #[Route('/{id}', name: "getById")]
     public function byId(string $id): Response
     {
         $data = $this->commentRepository->findOneBy(["id" => $id]);

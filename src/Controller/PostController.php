@@ -16,9 +16,12 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 
@@ -140,6 +143,14 @@ class PostController extends AbstractController implements LoggerAwareInterface
         $data = $this->posts->findOneBy(["id" => $id]);
         if ($data) {
             return $this->json($data->getComments());
+//            try {
+//                $content = $this->serializer->serialize($data->getComments(), 'json', [
+//                    AbstractNormalizer::IGNORED_ATTRIBUTES => ['post']
+//                ]);
+//                return new JsonResponse($content, 200, [], true);
+//            } catch (ExceptionInterface $e) {
+//                return new Response("Bad Request", 400);
+//            }
         } else {
             throw new PostNotFoundException($id);
             //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
