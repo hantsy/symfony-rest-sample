@@ -138,24 +138,16 @@ class PostController extends AbstractController implements LoggerAwareInterface
     // comments sub resources.
     #[Route(path: "/{id}/comments", name: "commentByPostId", methods: ["GET"])]
     //#[GET(path: "/{id}/comments", name: "commentByPostId")]
-    public function getComments(Uuid $id): Response
-    {
-        $data = $this->posts->findOneBy(["id" => $id]);
-        if ($data) {
-            return $this->json($data->getComments());
-//            try {
-//                $content = $this->serializer->serialize($data->getComments(), 'json', [
-//                    AbstractNormalizer::IGNORED_ATTRIBUTES => ['post']
-//                ]);
-//                return new JsonResponse($content, 200, [], true);
-//            } catch (ExceptionInterface $e) {
-//                return new Response("Bad Request", 400);
-//            }
-        } else {
-            throw new PostNotFoundException($id);
-            //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
-        }
+public function getComments(Uuid $id): Response
+{
+    $data = $this->posts->findOneBy(["id" => $id]);
+    if ($data) {
+        return $this->json($data->getComments());
+    } else {
+        throw new PostNotFoundException($id);
+        //return $this->json(["error" => "Post was not found b}y id:" . $id], 404);
     }
+}
 
     #[Route(path: "/{id}/comments", name: "addComments", methods: ["POST"])]
     //#[Post(path: "/{id}/comments", name: "addComments")]
