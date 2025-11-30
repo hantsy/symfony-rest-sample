@@ -1,0 +1,2135 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../ex/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Creating Controller - Building RESTful API with Symfony and PHP 8</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#producing-restful-api" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Building RESTful API with Symfony and PHP 8" class="md-header__button md-logo" aria-label="Building RESTful API with Symfony and PHP 8" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Building RESTful API with Symfony and PHP 8
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Creating Controller
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="pink" data-md-color-accent="pink"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/hantsy/symfony-rest-sample" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hantsy/symfony-rest-sample
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Building RESTful API with Symfony and PHP 8" class="md-nav__button md-logo" aria-label="Building RESTful API with Symfony and PHP 8" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Building RESTful API with Symfony and PHP 8
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/hantsy/symfony-rest-sample" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    hantsy/symfony-rest-sample
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_1" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Preface
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../gs/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gs/pre/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prerequisites
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gs/create/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating Symfony Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../gs/hello/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hello Symfony!
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../data/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Accessing with Doctrine
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Data Accessing with Doctrine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connecting to Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Modeling
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data/operations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Data Operations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Producing RESTful API
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Producing RESTful API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating Controller
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-postcontroller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating PostController
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating PostController">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paginating-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paginating Result
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handling Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieving Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converting-request-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting Request Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converting-request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting Request Body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validating-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validating Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-post-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Post Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deleting Post
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ex/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handling Exceptions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Handling Subresources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Design Consideration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../test/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Testing
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/testdb/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Repository
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../test/testctl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing Controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tips/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tips and Tricks
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tips and Tricks
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tips/enum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Using Enum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tips/v7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade to V7
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tips/v8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Upgrade to V8
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creating-postcontroller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating PostController
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating PostController">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paginating-result" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Paginating Result
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handling-query-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Handling Query Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retrieving-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Retrieving Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converting-request-attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting Request Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Creating Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#converting-request-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Converting Request Body
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#validating-request" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Validating Request
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#updating-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Post
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Updating Post">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#updating-post-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Updating Post Status
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#deleting-post" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deleting Post
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="producing-restful-api">Producing RESTful API<a class="headerlink" href="#producing-restful-api" title="Permanent link">&para;</a></h1>
+<p>Follow  the REST convention, we are going to create the following APIs.</p>
+<ul>
+<li><code>GET  /posts</code>    Get all posts.</li>
+<li><code>GET /posts/{id}</code> Get a single post by ID, if not found, return status 404 </li>
+<li><code>POST /posts</code> Create a new post from  request body, add the new post URI to response header <code>Location</code>, and return status 201</li>
+<li><code>DELETE /posts/{id}</code> Delete a single post by ID, return status 204. If the post was  not found, return status 404 instead.</li>
+<li>...</li>
+</ul>
+<p>Next let's create a <code>Controller</code>  to handle the  incoming requests.</p>
+<h2 id="creating-postcontroller">Creating PostController<a class="headerlink" href="#creating-postcontroller" title="Permanent link">&para;</a></h2>
+<p>To create a <code>Controller</code> skeleton, run the following command and follow the interactive guide to create a controller named <code>PostController</code>.</p>
+<pre><code class="language-bash"># php bin/console make:constroller
+</code></pre>
+<p>Open <em>src/Controller/PostController.php</em> in IDE.</p>
+<p>Add a new function to retrieve all posts.  To bind the request path to the controller,  add a  <code>Route</code> attribute on class level and the <code>all</code> function. The former <code>Route</code> will apply to all functions in this controller.</p>
+<pre><code class="language-bash">#[Route(path: &quot;/posts&quot;, name: &quot;posts_&quot;)]
+class PostController extends AbstractController
+{
+    public function __construct(private PostRepository      $posts)
+    {
+    }
+
+    #[Route(path: &quot;&quot;, name: &quot;all&quot;, methods: [&quot;GET&quot;])]
+    function all(): Response
+    {
+        $data = $this-&gt;posts-&gt;findAll();
+        return $this-&gt;json($data);
+    }
+
+}
+</code></pre>
+<p>Start up the application, and try to access the <em>http://localhost:8000/posts</em>, it will throw a circular dependencies exception when rendering the models in JSON view directly. </p>
+<p>There are some solutions to avoid this, the simplest is break the bi-direction relations before rendering the JSON view.  </p>
+<p>Add a <code>Ignore</code> attribute on <code>Comment.post</code> and <code>Tag.posts</code>.</p>
+<pre><code class="language-php">//src/Entity/Comment.php
+class Comment
+{
+    #[Ignore]
+    private Post $post;
+}
+
+//src/Entity/Tag.php
+class Tag
+{
+    #[Ignore]
+    private Collection $posts;
+}
+</code></pre>
+<blockquote>
+<p>Alternatively,  the DTO pattern is a good option to transform the data to a plain object that only includes <em>essential</em> fields before rendering in the HTTP response.</p>
+</blockquote>
+<h3 id="paginating-result">Paginating Result<a class="headerlink" href="#paginating-result" title="Permanent link">&para;</a></h3>
+<p>There are a lot of web applications which provide a input field for typing keyword and paginating the search results. Assume there is a <em>keyword</em> provided by request to match Post <em>title</em> or <em>content</em> fields, a  <em>offset</em> to set the offset position of the pagination, and a <em>limit</em> to set the limited size of the elements per page. Create  a function in the <code>PostRepository</code>, accepts a <em>keyword</em>, <em>offset</em> and <em>limit</em> as arguments.</p>
+<pre><code class="language-php">public function findByKeyword(string $q, int $offset = 0, int $limit = 20): Page
+{
+    $query = $this-&gt;createQueryBuilder(&quot;p&quot;)
+        -&gt;andWhere(&quot;p.title like :q or p.content like :q&quot;)
+        -&gt;setParameter('q', &quot;%&quot; . $q . &quot;%&quot;)
+        -&gt;orderBy('p.createdAt', 'DESC')
+        -&gt;setMaxResults($limit)
+        -&gt;setFirstResult($offset)
+        -&gt;getQuery();
+
+    $paginator = new Paginator($query, $fetchJoinCollection = false);
+    $c = count($paginator);
+    $content = new ArrayCollection();
+    foreach ($paginator as $post) {
+        $content-&gt;add(PostSummaryDto::of($post-&gt;getId(), $post-&gt;getTitle()));
+    }
+    return Page::of ($content, $c, $offset, $limit);
+}
+</code></pre>
+<p>Firstly, create a dynamic query using <code>createQueryBuilder</code> ,  then create a Doctrine <code>Paginator</code> instance to execute the query. The <code>Paginator</code> implements <code>Countable</code> interface,  use <code>count</code> to get the count of total elements. Finally, we use a custom <code>Page</code> object to wrap the result.</p>
+<pre><code class="language-php">class Page
+{
+    private Collection $content;
+    private int $totalElements;
+    private int $offset;
+    private int $limit;
+
+    #[Pure] public function __construct()
+    {
+        $this-&gt;content = new ArrayCollection();
+    }
+
+
+    public static function of(Collection $content, int $totalElements, int $offset = 0, int $limit = 20): Page
+    {
+        $page = new Page();
+        $page-&gt;setContent($content)
+            -&gt;setTotalElements($totalElements)
+            -&gt;setOffset($offset)
+            -&gt;setLimit($limit);
+
+        return $page;
+    }
+
+    //
+    //getters
+
+}    
+</code></pre>
+<h3 id="handling-query-parameters">Handling Query Parameters<a class="headerlink" href="#handling-query-parameters" title="Permanent link">&para;</a></h3>
+<p>In the <code>PostController</code> , let's improve the the function which serves the route <code>/posts</code>, make it accept query parameters like <em>/posts?q=Symfony&amp;offset=0&amp;limit=10</em>, and ensure the parameters are optional.</p>
+<pre><code class="language-php">    #[Route(path: &quot;&quot;, name: &quot;all&quot;, methods: [&quot;GET&quot;])]
+    function all(Request $req): Response
+    {
+        $keyword = $req-&gt;query-&gt;get('q')??'';
+        $offset = $req-&gt;query-&gt;get('offset')??0;
+        $limit = $req-&gt;query-&gt;get('limit')??10;
+
+        $data = $this-&gt;posts-&gt;findByKeyword($keyword, $offset, $limit);
+        return $this-&gt;json($data);
+    }
+</code></pre>
+<p>It works but the query parameters handling looks a little ugly.  It is great if they can be handled as the route path parameters.  </p>
+<p>We can create a custom <code>ArgumentResolver</code> to resolve the bound query arguments.</p>
+<p>Firstly create an Annotation/Attribute class to identify a query parameter that need to be resolved by this <code>ArgumentResolver</code>.</p>
+<pre><code class="language-php">#[Attribute(Attribute::TARGET_PARAMETER)]
+final class QueryParam
+{
+    private null|string $name;
+    private bool $required;
+
+    /**
+     * @param string|null $name
+     * @param bool $required
+     */
+    public function __construct(?string $name = null, bool $required = false)
+    {
+        $this-&gt;name = $name;
+        $this-&gt;required = $required;
+    }
+
+    //getters and setters
+
+}    
+</code></pre>
+<p>Create a custom <code>ArgumentResolver</code> implements the built-in <code>ArgugmentResolverInterface</code>.</p>
+<pre><code class="language-php">class QueryParamValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
+{
+    public function __construct()
+    {
+    }
+
+    private LoggerInterface $logger;
+
+    /**
+     * @inheritDoc
+     */
+    public function resolve(Request $request, ArgumentMetadata $argument)
+    {
+        $argumentName = $argument-&gt;getName();
+        $this-&gt;logger-&gt;info(&quot;Found [QueryParam] annotation/attribute on argument '&quot; . $argumentName . &quot;', applying [QueryParamValueResolver]&quot;);
+        $type = $argument-&gt;getType();
+        $nullable = $argument-&gt;isNullable();
+        $this-&gt;logger-&gt;debug(&quot;The method argument type: '&quot; . $type . &quot;' and nullable: '&quot; . $nullable . &quot;'&quot;);
+
+        //read name property from QueryParam
+        $attr = $argument-&gt;getAttributes(QueryParam::class)[0];// `QueryParam` is not repeatable
+        $this-&gt;logger-&gt;debug(&quot;QueryParam:&quot; . $attr);
+        //if name property is not set in `QueryParam`, use the argument name instead.
+        $name = $attr-&gt;getName() ?? $argumentName;
+        $required = $attr-&gt;isRequired() ?? false;
+        $this-&gt;logger-&gt;debug(&quot;Polished QueryParam values: name='&quot; . $name . &quot;', required='&quot; . $required . &quot;'&quot;);
+
+        //fetch query name from request
+        $value = $request-&gt;query-&gt;get($name);
+        $this-&gt;logger-&gt;debug(&quot;The request query parameter value: '&quot; . $value . &quot;'&quot;);
+
+        //if default value is set and query param value is not set, use default value instead.
+        if (!$value &amp;&amp; $argument-&gt;hasDefaultValue()) {
+            $value = $argument-&gt;getDefaultValue();
+            $this-&gt;logger-&gt;debug(&quot;After set default value: '&quot; . $value . &quot;'&quot;);
+        }
+
+        if ($required &amp;&amp; !$value) {
+            throw new \InvalidArgumentException(&quot;Request query parameter '&quot; . $name . &quot;' is required, but not set.&quot;);
+        }
+
+        $this-&gt;logger-&gt;debug(&quot;final resolved value: '&quot; . $value . &quot;'&quot;);
+
+        //must return  a `yield` clause
+        yield match ($type) {
+            'int' =&gt; $value ? (int)$value : 0,
+            'float' =&gt; $value ? (float)$value : .0,
+            'bool' =&gt; (bool)$value,
+            'string' =&gt; $value ? (string)$value : ($nullable ? null : ''),
+            null =&gt; null
+        };
+    }
+
+    public function supports(Request $request, ArgumentMetadata $argument): bool
+    {
+        $attrs = $argument-&gt;getAttributes(QueryParam::class);
+        return count($attrs) &gt; 0;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this-&gt;logger = $logger;
+    }
+}
+</code></pre>
+<p>At runtime, it calls the <code>supports</code> function to check it the current request satisfy the requirement, if it is ok, then invoke the <code>resovle</code> funtion.</p>
+<p>In the <code>supports</code> function, we check if the argument is annotated with a <code>QueryParam</code>, if it is existed, then resolved the argument from request query string. </p>
+<p>Now change the function that serves <em>/posts</em> endpoint to the following.</p>
+<pre><code class="language-php">#[Route(path: &quot;&quot;, name: &quot;all&quot;, methods: [&quot;GET&quot;])]
+function all(#[QueryParam] $keyword,
+    #[QueryParam] int $offset = 0,
+    #[QueryParam] int $limit = 20): Response
+    {
+        $data = $this-&gt;posts-&gt;findByKeyword($keyword || '', $offset, $limit);
+        return $this-&gt;json($data);
+    }
+</code></pre>
+<p>Run the application and test the <em>/posts</em> using <code>curl</code>.</p>
+<pre><code class="language-bash"># curl http://localhost:8000/posts
+{
+    &quot;content&quot;:[
+        {
+            &quot;id&quot;:&quot;1ec3e1e0-17b3-6ed2-a01c-edecc112b436&quot;,
+            &quot;title&quot;:&quot;Building Restful APIs with Symfony and PHP 8&quot;
+        }
+    ],
+    &quot;totalElements&quot;:1,
+    &quot;offset&quot;:0,
+    &quot;limit&quot;:20
+}
+</code></pre>
+<h2 id="retrieving-post">Retrieving Post<a class="headerlink" href="#retrieving-post" title="Permanent link">&para;</a></h2>
+<p>Follow the design in the previous section, add another function to <code>PostController</code> to map route <code>/posts/{id}</code> . </p>
+<pre><code class="language-bash">class PostController extends AbstractController
+{
+    //other functions...
+
+    #[Route(path: &quot;/{id}&quot;, name: &quot;byId&quot;, methods: [&quot;GET&quot;])]
+    function getById(Uuid $id): Response
+    {
+        $data = $this-&gt;posts-&gt;findOneBy([&quot;id&quot; =&gt; $id]);
+        if ($data) {
+            return $this-&gt;json($data);
+        } else {
+            return $this-&gt;json([&quot;error&quot; =&gt; &quot;Post was not found by id:&quot; . $id], 404);
+        }
+    }
+}
+</code></pre>
+<p>Run the application, and try to access <em>http://localhost:8000/posts/{id}</em>, it will throw an exception like this.</p>
+<pre><code class="language-bash">App\Controller\PostController::getById(): Argument #1 ($id) must be of type Symfony\Component\Uid\Uuid, string given, cal
+led in D:\hantsylabs\symfony5-sample\rest-sample\vendor\symfony\http-kernel\HttpKernel.php on line 156
+
+</code></pre>
+<p>The <code>id</code> in the URI is a string,  can not be  used  as <code>Uuid</code>  directly.</p>
+<p>Symfony provides <code>ParamConverter</code> to convert the request attributes to the target type. We can create a custom <code>ParamConverter</code> to archive the purpose.</p>
+<h3 id="converting-request-attributes">Converting Request Attributes<a class="headerlink" href="#converting-request-attributes" title="Permanent link">&para;</a></h3>
+<p>Create a  new class <code>UuidParamCovnerter</code> under <em>src/Request/</em> folder.</p>
+<pre><code class="language-php">class UuidParamConverter implements ParamConverterInterface
+{
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
+
+
+    /**
+     * @inheritDoc
+     */
+    public function apply(Request $request, ParamConverter $configuration): bool
+    {
+
+        $param = $configuration-&gt;getName();
+
+        if (!$request-&gt;attributes-&gt;has($param)) {
+            return false;
+        }
+
+        $value = $request-&gt;attributes-&gt;get($param);
+        $this-&gt;logger-&gt;info(&quot;parameter value:&quot; . $value);
+        if (!$value &amp;&amp; $configuration-&gt;isOptional()) {
+            $request-&gt;attributes-&gt;set($param, null);
+
+            return true;
+        }
+
+        $data = Uuid::fromString($value);
+        $request-&gt;attributes-&gt;set($param, $data);
+
+        return true;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports(ParamConverter $configuration): bool
+    {
+        $className = $configuration-&gt;getClass();
+        $this-&gt;logger-&gt;info(&quot;converting to UUID :{c}&quot;, [&quot;c&quot; =&gt; $className]);
+        return $className &amp;&amp; $className == Uuid::class;
+    }
+}
+</code></pre>
+<p>In the above codes, </p>
+<ul>
+<li>
+<p>The <code>supports</code> function to check the execution environment if matching the requirements</p>
+</li>
+<li>
+<p>The <code>apply</code> function to perform the conversion. if <code>supports</code> returns false, this conversion step will be skipped.</p>
+</li>
+</ul>
+<h2 id="creating-post">Creating Post<a class="headerlink" href="#creating-post" title="Permanent link">&para;</a></h2>
+<p>Follow the REST convention, define the following rule to serve an endpoint to handle the request.</p>
+<ul>
+<li>Request matches Http verbs/HTTP Method: <code>POST</code></li>
+<li>Request matches route endpoint: <em>/posts</em></li>
+<li>Set request header  <code>Content-Type</code> value to <em>application/json</em>, and use request body to hold request data as JSON format</li>
+<li>If successful, return a <code>CREATED</code>(201) Http Status code, and set the response header <em>Location</em> value to the URI of the new created post.</li>
+</ul>
+<pre><code class="language-php">#[Route(path: &quot;&quot;, name: &quot;create&quot;, methods: [&quot;POST&quot;])]
+public function create(Request $request): Response
+{
+    $data = $this-&gt;serializer-&gt;deserialize($request-&gt;getContent(), CreatePostDto::class, 'json');
+    $entity = PostFactory::create($data-&gt;getTitle(), $data-&gt;getContent());
+    $this-&gt;posts-&gt;getEntityManager()-&gt;persist($entity);
+
+    return $this-&gt;json([], 201, [&quot;Location&quot; =&gt; &quot;/posts/&quot; . $entity-&gt;getId()]);
+}
+</code></pre>
+<p>The <code>posts-&gt;getEntityManager()</code> overrides parent methods to get a <code>EntityManager</code> from parent class, you can also inject <code>ObjectManager</code> or <code>EntityManagerInterface</code> in the  <code>PostController</code> directly to do the persistence work. The Doctrine <code>Repository</code> is mainly designated to build query criteria and execute custom queries.</p>
+<h3 id="converting-request-body">Converting Request Body<a class="headerlink" href="#converting-request-body" title="Permanent link">&para;</a></h3>
+<p>We can also use an Annotation/Attribute to erase the raw codes of handling <code>Request</code> object through introducing a custom  <code>ArgumentResolver</code>.</p>
+<p>Create a <code>Body</code> <em>Attribute</em>.</p>
+<pre><code class="language-php">#[Attribute(Attribute::TARGET_PARAMETER)]
+final class Body
+{
+}
+</code></pre>
+<p>Then create a <code>BodyValueResolver</code>.</p>
+<pre><code class="language-php">class BodyValueResolver implements ArgumentValueResolverInterface, LoggerAwareInterface
+{
+    public function __construct(private SerializerInterface $serializer)
+    {
+    }
+
+    private LoggerInterface $logger;
+
+    /**
+     * @inheritDoc
+     */
+    public function resolve(Request $request, ArgumentMetadata $argument)
+    {
+        $type = $argument-&gt;getType();
+        $this-&gt;logger-&gt;debug(&quot;The argument type:'&quot; . $type . &quot;'&quot;);
+        $format = $request-&gt;getContentType() ?? 'json';
+        $this-&gt;logger-&gt;debug(&quot;The request format:'&quot; . $format . &quot;'&quot;);
+
+        //read request body
+        $content = $request-&gt;getContent();
+        $data = $this-&gt;serializer-&gt;deserialize($content, $type, $format);
+       // $this-&gt;logger-&gt;debug(&quot;deserialized data:{0}&quot;, [$data]);
+        yield $data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function supports(Request $request, ArgumentMetadata $argument): bool
+    {
+        $attrs = $argument-&gt;getAttributes(Body::class);
+        return count($attrs) &gt; 0;
+    }
+
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this-&gt;logger = $logger;
+    }
+
+</code></pre>
+<p>In the <code>supports</code> method, it simply detects if the method argument annotated with a <code>Body</code> attribute, then apply <code>resolve</code> method to deserialize the request body  content to a typed object.</p>
+<p>Run the application and test the endpoint through <em>/posts</em>.</p>
+<pre><code class="language-php">curl -v http://localhost:8000/posts -H &quot;Content-Type:application/json&quot; -d &quot;{\&quot;title\&quot;:\&quot;test title\&quot;,\&quot;content\&quot;:\&quot;test content\&quot;}&quot;
+&gt; POST /posts HTTP/1.1
+&gt; Host: localhost:8000
+&gt; User-Agent: curl/7.55.1
+&gt; Accept: */*
+&gt; Content-Type:application/json
+&gt; Content-Length: 47
+&gt;
+&lt; HTTP/1.1 201 Created
+&lt; Cache-Control: no-cache, private
+&lt; Content-Type: application/json
+&lt; Date: Sun, 21 Nov 2021 08:42:49 GMT
+&lt; Location: /posts/1ec4aa70-1b21-6bce-93f8-b39330fe328e
+&lt; X-Powered-By: PHP/8.0.10
+&lt; X-Robots-Tag: noindex
+&lt; Content-Length: 2
+&lt;
+[]
+</code></pre>
+<h3 id="validating-request">Validating Request<a class="headerlink" href="#validating-request" title="Permanent link">&para;</a></h3>
+<p>In the last section,  we convert the request body into an plain object. To validate the object, generally we can inject a <code>Validator</code> service. </p>
+<pre><code class="language-php">__constructor(ValidatorInterface $validator, ...){}
+</code></pre>
+<p>Then invoke <code>validate</code> function to validate the target value, store the validation result into an  <code>errors</code> object,  you can process it later.</p>
+<pre><code class="language-php">$errors = $validator-&gt;validate($body);
+
+if (count($errors) &gt; 0) {
+    //...
+}
+</code></pre>
+<p>Like the above section, you can create  a custom  <code>ArgumentValueResolver</code>  and a specific <code>Attribute</code> to handle the validation automatically. </p>
+<p>But I hope the official <em>validation attributes</em> can be applied on the controller method arguments directly,  like the existing Bean Validation in a Spring Controller. For example, </p>
+<pre><code class="language-php">#[Route(path: &quot;&quot;, name: &quot;all&quot;, methods: [&quot;GET&quot;])]
+function all(string $keyword, #[PositiveOrZero] int $offset = 0, #[Positive] int $limit = 20): Response
+{
+    //...
+}
+
+#[Route(path: &quot;&quot;, name: &quot;all&quot;, methods: [&quot;POST&quot;])]
+function create(#[Body] #[Valid] data: CreatePostCommand): Response
+{
+    //...
+}             
+</code></pre>
+<p>Please vote <a href="https://github.com/symfony/symfony/issues/43958">issue #43958</a> if you like include this feature.</p>
+<h2 id="updating-post">Updating Post<a class="headerlink" href="#updating-post" title="Permanent link">&para;</a></h2>
+<p>Follow the REST convention, define the following rule to serve an endpoint to handle the request.</p>
+<ul>
+<li>Request matches Http verbs/HTTP Method: <code>PUT</code></li>
+<li>Request matches route endpoint: <em>/posts/{id}</em></li>
+<li>If successful, return a <code>NO_CONTENT</code>(204) Http Status code and an empty response body.</li>
+</ul>
+<pre><code class="language-php">#[Route(path: &quot;/{id}&quot;, name: &quot;update&quot;, methods: [&quot;PUT&quot;])]
+public function update(Uuid $id, #[Body] UpdatePostDto $data): Response
+{
+    $entity = $this-&gt;posts-&gt;findOneBy([&quot;id&quot; =&gt; $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this-&gt;json([&quot;error&quot; =&gt; &quot;Post was not found by id:&quot; . $id], 404);
+    }
+    $entity-&gt;setTitle($data-&gt;getTitle())
+        -&gt;setContent($data-&gt;getContent());
+    $this-&gt;objectManager-&gt;merge($entity);
+    $this-&gt;objectManager-&gt;flush();
+
+    return $this-&gt;json([], 204);
+}
+</code></pre>
+<p>Firstly we retrieve the existing post through the <code>id</code> path variable.   Update the existing  post with data from the request body, and save it back to the database.</p>
+<h3 id="updating-post-status">Updating Post Status<a class="headerlink" href="#updating-post-status" title="Permanent link">&para;</a></h3>
+<p>In the above update operation, we do not update the status field. In a real world application, in some cases we could update a single field instead of the world entity. </p>
+<p>The status field of a <code>Post</code> can be updated via a standalone endpoint.</p>
+<p>Follow the REST convention, define the following rule to serve an endpoint to handle the request.</p>
+<ul>
+<li>Request matches Http verbs/HTTP Method: <code>PUT</code></li>
+<li>Request matches route endpoint: <em>/posts/{id}/status</em></li>
+<li>If successful, return a <code>NO_CONTENT</code>(204) Http Status code and an empty response body.</li>
+</ul>
+<pre><code class="language-php">#[Route(path: &quot;/{id}/status&quot;, name: &quot;update_status&quot;, methods: [&quot;PUT&quot;])]
+public function updateStatus(Uuid $id, #[Body] UpdatePostStatusDto $data): Response
+{
+    $entity = $this-&gt;posts-&gt;findOneBy([&quot;id&quot; =&gt; $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this-&gt;json([&quot;error&quot; =&gt; &quot;Post was not found by id:&quot; . $id], 404);
+    }
+    echo &quot;update post status::::&quot; . PHP_EOL;
+    var_export($data);
+    $entity-&gt;setStatus($data-&gt;getStatus());
+    $this-&gt;objectManager-&gt;merge($entity);
+    $this-&gt;objectManager-&gt;flush();
+
+    return $this-&gt;json([], 204);
+}
+</code></pre>
+<h2 id="deleting-post">Deleting Post<a class="headerlink" href="#deleting-post" title="Permanent link">&para;</a></h2>
+<p>Follow the REST convention, define the following rule to serve an endpoint to handle the request.</p>
+<ul>
+<li>Request matches Http verbs/HTTP Method: <code>DELETE</code></li>
+<li>Request matches route endpoint: <em>/posts/{id}</em></li>
+<li>If successful, return a <code>NO_CONTENT</code>(204) Http Status code and an empty response body.</li>
+</ul>
+<pre><code class="language-php">#[Route(path: &quot;/{id}&quot;, name: &quot;delete&quot;, methods: [&quot;DELETE&quot;])]
+public function deleteById(Uuid $id): Response
+{
+    $entity = $this-&gt;posts-&gt;findOneBy([&quot;id&quot; =&gt; $id]);
+    if (!$entity) {
+        throw new PostNotFoundException($id);
+        //return $this-&gt;json([&quot;error&quot; =&gt; &quot;Post was not found by id:&quot; . $id], 404);
+    }
+    $this-&gt;objectManager-&gt;remove($entity);
+    $this-&gt;objectManager-&gt;flush();
+
+    return $this-&gt;json([], 204);
+}
+</code></pre>
+
+
+
+
+
+
+
+  
+    
+  
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    2025-11-30
+  </span>
+
+    
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy;2022 Hantsy
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/hantsy" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M459.4 151.7c.3 4.5.3 9.1.3 13.6 0 138.7-105.6 298.6-298.6 298.6-59.5 0-114.7-17.2-161.1-47.1 8.4 1 16.6 1.3 25.3 1.3 49.1 0 94.2-16.6 130.3-44.8-46.1-1-84.8-31.2-98.1-72.8 6.5 1 13 1.6 19.8 1.6 9.4 0 18.8-1.3 27.6-3.6-48.1-9.7-84.1-52-84.1-103v-1.3c14 7.8 30.2 12.7 47.4 13.3-28.3-18.8-46.8-51-46.8-87.4 0-19.5 5.2-37.4 14.3-53C87.4 130.8 165 172.4 252.1 176.9c-1.6-7.8-2.6-15.9-2.6-24C249.5 95.1 296.3 48 354.4 48c30.2 0 57.5 12.7 76.7 33.1 23.7-4.5 46.5-13.3 66.6-25.3-7.8 24.4-24.4 44.8-46.1 57.8 21.1-2.3 41.6-8.1 60.4-16.2-14.3 20.8-32.2 39.3-52.6 54.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://linkedin.com/in/hantsy" target="_blank" rel="noopener" title="linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://medium.com/@hantsy" target="_blank" rel="noopener" title="medium.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M369.4 32c43.4 0 78.6 35.2 78.6 78.6v83.8c-1.9-.1-3.8-.2-5.7-.2h-.4c-10 0-22.3 2.4-31.1 6.8-10 4.6-18.7 11.5-26 20.6-11.8 14.6-18.9 34.3-20.6 56.4-.1.7-.1 1.3-.2 2s-.1 1.2-.1 1.9c-.1 1.2-.1 2.4-.1 3.6 0 1.9-.1 3.8 0 5.8 1.2 50.1 28.2 90.2 76.3 90.2 2.7 0 5.3-.1 7.9-.4v20.4c0 43.4-35.2 78.6-78.6 78.6L78.6 480C35.2 480 0 444.8 0 401.4V110.6C0 67.2 35.2 32 78.6 32zM82.3 138.9l.3.1c13.2 3 19.8 7.4 19.8 23.4v187.2c0 16-6.7 20.4-19.9 23.4l-.3.1v2.8H135v-2.8l-.3-.1c-13.2-3-19.9-7.4-19.9-23.4V173.3l86.1 202.5h4.9l88.6-208.2v186.6c-1.1 12.6-7.8 16.5-19.7 19.2l-.3.1v2.7h91.9v-2.7l-.3-.1c-11.9-2.7-18.7-6.6-19.9-19.2l-.1-191.8h.1c0-16 6.7-20.4 19.9-23.4l.3-.1v-2.7h-72.2l-67 157.4-67-157.4H82.3zM448 340.3c-25.1-7.4-43-35.1-41.2-67.8h41.1v67.8zm-6.4-135.6c2.3 0 4.4.3 6.4.9V263h-40.2c1.5-33.6 13.6-57.9 33.8-58.3"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/hantsy" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "navigation.expand", "navigation.indexes"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
