@@ -7328,16 +7328,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.65.0",
+            "version": "v1.65.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "9a0276d7486b29cae641b4a0a85d5e5cc149bff2"
+                "reference": "eba30452d212769c9a5bcf0716959fd8ba1e54e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/9a0276d7486b29cae641b4a0a85d5e5cc149bff2",
-                "reference": "9a0276d7486b29cae641b4a0a85d5e5cc149bff2",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/eba30452d212769c9a5bcf0716959fd8ba1e54e3",
+                "reference": "eba30452d212769c9a5bcf0716959fd8ba1e54e3",
                 "shasum": ""
             },
             "require": {
@@ -7402,7 +7402,7 @@
             ],
             "support": {
                 "issues": "https://github.com/symfony/maker-bundle/issues",
-                "source": "https://github.com/symfony/maker-bundle/tree/v1.65.0"
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.65.1"
             },
             "funding": [
                 {
@@ -7422,7 +7422,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-11-24T15:41:51+00:00"
+            "time": "2025-12-02T07:14:37+00:00"
         },
         {
             "name": "symfony/phpunit-bridge",
